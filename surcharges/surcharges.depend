@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1570480167 source:/home/julien/dev/surcharges/main.cpp
+	<iostream>
+	"Duree.h"
+
+1570649601 /home/julien/dev/surcharges/include/Duree.h
+	<iostream>
+
+1570480126 source:/home/julien/dev/surcharges/src/Duree.cpp
+	"Duree.h"
+	<iostream>
+
+1570480167 source:/home/julien/dev/cplusplus_programming/surcharges/main.cpp
+	<iostream>
+	"Duree.h"
+
+1570649601 /home/julien/dev/cplusplus_programming/surcharges/include/Duree.h
+	<iostream>
+
+1570480126 source:/home/julien/dev/cplusplus_programming/surcharges/src/Duree.cpp
+	"Duree.h"
+	<iostream>
+
