@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1570995738 source:/home/julien/dev/leMotMystere/main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<vector>
+	<iomanip>
+	<fstream>
+	<algorithm>
+
+1570995738 source:/home/julien/dev/cplusplus_programming/leMotMystere/main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<vector>
+	<iomanip>
+	<fstream>
+	<algorithm>
+
