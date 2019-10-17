@@ -52,8 +52,8 @@ int demanderMotMystere(string motAMelanger, string motMystere, int essais)
         cout << "Quel est ce mot ? " << motMystere << endl;
         cin >>  motAComparer;
 
-        transform(motAMelanger.begin(), motAMelanger.end(), motAMelanger.begin(), ::tolower);
-        transform(motAComparer.begin(), motAComparer.end(), motAComparer.begin(), ::tolower);
+        //transform(motAMelanger.begin(), motAMelanger.end(), motAMelanger.begin(), ::tolower);
+        //transform(motAComparer.begin(), motAComparer.end(), motAComparer.begin(), ::toupper);
 
         if(motAMelanger == motAComparer)
         {
@@ -71,7 +71,7 @@ int demanderMotMystere(string motAMelanger, string motMystere, int essais)
             }
             else
             {
-                cout << "Le mot mystère est : " << motAMelanger << endl;
+                cout << "La solution est : " << motAMelanger << endl;
             }
         }
 
@@ -186,7 +186,7 @@ int main()
 
     string motAMelanger = "";
     string motMystere = "";
-    char continuer = 'o';
+    string continuer = "";
     int nombreEssais = 5;
     vector<int> scoresPartiesJouees;
     double moyenneScoreParties = 0;
@@ -194,7 +194,7 @@ int main()
     int nombreDeParties = 0;
     string choixMode = "";
 
-    while(continuer == 'o')
+    do
     {
 
         nombreDeParties++;
@@ -204,6 +204,7 @@ int main()
         {
             cout << "1 - Saisir un mot" << endl;
             cout << "2 - Prendre un mot au hasard dans un dico" << endl;
+            cout << "Entrez 1 ou 2 pour sélectionner le mode : ";
             cin >> choixMode;
             cout << "mode : " << choixMode << endl;
         }
@@ -225,10 +226,15 @@ int main()
         cout << "Score de la partie : " << scorePartieEnCours << endl;
         scoresPartiesJouees.push_back(scorePartieEnCours);
 
-        cout << "Une autre partie? o/n : ";
-        cin >> continuer;
+        do
+        {
+            choixMode = "";
+            cout << "Voulez-vous faire une autre partie? (o/N) : " << endl;
+            cin >> continuer;
+        }
+        while(continuer != "o" && continuer != "N");
 
-    }
+    }while(continuer == "o");
 
     moyenneScoreParties = calculerScore(scoresPartiesJouees);
     cout << "Votre score moyen après " << nombreDeParties << " partie(s) : " << moyenneScoreParties << endl;
