@@ -141,7 +141,7 @@ string selectionnerMotDico()
 
         //cout << "Nombre de lignes du fichier : " << nbrLignes << endl;
 
-        positionTiree = rand() % nbrLignes; // On tire en nombre entre 0 et le nombre de lignes - 1
+        positionTiree = rand() % nbrLignes; // On tire un nombre entre 0 et le nombre de lignes - 1
         positionTiree += 1;
 
         //cout << "Position tirée au hasard : " << positionTiree <<endl;
