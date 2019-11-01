@@ -3,32 +3,11 @@
 
 using namespace std;
 
-ZFraction::ZFraction(int numerateur, int denominateur)
+ZFraction::ZFraction(int numerateur, int denominateur):m_numerateur(numerateur), m_denominateur(denominateur)
 {
-    if(denominateur == 0)
-    {
-        cout << "Division par 0 impossible! On considére que le dénominateur vaut 1." << endl;
-        denominateur=1;
-    }
-
-    m_numerateur = numerateur;
-    m_denominateur = denominateur;
-
     simplifierFraction();
 
-}
-
-ZFraction::ZFraction(int numerateur)
-{
-    m_numerateur = numerateur;
-    m_denominateur = 1;
-}
-
-ZFraction::ZFraction()
-{
-    m_numerateur = 0;
-    m_denominateur = 0;
-    m_diviseurCommun = 0;
+    signer();
 }
 
 ZFraction::~ZFraction()
@@ -61,41 +40,44 @@ void ZFraction::afficherFraction(ostream &flux) const
 
 ostream& operator<<(ostream &flux, ZFraction const& a)
 {
-    a.afficherFraction(flux) ;
+    a.afficherFraction(flux);
     return flux;
 }
 
-ZFraction& ZFraction::operator+=(ZFraction a)
+ZFraction& ZFraction::operator+=(ZFraction const& a)
 {
-    //On passe les fractions sous un même denominateur.
+    m_numerateur = m_numerateur * a.m_denominateur + a.m_numerateur * m_denominateur;
+    m_denominateur = m_denominateur * a.m_denominateur;
 
-    //On sauvegarde les dénominateurs qui vont servir à effectuer le calcul.
-    int denominateur1 = m_denominateur;
-    int denominateur2 = a.m_denominateur;
-
-    //On multiplie le numérateur et le dénominateur de la fraction par le dénominateur de l'autre fraction.
-    m_numerateur *= denominateur2;
-    m_denominateur *= denominateur2;
-
-    a.m_numerateur *= denominateur1;
-    a.m_denominateur *= denominateur1;
-
-    if(m_denominateur == a.m_denominateur)
-    {
-        m_numerateur += a.m_numerateur;
-    }
-    else
-    {
-        cout << "Erreur lors de l'addition.";
-    }
+    simplifierFraction();
 
     return *this;
 }
 
-ZFraction& ZFraction::operator*=(ZFraction a)
+ZFraction& ZFraction::operator-=(ZFraction const& a)
+{
+    m_numerateur = m_numerateur * a.m_denominateur - a.m_numerateur * m_denominateur;
+    m_denominateur = m_denominateur * a.m_denominateur;
+
+    simplifierFraction();
+
+    return *this;
+}
+
+ZFraction& ZFraction::operator*=(ZFraction const& a)
 {
     m_numerateur *= a.m_numerateur;
     m_denominateur *= a.m_denominateur;
+
+    simplifierFraction();
+
+    return *this;
+}
+
+ZFraction& ZFraction::operator/=(ZFraction const& a)
+{
+    m_numerateur *= a.m_denominateur;
+    m_denominateur *= a.m_numerateur;
 
     simplifierFraction();
 
@@ -114,7 +96,7 @@ bool ZFraction::estEgal(ZFraction const& a) const
 
 bool ZFraction::estPlusPetit(ZFraction const& a) const
 {
-    if(float(m_numerateur)/m_denominateur < float(a.m_numerateur)/a.m_denominateur)
+    if(m_numerateur * a.m_denominateur < m_denominateur * a.m_numerateur)
     {
         return true;
     }
@@ -124,18 +106,60 @@ bool ZFraction::estPlusPetit(ZFraction const& a) const
 
 ZFraction& ZFraction::simplifierFraction()
 {
-    m_diviseurCommun = pgcd(m_numerateur, m_denominateur);
+    int diviseurCommun = pgcd(m_numerateur, m_denominateur);
 
-    m_numerateur /= m_diviseurCommun;
-    m_denominateur /= m_diviseurCommun;
+    m_numerateur /= diviseurCommun;
+    m_denominateur /= diviseurCommun;
 
     return *this;
+}
+
+int ZFraction::getNumerateur() const
+{
+    return m_numerateur;
+}
+
+int ZFraction::getDenominateur() const
+{
+    return m_denominateur;
+}
+
+double ZFraction::transformerEnNombreReel() const
+{
+    return double(m_numerateur) / m_denominateur;
+}
+
+void ZFraction::signer()
+{
+    if(m_numerateur >= 0 && m_denominateur < 0)
+    {
+        m_numerateur = -m_numerateur;
+        m_denominateur = -m_denominateur;
+    }
+
+    else if(m_numerateur < 0 && m_denominateur < 0)
+    {
+        m_numerateur = -m_numerateur;
+        m_denominateur = -m_denominateur;
+    }
 }
 
 ZFraction operator+(ZFraction const& a, ZFraction const& b)
 {
     ZFraction copie(a);
     copie += b;
+
+    copie.signer();
+
+    return copie;
+}
+
+ZFraction operator-(ZFraction const& a, ZFraction const& b)
+{
+    ZFraction copie(a);
+    copie -= b;
+
+    copie.signer();
 
     return copie;
 }
@@ -144,6 +168,18 @@ ZFraction operator*(ZFraction const& a, ZFraction const& b)
 {
     ZFraction copie(a);
     copie *= b;
+
+    copie.signer();
+
+    return copie;
+}
+
+ZFraction operator/(ZFraction const& a, ZFraction const& b)
+{
+    ZFraction copie(a);
+    copie /= b;
+
+    copie.signer();
 
     return copie;
 }
@@ -156,6 +192,16 @@ bool operator==(ZFraction const& a, ZFraction const& b)
     }
 
     return false;
+}
+
+bool operator!=(ZFraction const& a, ZFraction const& b)
+{
+    if(a.estEgal(b))
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool operator<(ZFraction const& a, ZFraction const& b)
@@ -178,4 +224,59 @@ bool operator>(ZFraction const& a, ZFraction const& b)
     }
 
     return false;
+}
+
+bool operator<=(ZFraction const& a, ZFraction const& b) //Vrai si a<=b donc si b n'est pas plus petit que a
+{
+    if(b.estPlusPetit(a))
+        return false;
+    else
+        return true;
+}
+
+bool operator>=(ZFraction const& a, ZFraction const& b) //Vrai si a>=b donc si a n'est pas plus petit que b
+{
+    if(a.estPlusPetit(b))
+        return false;
+    else
+        return true;
+}
+
+ZFraction operator-(ZFraction const& a)
+{
+    ZFraction copie(a);
+    copie *= -1;
+    copie.signer();
+    return copie;
+}
+
+double ZFraction::calculerRacineCarree(ZFraction const& a)
+{
+    double racineCarree = sqrt(a.m_numerateur) / sqrt(a.m_denominateur);
+
+    return racineCarree;
+}
+
+ZFraction ZFraction::calculerValeurAbsolue()
+{
+    ZFraction copie(*this);
+
+    copie.m_numerateur = abs(m_numerateur);
+    copie.m_denominateur = abs(m_denominateur);
+
+    copie.simplifierFraction();
+
+    return copie;
+}
+
+ZFraction ZFraction::calculerPuissance(int puissance)
+{
+    ZFraction copie(*this);
+
+    copie.m_numerateur = pow(m_numerateur, puissance);
+    copie.m_denominateur = pow(m_denominateur, puissance);
+
+    copie.simplifierFraction();
+
+    return copie;
 }

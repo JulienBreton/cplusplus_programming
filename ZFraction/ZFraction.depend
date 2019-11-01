@@ -10,3 +10,15 @@
 1572196124 /home/julien/dev/ZFraction/include/ZFraction.h
 	<iostream>
 
+1572629964 source:/home/julien/dev/cplusplus_programming/ZFraction/main.cpp
+	"ZFraction.h"
+	<iostream>
+
+1572629414 /home/julien/dev/cplusplus_programming/ZFraction/include/ZFraction.h
+	<iostream>
+	<cmath>
+
+1572630089 source:/home/julien/dev/cplusplus_programming/ZFraction/src/ZFraction.cpp
+	"ZFraction.h"
+	<iostream>
+
