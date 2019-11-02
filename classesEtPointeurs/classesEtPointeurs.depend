@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1572717104 source:/home/julien/dev/cplusplus_programming/classesEtPointeurs/main.cpp
+	<iostream>
+	"Personnage.h"
+
+1572714167 /home/julien/dev/cplusplus_programming/classesEtPointeurs/include/Personnage.h
+	<string>
+	<iostream>
+	"Arme.h"
+
+1572705203 /home/julien/dev/cplusplus_programming/classesEtPointeurs/include/Arme.h
+	<string>
+	<iostream>
+
+1572705126 source:/home/julien/dev/cplusplus_programming/classesEtPointeurs/src/Arme.cpp
+	"Arme.h"
+
+1572715548 source:/home/julien/dev/cplusplus_programming/classesEtPointeurs/src/Personnage.cpp
+	"Personnage.h"
+
