@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1572810432 source:/home/julien/dev/cplusplus_programming/heritage/main.cpp
+	<iostream>
+	"Guerrier.h"
+	"Magicien.h"
+
+1572810165 source:/home/julien/dev/cplusplus_programming/heritage/src/Personnage.cpp
+	"Personnage.h"
+
+1572810149 /home/julien/dev/cplusplus_programming/heritage/include/Personnage.h
+	<string>
+	<iostream>
+
+1572705203 /home/julien/dev/cplusplus_programming/heritage/include/Arme.h
+	<string>
+	<iostream>
+
+1572810497 source:/home/julien/dev/cplusplus_programming/heritage/src/Guerrier.cpp
+	"Guerrier.h"
+
+1572810277 /home/julien/dev/cplusplus_programming/heritage/include/Guerrier.h
+	<iostream>
+	<string>
+	"Personnage.h"
+
+1572809609 source:/home/julien/dev/cplusplus_programming/heritage/src/Magicien.cpp
+	"Magicien.h"
+
+1572809179 /home/julien/dev/cplusplus_programming/heritage/include/Magicien.h
+	<iostream>
+	<string>
+	"Personnage.h"
+
