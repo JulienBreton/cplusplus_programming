@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1575493415 source:/home/julien/dev/cplusplus_programming/elementsStatiquesEtAmitie/main.cpp
+	<iostream>
+	"MaClasse.h"
+
+1575493432 source:/home/julien/dev/cplusplus_programming/elementsStatiquesEtAmitie/src/MaClasse.cpp
+	"MaClasse.h"
+
+1575493432 /home/julien/dev/cplusplus_programming/elementsStatiquesEtAmitie/include/MaClasse.h
+	<iostream>
+
