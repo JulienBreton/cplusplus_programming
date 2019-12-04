@@ -32,7 +32,42 @@ Voiture& demarrer()
 * Une méthode virtuelle peut être redéfinie dans une classe fille. Cela permet d'appeler la méthode de la classe fille et non pas celle de la classe mére.
 * Une méthode virtuelle pure doit être redéfinie dans une classe fille. Dans le cas où ça n'a pas de sens d'implémenter la méthode dans la classe mère on la déclare comme virtuelle pure (=0).
 
-#### Le mot static
+#### Le mot clé static
 
 * Une métode statique peut être appelée directement sans créer d'objet.
 * Une variable statique est partagée par toutes les instances d'une même classe.
+
+### Le mot clé friend
+
+Une fonction amie d'une classe peut accéder à tous ses éléments, même les éléments privés.
+
+```c++
+class MaClasse
+{
+    public:
+        MaClasse();
+        virtual ~MaClasse();
+
+    protected:
+
+    private:
+        void afficher();
+
+        friend void fonctionAmie(MaClasse & test);
+};
+
+Dans le MaClasse.cpp :
+void MaClasse::afficher()
+{
+    cout << "Appellé par la fonction amie." << endl;
+}
+
+void fonctionAmie(MaClasse & test)
+{
+    test.afficher();
+}
+
+Dans le main.cpp :
+MaClasse * test1 = new MaClasse();
+fonctionAmie(*test1);
+```
