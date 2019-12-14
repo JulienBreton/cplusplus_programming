@@ -82,6 +82,8 @@ sudo apt-get install build-essential libgl1-mesa-dev
 ```
 Pour avoir la transparence sur les fenêtres de LXDE :
 
+Voir http://debian-facile.org/doc:environnements:lxde:transparence pour l'installation de Compton.
+
 ```console
 compton &
 ```
