@@ -1,3 +1,5 @@
+## C++
+
 #### Le mot clé const
 
 ```c++
@@ -70,4 +72,11 @@ void fonctionAmie(MaClasse & test)
 Dans le main.cpp :
 MaClasse * test1 = new MaClasse();
 fonctionAmie(*test1);
+```
+## Qt
+
+Pour faire fonctionner Qt :
+
+```console
+sudo apt-get install build-essential libgl1-mesa-dev
 ```
