@@ -80,3 +80,8 @@ Pour faire fonctionner Qt :
 ```console
 sudo apt-get install build-essential libgl1-mesa-dev
 ```
+Pour avoir la transparence sur les fenêtres de LXDE :
+
+```console
+compton &
+```
