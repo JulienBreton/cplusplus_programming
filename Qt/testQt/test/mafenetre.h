@@ -7,6 +7,7 @@
 #include <QLCDNumber>
 #include <QSlider>
 #include <QProgressBar>
+#include <QMessageBox>
 
 class MaFenetre : public QWidget
 {
@@ -21,20 +22,22 @@ public slots:
     void changerHauteur(int largeur);
     void augmenterOpacite();
     void reduireOpacite();
+    void ouvrirDialogue();
+    void poserQuestion();
 
 signals:
     void agrandissementMax();
 
 private:
-    QPushButton *m_bouton;
-    QPushButton *m_boutonAjouterOpacite;
-    QPushButton *m_boutonReduireOpacite;
+    QPushButton * m_bouton;
+    QPushButton * m_boutonAjouterOpacite;
+    QPushButton * m_boutonReduireOpacite;
+    QPushButton * m_boutonDialogue;
+    QPushButton * m_boutonQuestion;
     QLCDNumber * m_lcd;
     QSlider * m_slider;
     QSlider * m_sliderHauteur;
     QProgressBar * m_progressBar;
-
-
 };
 
 #endif // MAFENETRE_H
