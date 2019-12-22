@@ -2,9 +2,11 @@
 
 MaFenetre::MaFenetre() : QWidget()
 {
-    setFixedSize(200, 300);
+    m_boutonCacheTrouve = false;
 
-    setWindowOpacity(0.5);
+    setFixedSize(200, 460);
+
+    setWindowOpacity(0.9);
 
     m_lcd = new QLCDNumber(this);
     m_lcd->setSegmentStyle(QLCDNumber::Flat);
@@ -17,7 +19,7 @@ MaFenetre::MaFenetre() : QWidget()
 
     m_sliderHauteur = new QSlider(this);
     m_sliderHauteur->setGeometry(180, 10, 20, 150);
-    m_sliderHauteur->setRange(300, 600);
+    m_sliderHauteur->setRange(460, 600);
 
     m_progressBar = new QProgressBar(this);
     m_progressBar->setGeometry(10, 100, 150, 20);
@@ -38,6 +40,18 @@ MaFenetre::MaFenetre() : QWidget()
     m_boutonQuestion = new QPushButton("Question?", this);
     m_boutonQuestion->move(50, 260);
 
+    m_boutonDemandePseudo = new QPushButton("Qui êtes-vous?", this);
+    m_boutonDemandePseudo->move(50, 300);
+
+    m_boutonCouleur = new QPushButton("Changer la couleur", this);
+    m_boutonCouleur->move(50, 340);
+
+    m_boutonPolice = new QPushButton("Changer la police", this);
+    m_boutonPolice->move(50, 380);
+
+    m_boutonChargerImage = new QPushButton("Charger une image", this);
+    m_boutonChargerImage->move(50, 420);
+
     QObject::connect(m_slider, SIGNAL(valueChanged(int)), m_lcd, SLOT(display(int)));
     QObject::connect(m_slider, SIGNAL(valueChanged(int)), m_progressBar, SLOT(setValue(int)));
     QObject::connect(m_bouton, SIGNAL(clicked()), m_progressBar, SLOT(reset()));
@@ -48,6 +62,10 @@ MaFenetre::MaFenetre() : QWidget()
     QObject::connect(this, SIGNAL(agrandissementMax()), qApp, SLOT(quit()));
     QObject::connect(m_boutonDialogue, SIGNAL(clicked()), this, SLOT(ouvrirDialogue()));
     QObject::connect(m_boutonQuestion, SIGNAL(clicked()), this, SLOT(poserQuestion()));
+    QObject::connect(m_boutonDemandePseudo, SIGNAL(clicked()), this, SLOT(demanderPseudo()));
+    QObject::connect(m_boutonCouleur, SIGNAL(clicked()), this, SLOT(changerCouleur()));
+    QObject::connect(m_boutonPolice, SIGNAL(clicked()), this, SLOT(changerPolice()));
+    QObject::connect(m_boutonChargerImage, SIGNAL(clicked()), this, SLOT(chargerImage()));
 }
 
 void MaFenetre::changerLargeur(int largeur)
@@ -90,6 +108,7 @@ void MaFenetre::reduireOpacite()
 
 void MaFenetre::ouvrirDialogue()
 {
+    m_boutonCacheTrouve = true;
     QMessageBox::information(this, "Bravo!", "Tu as trouvé <strong>le bouton caché!</strong>");
 }
 
@@ -97,13 +116,61 @@ void MaFenetre::poserQuestion()
 {
     int reponse = QMessageBox::question(this, "Bouton caché", "As-tu trouvé le bouton caché?", QMessageBox::Yes | QMessageBox::No);
 
-    if(reponse == QMessageBox::Yes)
+    if(reponse == QMessageBox::Yes && m_boutonCacheTrouve == true)
     {
         QMessageBox::information(this, "Oui", "Alors là bien joué!");
+    }
+
+    if(reponse == QMessageBox::Yes && m_boutonCacheTrouve == false)
+    {
+        QMessageBox::information(this, "Menteur", "Ce n'est pas vrai! Cherche encore!");
     }
 
     if(reponse == QMessageBox::No)
     {
         QMessageBox::information(this, "Non", "Mais dans quel coin est-il?");
     }
+}
+
+void MaFenetre::demanderPseudo()
+{
+    bool ok = false;
+    QString pseudo = QInputDialog::getText(this, "Pseudo", "Quel est votre pseudo ?", QLineEdit::Normal, QString(), &ok);
+
+    if (ok && !pseudo.isEmpty())
+    {
+        QMessageBox::information(this, "Pseudo", "Bonjour " + pseudo + ", ça va ?");
+        m_boutonDemandePseudo->setText(pseudo);
+    }
+    else
+    {
+        QMessageBox::critical(this, "Pseudo", "Vous n'avez pas voulu donner votre nom… snif.");
+    }
+}
+
+void MaFenetre::changerCouleur()
+{
+    QColor couleur = QColorDialog::getColor(Qt::white, this);
+
+    QPalette palette;
+    palette.setColor(QPalette::Window, couleur);
+    this->setPalette(palette);
+}
+
+void MaFenetre::changerPolice()
+{
+    bool ok = false;
+
+    QFont police = QFontDialog::getFont(&ok, m_boutonDialogue->font(), this, "Choisissez une police");
+
+    if (ok)
+    {
+        this->setFont(police);
+    }
+}
+
+void MaFenetre::chargerImage()
+{
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.gif *.jpg *.jpeg)");
+    QMessageBox::information(this, "Fichier", "Vous avez sélectionné :\n" + fichier);
 }
