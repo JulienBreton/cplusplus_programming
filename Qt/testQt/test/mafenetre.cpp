@@ -4,53 +4,59 @@ MaFenetre::MaFenetre() : QWidget()
 {
     m_boutonCacheTrouve = false;
 
-    setFixedSize(200, 460);
+    //setFixedSize(200, 460);
 
     setWindowOpacity(0.9);
 
-    m_lcd = new QLCDNumber(this);
+    layout = new QGridLayout;
+
+    m_lcd = new QLCDNumber();
     m_lcd->setSegmentStyle(QLCDNumber::Flat);
-    m_lcd->move(50, 20);
-    m_lcd->display(200);
+    m_lcd->display(this->width());
+    layout->addWidget(m_lcd, 0, 0, 1, 2);
 
-    m_slider = new QSlider(Qt::Horizontal, this);
+    m_slider = new QSlider(Qt::Horizontal);
     m_slider->setGeometry(10, 60, 150, 20);
-    m_slider->setRange(200, 600);
+    m_slider->setRange(this->width(), 800);
+    layout->addWidget(m_slider, 1, 0, 1, 2);
 
-    m_sliderHauteur = new QSlider(this);
-    m_sliderHauteur->setGeometry(180, 10, 20, 150);
-    m_sliderHauteur->setRange(460, 600);
+    //m_sliderHauteur = new QSlider();
+    //m_sliderHauteur->setGeometry(180, 10, 20, 600);
+    //m_sliderHauteur->setRange(this->height(), 600);
+    //layout->addWidget(m_sliderHauteur, 0 , 3, 7, 1);
 
-    m_progressBar = new QProgressBar(this);
+    m_progressBar = new QProgressBar();
     m_progressBar->setGeometry(10, 100, 150, 20);
-    m_progressBar->setRange(200, 600);
+    m_progressBar->setRange(this->width(), 800);
+    layout->addWidget(m_progressBar, 2, 0, 1, 2);
 
-    m_bouton = new QPushButton("Reset the progress bar", this);
-    m_bouton->move(10, 140);
+    m_bouton = new QPushButton("Reset the progress bar");
+    layout->addWidget(m_bouton, 3, 0, 1, 2);
 
-    m_boutonAjouterOpacite = new QPushButton("Add window opacity", this);
-    m_boutonAjouterOpacite->move(10, 180);
+    m_boutonAjouterOpacite = new QPushButton("Add window opacity");
+    layout->addWidget(m_boutonAjouterOpacite, 4, 0);
 
-    m_boutonReduireOpacite = new QPushButton("Reduce window opacity", this);
-    m_boutonReduireOpacite->move(10, 220);
+    m_boutonReduireOpacite = new QPushButton("Reduce window opacity");
+    layout->addWidget(m_boutonReduireOpacite, 4, 1);
 
-    m_boutonDialogue = new QPushButton("Bouton caché", this);
-    m_boutonDialogue->move(450, 550);
+    m_boutonQuestion = new QPushButton("Question?");
+    layout->addWidget(m_boutonQuestion, 5, 0);
 
-    m_boutonQuestion = new QPushButton("Question?", this);
-    m_boutonQuestion->move(50, 260);
+    m_boutonDemandePseudo = new QPushButton("Qui êtes-vous?");
+    layout->addWidget(m_boutonDemandePseudo, 5, 1);
 
-    m_boutonDemandePseudo = new QPushButton("Qui êtes-vous?", this);
-    m_boutonDemandePseudo->move(50, 300);
+    m_boutonCouleur = new QPushButton("Changer la couleur");
+    layout->addWidget(m_boutonCouleur, 6, 0);
 
-    m_boutonCouleur = new QPushButton("Changer la couleur", this);
-    m_boutonCouleur->move(50, 340);
+    m_boutonPolice = new QPushButton("Changer la police");
+    layout->addWidget(m_boutonPolice, 6, 1);
 
-    m_boutonPolice = new QPushButton("Changer la police", this);
-    m_boutonPolice->move(50, 380);
+    m_boutonChargerImage = new QPushButton("Charger une image");
+    layout->addWidget(m_boutonChargerImage, 7, 0);
 
-    m_boutonChargerImage = new QPushButton("Charger une image", this);
-    m_boutonChargerImage->move(50, 420);
+    m_boutonDialogue = new QPushButton("Bouton caché");
+    layout->addWidget(m_boutonDialogue, 7, 1);
+    m_boutonDialogue->setVisible(false);
 
     QObject::connect(m_slider, SIGNAL(valueChanged(int)), m_lcd, SLOT(display(int)));
     QObject::connect(m_slider, SIGNAL(valueChanged(int)), m_progressBar, SLOT(setValue(int)));
@@ -66,13 +72,15 @@ MaFenetre::MaFenetre() : QWidget()
     QObject::connect(m_boutonCouleur, SIGNAL(clicked()), this, SLOT(changerCouleur()));
     QObject::connect(m_boutonPolice, SIGNAL(clicked()), this, SLOT(changerPolice()));
     QObject::connect(m_boutonChargerImage, SIGNAL(clicked()), this, SLOT(chargerImage()));
+
+    this->setLayout(layout);
 }
 
 void MaFenetre::changerLargeur(int largeur)
 {
     setFixedWidth(largeur);
 
-    if(largeur == 600)
+    if(largeur == 800)
     {
         QMessageBox::warning(this, "Bye!", "Le programme va se fermer!");
         emit agrandissementMax();
@@ -103,6 +111,10 @@ void MaFenetre::reduireOpacite()
     {
         opacite -= 0.1;
         setWindowOpacity(opacite);
+    }
+    else
+    {
+        m_boutonDialogue->setVisible(true);
     }
 }
 

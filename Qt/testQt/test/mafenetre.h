@@ -12,6 +12,7 @@
 #include <QColorDialog>
 #include <QFontDialog>
 #include <QFileDialog>
+#include <QGridLayout>
 
 class MaFenetre : public QWidget
 {
@@ -51,6 +52,7 @@ private:
     QSlider * m_slider;
     QSlider * m_sliderHauteur;
     QProgressBar * m_progressBar;
+    QGridLayout *layout;
 };
 
 #endif // MAFENETRE_H
