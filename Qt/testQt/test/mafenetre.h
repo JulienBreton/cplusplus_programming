@@ -13,6 +13,10 @@
 #include <QFontDialog>
 #include <QFileDialog>
 #include <QGridLayout>
+#include <QLabel>
+#include <QTabWidget>
+#include <QGroupBox>
+#include <QRadioButton>
 
 class MaFenetre : public QWidget
 {
@@ -33,6 +37,7 @@ public slots:
     void changerCouleur();
     void changerPolice();
     void chargerImage();
+    void afficherComoEstaReponse();
 
 signals:
     void agrandissementMax();
@@ -52,7 +57,15 @@ private:
     QSlider * m_slider;
     QSlider * m_sliderHauteur;
     QProgressBar * m_progressBar;
-    QGridLayout *layout;
+    QGridLayout * m_layout;
+    QLabel * m_labelComoEsta;
+    QRadioButton * m_muyBien;
+    QRadioButton * m_estoyBien;
+    QRadioButton * m_malo;
+    QGroupBox * m_groupbox;
+    QWidget * m_page1;
+    QWidget * m_page2;
+    QTabWidget * m_onglets;
 };
 
 #endif // MAFENETRE_H

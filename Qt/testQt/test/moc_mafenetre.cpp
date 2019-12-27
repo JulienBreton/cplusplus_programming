@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MaFenetre_t {
-    QByteArrayData data[14];
-    char stringdata0[185];
+    QByteArrayData data[15];
+    char stringdata0[209];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,7 +44,8 @@ QT_MOC_LITERAL(9, 114, 13), // "poserQuestion"
 QT_MOC_LITERAL(10, 128, 14), // "demanderPseudo"
 QT_MOC_LITERAL(11, 143, 14), // "changerCouleur"
 QT_MOC_LITERAL(12, 158, 13), // "changerPolice"
-QT_MOC_LITERAL(13, 172, 12) // "chargerImage"
+QT_MOC_LITERAL(13, 172, 12), // "chargerImage"
+QT_MOC_LITERAL(14, 185, 23) // "afficherComoEstaReponse"
 
     },
     "MaFenetre\0agrandissementMax\0\0"
@@ -52,7 +53,8 @@ QT_MOC_LITERAL(13, 172, 12) // "chargerImage"
     "augmenterOpacite\0reduireOpacite\0"
     "ouvrirDialogue\0poserQuestion\0"
     "demanderPseudo\0changerCouleur\0"
-    "changerPolice\0chargerImage"
+    "changerPolice\0chargerImage\0"
+    "afficherComoEstaReponse"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +64,7 @@ static const uint qt_meta_data_MaFenetre[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,19 +72,20 @@ static const uint qt_meta_data_MaFenetre[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x06 /* Public */,
+       1,    0,   74,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   70,    2, 0x0a /* Public */,
-       5,    1,   73,    2, 0x0a /* Public */,
-       6,    0,   76,    2, 0x0a /* Public */,
-       7,    0,   77,    2, 0x0a /* Public */,
-       8,    0,   78,    2, 0x0a /* Public */,
-       9,    0,   79,    2, 0x0a /* Public */,
-      10,    0,   80,    2, 0x0a /* Public */,
-      11,    0,   81,    2, 0x0a /* Public */,
-      12,    0,   82,    2, 0x0a /* Public */,
-      13,    0,   83,    2, 0x0a /* Public */,
+       3,    1,   75,    2, 0x0a /* Public */,
+       5,    1,   78,    2, 0x0a /* Public */,
+       6,    0,   81,    2, 0x0a /* Public */,
+       7,    0,   82,    2, 0x0a /* Public */,
+       8,    0,   83,    2, 0x0a /* Public */,
+       9,    0,   84,    2, 0x0a /* Public */,
+      10,    0,   85,    2, 0x0a /* Public */,
+      11,    0,   86,    2, 0x0a /* Public */,
+      12,    0,   87,    2, 0x0a /* Public */,
+      13,    0,   88,    2, 0x0a /* Public */,
+      14,    0,   89,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -90,6 +93,7 @@ static const uint qt_meta_data_MaFenetre[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    4,
     QMetaType::Void, QMetaType::Int,    4,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -119,6 +123,7 @@ void MaFenetre::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 8: _t->changerCouleur(); break;
         case 9: _t->changerPolice(); break;
         case 10: _t->chargerImage(); break;
+        case 11: _t->afficherComoEstaReponse(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -162,13 +167,13 @@ int MaFenetre::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }
