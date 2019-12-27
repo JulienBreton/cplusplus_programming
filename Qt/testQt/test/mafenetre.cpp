@@ -214,11 +214,17 @@ void MaFenetre::demanderPseudo()
 
 void MaFenetre::changerCouleur()
 {
-    QColor couleur = QColorDialog::getColor(Qt::white, this);
+    QColorDialog * lesCouleurs = new QColorDialog();
 
-    QPalette palette;
-    palette.setColor(QPalette::Window, couleur);
-    this->setPalette(palette);
+    QColor couleur = lesCouleurs->getColor(Qt::white, this);
+
+    if(couleur.isValid())
+    {
+        QPalette palette;
+        palette.setColor(QPalette::Window, couleur);
+        this->setPalette(palette);
+    }
+
 }
 
 void MaFenetre::changerPolice()
