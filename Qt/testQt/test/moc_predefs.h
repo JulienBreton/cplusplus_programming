@@ -58,7 +58,6 @@
 #define __DEC32_EPSILON__ 1E-6DF
 #define __FLT_EVAL_METHOD_TS_18661_3__ 0
 #define __OPTIMIZE__ 1
-#define __unix 1
 #define __UINT32_MAX__ 0xffffffffU
 #define __GXX_EXPERIMENTAL_CXX0X__ 1
 #define __LDBL_MAX_EXP__ 16384
@@ -235,6 +234,7 @@
 #define __FLT64X_HAS_DENORM__ 1
 #define __DEC128_SUBNORMAL_MIN__ 0.000000000000000000000000000000001E-6143DL
 #define __FLT_HAS_INFINITY__ 1
+#define __unix 1
 #define __cpp_unicode_literals 200710
 #define __UINT_FAST16_TYPE__ long unsigned int
 #define __DEC64_MAX__ 9.999999999999999E384DD

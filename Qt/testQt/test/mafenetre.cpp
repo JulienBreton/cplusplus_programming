@@ -10,21 +10,23 @@ MaFenetre::MaFenetre() : QWidget()
 
     m_page1 = new QWidget;
     m_page2 = new QWidget;
+    m_page3 = new QWidget;
 
     setWindowOpacity(0.9);
 
     m_layout = new QGridLayout;
 
-    setFixedWidth(640);
+    setFixedWidth(900);
 
     m_lcd = new QLCDNumber();
     m_lcd->setSegmentStyle(QLCDNumber::Flat);
     m_lcd->display(this->width());
+    m_lcd->setFixedHeight(35);
     m_layout->addWidget(m_lcd, 0, 0, 1, 2);
 
     m_slider = new QSlider(Qt::Horizontal);
     m_slider->setGeometry(10, 60, 150, 20);
-    m_slider->setRange(this->width(), 800);
+    m_slider->setRange(this->width(), 1200);
     m_layout->addWidget(m_slider, 1, 0, 1, 2);
 
     //m_sliderHauteur = new QSlider();
@@ -34,7 +36,7 @@ MaFenetre::MaFenetre() : QWidget()
 
     m_progressBar = new QProgressBar();
     m_progressBar->setGeometry(10, 100, 150, 20);
-    m_progressBar->setRange(this->width(), 800);
+    m_progressBar->setRange(this->width(), 1200);
     m_layout->addWidget(m_progressBar, 2, 0, 1, 2);
 
     m_bouton = new QPushButton("Reset the progress bar");
@@ -78,29 +80,59 @@ MaFenetre::MaFenetre() : QWidget()
 
     QVBoxLayout *vboxQueOnda = new QVBoxLayout;
 
-    m_groupbox = new QGroupBox("Hola como estas?", m_page2);
+    m_groupboxQueOnda = new QGroupBox("Hola como estas?", m_page2);
+    m_groupboxQueTomas = new QGroupBox("Que tomas?", m_page2);
 
         m_muyBien = new QRadioButton("Muy bien!");
         m_estoyBien = new QRadioButton("Estoy bien.");
         m_malo = new QRadioButton("Malo...");
 
+        m_cafe = new QRadioButton("Cafe con leche");
+        m_cerbeza = new QRadioButton("Una cana");
+        m_zumo = new QRadioButton("Un zumo de naranja");
+
         //m_muyBien->setChecked(true);
 
-        QVBoxLayout *vbox = new QVBoxLayout;
-        vbox->addWidget(m_muyBien);
-        vbox->addWidget(m_estoyBien);
-        vbox->addWidget(m_malo);
+        QVBoxLayout * vboxBoutonsQueOnda = new QVBoxLayout;
+        vboxBoutonsQueOnda->addWidget(m_muyBien);
+        vboxBoutonsQueOnda->addWidget(m_estoyBien);
+        vboxBoutonsQueOnda->addWidget(m_malo);
 
-        m_groupbox->setLayout(vbox);
-        vboxQueOnda->addWidget(m_groupbox);
-        //m_groupbox->move(5, 5);
+        QVBoxLayout * vboxBoutonsQueTomas = new QVBoxLayout;
+        vboxBoutonsQueTomas->addWidget(m_cafe);
+        vboxBoutonsQueTomas->addWidget(m_cerbeza);
+        vboxBoutonsQueTomas->addWidget(m_zumo);
+
+        m_groupboxQueOnda->setLayout(vboxBoutonsQueOnda);
+        vboxQueOnda->addWidget(m_groupboxQueOnda);
 
         m_labelComoEsta = new QLabel("");
         vboxQueOnda->addWidget(m_labelComoEsta);
 
+        m_groupboxQueTomas->setLayout(vboxBoutonsQueTomas);
+        vboxQueOnda->addWidget(m_groupboxQueTomas);
+
      m_page2->setLayout(vboxQueOnda);
 
      m_onglets->addTab(m_page2, "Que onda?");
+
+     QVBoxLayout * vNote = new QVBoxLayout;
+
+     //m_labelTitreNote = new QLabel("Titre de la note :");
+     m_titreNote = new QLineEdit();
+     m_titreNote->setText("Saisissez le titre de la note");
+     //m_note = new QPlainTextEdit();
+     mw = new TextEdit();
+     //mw2 = new TextEdit();
+
+     //vNote->addWidget(m_labelTitreNote);
+     vNote->addWidget(m_titreNote);
+     vNote->addWidget(mw);
+     //vNote->addWidget(mw2);
+
+     m_page3->setLayout(vNote);
+
+     m_onglets->addTab(m_page3, "Notes");
 
      vboxOnglets->addWidget(m_onglets);
 
@@ -129,7 +161,7 @@ void MaFenetre::changerLargeur(int largeur)
 {
     setFixedWidth(largeur);
 
-    if(largeur == 800)
+    if(largeur == 1200)
     {
         QMessageBox::warning(this, "Bye!", "Le programme va se fermer!");
         emit agrandissementMax();
@@ -218,6 +250,7 @@ void MaFenetre::changerCouleur()
 
     QColor couleur = lesCouleurs->getColor(Qt::white, this);
 
+    //It returns an invalid (see QColor::isValid()) color if the user cancels the dialog.
     if(couleur.isValid())
     {
         QPalette palette;

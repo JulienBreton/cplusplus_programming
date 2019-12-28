@@ -17,6 +17,8 @@
 #include <QTabWidget>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QPlainTextEdit>
+#include <textedit.h>
 
 class MaFenetre : public QWidget
 {
@@ -62,10 +64,20 @@ private:
     QRadioButton * m_muyBien;
     QRadioButton * m_estoyBien;
     QRadioButton * m_malo;
-    QGroupBox * m_groupbox;
+    QRadioButton * m_cafe;
+    QRadioButton * m_cerbeza;
+    QRadioButton * m_zumo;
+    QGroupBox * m_groupboxQueOnda;
+    QGroupBox * m_groupboxQueTomas;
     QWidget * m_page1;
     QWidget * m_page2;
+    QWidget * m_page3;
     QTabWidget * m_onglets;
+    QLineEdit * m_titreNote;
+    QLabel * m_labelTitreNote;
+    QPlainTextEdit * m_note;
+    TextEdit * mw;
+    //TextEdit * mw2;
 };
 
 #endif // MAFENETRE_H
