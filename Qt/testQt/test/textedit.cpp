@@ -901,28 +901,52 @@ void TextEdit::alignmentChanged(Qt::Alignment a)
 
 void TextEdit::insertTable()
 {
-    QTextTableFormat tableFormat;
-    tableFormat.setBackground(QColor("#e0e0e0"));
-    QVector<QTextLength> constraints;
-    constraints << QTextLength(QTextLength::PercentageLength, 16);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    tableFormat.setColumnWidthConstraints(constraints);
-    QTextCursor cursor = textEdit->textCursor();
-    cursor.insertTable(2, 3, tableFormat);
+    QTextCursor cursor;
+    cursor = textEdit->textCursor();
+    bool result = false;
 
-    /*QTextCursor cursor = textEdit->textCursor();
-    QTextTableFormat tableFormat;
-    tableFormat.setBackground(QColor("#e0e0e0"));
-    QVector<QTextLength> constraints;
-    constraints << QTextLength(QTextLength::PercentageLength, 16);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    constraints << QTextLength(QTextLength::PercentageLength, 28);
-    tableFormat.setColumnWidthConstraints(constraints);
-    QTextTable *table = cursor.insertTable(3, 5, tableFormat);
-    table = cursor.currentTable();
-    table->insertRows(1, 5);*/
+    QTextTable * table = cursor.currentTable();
+    /*this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(table, SIGNAL(customContextMenuRequested(const QPoint &)),
+            this, SLOT(ShowContextMenu(const QPoint &)));*/
+
+    if (table != nullptr)
+    {
+       tableSettings = new WindowTableSettings(table->rows(), table->columns());
+       tableSettings->exec();
+       table->resize(tableSettings->getNumberOfRows(), tableSettings->getNumberOfColumns());
+    }
+    else
+    {
+        tableSettings = new WindowTableSettings;
+        result = tableSettings->exec();
+
+        if(result)
+        {
+            if(table == nullptr)
+            {
+                QTextTableFormat tableFormat;
+                tableFormat.setBackground(QColor("#e0e0e0"));
+                QVector<QTextLength> constraints;
+                constraints << QTextLength(QTextLength::PercentageLength, 16);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                tableFormat.setColumnWidthConstraints(constraints);
+                cursor = textEdit->textCursor();
+                cursor.insertTable(tableSettings->getNumberOfRows(), tableSettings->getNumberOfColumns(), tableFormat);
+            }
+        }
+    }
 }
 
+void TextEdit::ShowContextMenu(const QPoint &pos)
+{
+   QMenu contextMenu(tr("Context menu"), this);
+
+   QAction action1("Remove Data Point", this);
+   connect(&action1, SIGNAL(triggered()), this, SLOT(removeDataPoint()));
+   contextMenu.addAction(&action1);
+
+   contextMenu.exec(mapToGlobal(pos));
+}

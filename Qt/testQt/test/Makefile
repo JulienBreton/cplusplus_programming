@@ -54,12 +54,14 @@ OBJECTS_DIR   = ./
 
 SOURCES       = mafenetre.cpp \
 		main.cpp \
-		textedit.cpp qrc_textedit.cpp \
+		textedit.cpp \
+		windowtablesettings.cpp qrc_textedit.cpp \
 		moc_mafenetre.cpp \
 		moc_textedit.cpp
 OBJECTS       = mafenetre.o \
 		main.o \
 		textedit.o \
+		windowtablesettings.o \
 		qrc_textedit.o \
 		moc_mafenetre.o \
 		moc_textedit.o
@@ -278,9 +280,11 @@ DIST          = /home/julien/Qt/5.14.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/julien/Qt/5.14.0/gcc_64/mkspecs/features/yacc.prf \
 		/home/julien/Qt/5.14.0/gcc_64/mkspecs/features/lex.prf \
 		test.pro mafenetre.h \
-		textedit.h mafenetre.cpp \
+		textedit.h \
+		windowtablesettings.h mafenetre.cpp \
 		main.cpp \
-		textedit.cpp
+		textedit.cpp \
+		windowtablesettings.cpp
 QMAKE_TARGET  = test
 DESTDIR       = 
 TARGET        = test
@@ -742,8 +746,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents textedit.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/julien/Qt/5.14.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mafenetre.h textedit.h $(DISTDIR)/
-	$(COPY_FILE) --parents mafenetre.cpp main.cpp textedit.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mafenetre.h textedit.h windowtablesettings.h $(DISTDIR)/
+	$(COPY_FILE) --parents mafenetre.cpp main.cpp textedit.cpp windowtablesettings.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1008,6 +1012,14 @@ moc_mafenetre.cpp: mafenetre.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QMap \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QPointer \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
+		windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
 		moc_predefs.h \
 		/home/julien/Qt/5.14.0/gcc_64/bin/moc
 	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/testQt/test/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/testQt/test -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mafenetre.h -o moc_mafenetre.cpp
@@ -1123,6 +1135,29 @@ moc_textedit.cpp: textedit.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QMap \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QPointer \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
+		windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpen.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextoption.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLabel \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlabel.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QGroupBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
 		moc_predefs.h \
 		/home/julien/Qt/5.14.0/gcc_64/bin/moc
 	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/testQt/test/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/testQt/test -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include textedit.h -o moc_textedit.cpp
@@ -1313,7 +1348,15 @@ mafenetre.o: mafenetre.cpp mafenetre.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QMap \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QPointer \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
+		windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mafenetre.o mafenetre.cpp
 
 main.o: main.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QApplication \
@@ -1493,7 +1536,15 @@ main.o: main.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QApplication \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QMap \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QPointer \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
+		windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 textedit.o: textedit.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QAction \
@@ -1695,8 +1746,153 @@ textedit.o: textedit.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QAction
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QMap \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/QPointer \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
+		windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLabel \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlabel.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QGroupBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o textedit.o textedit.cpp
+
+windowtablesettings.o: windowtablesettings.cpp windowtablesettings.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qglobal.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qconfig.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qlogging.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qflags.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qatomic.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qmutex.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qwidget.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qobject.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstring.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qchar.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringview.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qlist.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qiterator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpair.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qvector.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpoint.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregexp.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qmargins.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qrect.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qsize.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpalette.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qcolor.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qrgb.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qbrush.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qmatrix.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qregion.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qline.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtransform.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpainterpath.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qimage.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qhash.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qfont.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qfontinfo.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qcursor.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qkeysequence.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qevent.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qvariant.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qmap.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qdebug.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qlocale.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qset.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qurl.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qurlquery.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qfile.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpen.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextoption.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLabel \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlabel.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QGroupBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o windowtablesettings.o windowtablesettings.cpp
 
 qrc_textedit.o: qrc_textedit.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_textedit.o qrc_textedit.cpp

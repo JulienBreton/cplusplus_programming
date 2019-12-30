@@ -55,6 +55,8 @@
 #include <QMap>
 #include <QPointer>
 
+#include "windowtablesettings.h"
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QComboBox;
@@ -108,6 +110,7 @@ private slots:
     void printPreview(QPrinter *);
 
     void insertTable();
+    void ShowContextMenu(const QPoint &pos);
 
 private:
     void setupFileActions();
@@ -150,6 +153,7 @@ private:
     QToolBar *tb;
     QString fileName;
     QTextEdit *textEdit;
+    WindowTableSettings *tableSettings;
 };
 
 #endif // TEXTEDIT_H
