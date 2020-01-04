@@ -11,13 +11,23 @@
 #include <QTextEdit>
 #include <QDateTimeEdit>
 #include <QPushButton>
+#include <QtGui>
+#include <QInputDialog>
+#include <QMessageBox>
+#include "fencodegenere.h"
 
 class FenPrincipale : public QWidget
 {
+    Q_OBJECT
+
 public:
     FenPrincipale();
 
+private slots:
+    void genererCode();
+
 private:
+
     QVBoxLayout *m_vboxLayoutPrincipale;
 
     //Definition de la classe
@@ -44,6 +54,8 @@ private:
     QHBoxLayout *m_boutonsHBoxLayout;
     QPushButton *m_generer;
     QPushButton *m_quitter;
+
+    FenCodeGenere *m_fenCodeGenere;
 };
 
 #endif // FENPRINCIPALE_H

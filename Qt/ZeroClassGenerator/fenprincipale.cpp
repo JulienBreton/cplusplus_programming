@@ -2,19 +2,30 @@
 
 FenPrincipale::FenPrincipale()
 {
+    //Paramétrage de la fenêtre
     setWindowTitle("Zero Class Generator");
+    setWindowIcon(QIcon("icone.png"));
+    resize(400, 450);
 
     m_vboxLayoutPrincipale = new QVBoxLayout;
 
     //Définition de la classe
     m_formLayoutDefClasse = new QFormLayout;
     m_groupBoxDefClasse = new QGroupBox(tr("Définition de la classe"));
-    m_nomClasse = new QLineEdit;
-    m_classeMere = new QLineEdit;
-    m_formLayoutDefClasse->addRow("&Nom :", m_nomClasse);
-    m_formLayoutDefClasse->addRow("Classe &mère :", m_classeMere);
-    m_groupBoxDefClasse->setLayout(m_formLayoutDefClasse);
-    m_vboxLayoutPrincipale->addWidget(m_groupBoxDefClasse);
+
+        //On ajoute une QRegExpValidator pour contrôler le nom des classes.
+        m_nomClasse = new QLineEdit;
+        QRegExp rx("^[a-zA-Z]+$");
+        QRegExpValidator * nomClasseValidator = new QRegExpValidator(rx, m_nomClasse);
+        m_nomClasse->setValidator(nomClasseValidator);
+        m_classeMere = new QLineEdit;
+        QRegExpValidator * classeMereValidator = new QRegExpValidator(rx, m_classeMere);
+        m_classeMere->setValidator(classeMereValidator);
+
+        m_formLayoutDefClasse->addRow("&Nom :", m_nomClasse);
+        m_formLayoutDefClasse->addRow("Classe &mère :", m_classeMere);
+        m_groupBoxDefClasse->setLayout(m_formLayoutDefClasse);
+        m_vboxLayoutPrincipale->addWidget(m_groupBoxDefClasse);
 
     //Options
     m_optionsVBoxLayout = new QVBoxLayout;
@@ -53,6 +64,53 @@ FenPrincipale::FenPrincipale()
     m_vboxLayoutPrincipale->addLayout(m_boutonsHBoxLayout);
 
     setLayout(m_vboxLayoutPrincipale);
-    setWindowIcon(QIcon("icone.png"));
-    resize(400, 450);
+
+    connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCode()));
+    connect(m_quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
+}
+
+void FenPrincipale::genererCode()
+{
+    QString codeGenere = "";
+
+    if(m_groupBoxCommentaires->isChecked())
+    {
+        codeGenere += "/*\n";
+
+        if(!m_auteur->text().isEmpty())
+        {
+            codeGenere += "Auteur : ";
+            codeGenere += m_auteur->text();
+            codeGenere += "\n";
+        }
+
+        if(!m_dateCreation->text().isEmpty())
+        {
+            codeGenere += "Date de création : ";
+            codeGenere += m_dateCreation->text();
+            codeGenere += "\n";
+        }
+
+        if(!m_roleClasse->toPlainText().isEmpty())
+        {
+            codeGenere += "\nRôle : \n";
+            codeGenere += m_roleClasse->toPlainText();
+            codeGenere += "\n";
+        }
+        codeGenere += "*/\n";
+    }
+
+    if(m_protegerHeader->isChecked() && !m_nomClasse->text().isEmpty())
+    {
+        codeGenere += "#ifndef HEADER_";
+        codeGenere += m_nomClasse->text().toUpper();
+        codeGenere += "\n";
+
+        codeGenere += "#define HEADER_";
+        codeGenere += m_nomClasse->text().toUpper();
+        codeGenere += "\n";
+    }
+
+    m_fenCodeGenere = new FenCodeGenere(codeGenere);
+    m_fenCodeGenere->exec();
 }
