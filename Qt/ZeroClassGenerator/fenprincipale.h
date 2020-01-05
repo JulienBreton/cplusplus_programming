@@ -7,7 +7,7 @@
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QLabel>
-#include <QRadioButton>
+#include <QCheckBox>
 #include <QTextEdit>
 #include <QDateTimeEdit>
 #include <QPushButton>
@@ -39,9 +39,9 @@ private:
     //Options
     QVBoxLayout *m_optionsVBoxLayout;
     QGroupBox *m_groupBoxOptions;
-    QRadioButton *m_protegerHeader;
-    QRadioButton *m_genererConstructeur;
-    QRadioButton *m_genererDestructeur;
+    QCheckBox *m_protegerHeader;
+    QCheckBox *m_genererConstructeur;
+    QCheckBox *m_genererDestructeur;
 
     //Commentaires
     QFormLayout *m_formLayoutCommentaires;

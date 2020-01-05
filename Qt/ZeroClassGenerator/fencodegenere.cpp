@@ -1,6 +1,6 @@
 #include "fencodegenere.h"
 
-FenCodeGenere::FenCodeGenere(QString codeGenere)
+FenCodeGenere::FenCodeGenere(QString codeGenere, QWidget *parent = 0) : QDialog(parent)
 {
     //Paramétrage de la fenêtre
     setWindowTitle("Zero Class Generator");

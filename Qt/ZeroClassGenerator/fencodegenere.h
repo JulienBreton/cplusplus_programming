@@ -11,7 +11,7 @@ class FenCodeGenere : public QDialog
     Q_OBJECT
 
 public:
-    FenCodeGenere(QString codeGenere);
+    FenCodeGenere(QString codeGenere, QWidget *parent);
 
 private:
     QTextEdit *m_TextEditCodeGenere;
