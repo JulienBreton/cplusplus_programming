@@ -25,6 +25,8 @@ public:
 
 private slots:
     void genererCode();
+    void saisirHeaderGuard(QString nomClasse);
+    void activerHeaderGuard(int state);
 
 private:
 
@@ -40,8 +42,10 @@ private:
     QVBoxLayout *m_optionsVBoxLayout;
     QGroupBox *m_groupBoxOptions;
     QCheckBox *m_protegerHeader;
+    QLineEdit *m_headerGuard;
     QCheckBox *m_genererConstructeur;
     QCheckBox *m_genererDestructeur;
+    QCheckBox *m_ajouterLicenceGPL;
 
     //Commentaires
     QFormLayout *m_formLayoutCommentaires;

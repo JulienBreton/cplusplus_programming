@@ -32,9 +32,11 @@ FenPrincipale::FenPrincipale()
     m_groupBoxOptions = new QGroupBox(tr("Options"));
     m_protegerHeader = new QCheckBox(tr("Protéger le &header contre les inclusions multiples"));
     m_protegerHeader->setChecked(true);
+    m_headerGuard = new QLineEdit();
     m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut");
     m_genererDestructeur = new QCheckBox("Générer un &destructeur");
     m_optionsVBoxLayout->addWidget(m_protegerHeader);
+    m_optionsVBoxLayout->addWidget(m_headerGuard);
     m_optionsVBoxLayout->addWidget(m_genererConstructeur);
     m_optionsVBoxLayout->addWidget(m_genererDestructeur);
     m_groupBoxOptions->setLayout(m_optionsVBoxLayout);
@@ -48,9 +50,11 @@ FenPrincipale::FenPrincipale()
     m_auteur = new QLineEdit;
     m_dateCreation = new QDateTimeEdit(QDate::currentDate());
     m_roleClasse = new QTextEdit;
+    m_ajouterLicenceGPL = new QCheckBox("Ajouter la &licence GPL");
     m_formLayoutCommentaires->addRow("&Auteur :", m_auteur);
     m_formLayoutCommentaires->addRow("Da&te de création :", m_dateCreation);
     m_formLayoutCommentaires->addRow("&Rôle de la classe :", m_roleClasse);
+    m_formLayoutCommentaires->addWidget(m_ajouterLicenceGPL);
     m_groupBoxCommentaires->setLayout(m_formLayoutCommentaires);
     m_vboxLayoutPrincipale->addWidget(m_groupBoxCommentaires);
 
@@ -67,6 +71,8 @@ FenPrincipale::FenPrincipale()
 
     connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCode()));
     connect(m_quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
+    connect(m_nomClasse, SIGNAL(textEdited(QString)), this, SLOT(saisirHeaderGuard(QString)));
+    connect(m_protegerHeader, SIGNAL(stateChanged(int)), this, SLOT(activerHeaderGuard(int)));
 }
 
 void FenPrincipale::genererCode()
@@ -115,12 +121,12 @@ void FenPrincipale::genererCode()
             //On protége le header.
             if(m_protegerHeader->isChecked())
             {
-                codeGenere += "#ifndef HEADER_";
-                codeGenere += m_nomClasse->text().toUpper();
+                codeGenere += "#ifndef ";
+                codeGenere += m_headerGuard->text().toUpper();
                 codeGenere += "\n";
 
-                codeGenere += "#define HEADER_";
-                codeGenere += m_nomClasse->text().toUpper();
+                codeGenere += "#define ";
+                codeGenere += m_headerGuard->text().toUpper();
                 codeGenere += "\n\n\n";
             }
 
@@ -160,15 +166,45 @@ void FenPrincipale::genererCode()
             codeGenere += "\n\n}\n";
 
             //On protége le header.
-            if(m_protegerHeader->isChecked() && !m_nomClasse->text().isEmpty())
+            if(m_protegerHeader->isChecked() && !m_headerGuard->text().isEmpty())
             {
                 codeGenere += "\n";
                 codeGenere += "#endif // ";
-                codeGenere += m_nomClasse->text().toUpper();
+                codeGenere += m_headerGuard->text().toUpper();
             }
         }
 
         m_fenCodeGenere = new FenCodeGenere(codeGenere, this);
         m_fenCodeGenere->exec();
+    }
+}
+
+void FenPrincipale::saisirHeaderGuard(QString nomClasse)
+{
+    if(m_protegerHeader->isChecked())
+    {
+        nomClasse = "HEADER_"+nomClasse.toUpper();
+        m_headerGuard->setText(nomClasse);
+
+        if(nomClasse == "HEADER_")
+        {
+            m_headerGuard->clear();
+        }
+    }
+}
+
+void FenPrincipale::activerHeaderGuard(int state)
+{
+    if(state == Qt::Unchecked)
+    {
+        m_headerGuard->clear();
+        m_headerGuard->setDisabled(true);
+    }
+    else if(state == Qt::Checked)
+    {
+        m_headerGuard->setDisabled(false);
+
+        QString nomClasse = "HEADER_"+m_nomClasse->text().toUpper();
+        m_headerGuard->setText(nomClasse);
     }
 }
