@@ -15,6 +15,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include "fencodegenere.h"
+#include "QListWidget"
+#include "QList"
 
 class FenPrincipale : public QWidget
 {
@@ -46,6 +48,8 @@ private:
     QCheckBox *m_genererConstructeur;
     QCheckBox *m_genererDestructeur;
     QCheckBox *m_ajouterLicenceGPL;
+    QListWidget *m_classeAAjouter;
+    QLineEdit *m_ajouterAttributs;
 
     //Commentaires
     QFormLayout *m_formLayoutCommentaires;

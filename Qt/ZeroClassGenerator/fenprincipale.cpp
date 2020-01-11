@@ -35,11 +35,35 @@ FenPrincipale::FenPrincipale()
     m_headerGuard = new QLineEdit();
     m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut");
     m_genererDestructeur = new QCheckBox("Générer un &destructeur");
+
+    //Ajouter des classes
+    QLabel * labelClasseAAjouter = new QLabel();
+    labelClasseAAjouter->setText("Sélectionnez les classes à ajouter : ");
+    m_classeAAjouter = new QListWidget();
+    m_classeAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    new QListWidgetItem(tr("QWidget"), m_classeAAjouter);
+    new QListWidgetItem(tr("QLabel"), m_classeAAjouter);
+    new QListWidgetItem(tr("QCheckBox"), m_classeAAjouter);
+    new QListWidgetItem(tr("QPushButton"), m_classeAAjouter);
+    new QListWidgetItem(tr("QTextEdit"), m_classeAAjouter);
+    new QListWidgetItem(tr("QMessageBox"), m_classeAAjouter);
+
+    QLabel * labelAjouterAttributs = new QLabel();
+    labelAjouterAttributs->setText("Ajoutez des attributs : ");
+    m_ajouterAttributs = new QLineEdit();
+    m_ajouterAttributs->setToolTip("Séparez les attributs par des ;");
+    m_ajouterAttributs->setToolTipDuration(5000);
+
     m_optionsVBoxLayout->addWidget(m_protegerHeader);
     m_optionsVBoxLayout->addWidget(m_headerGuard);
     m_optionsVBoxLayout->addWidget(m_genererConstructeur);
     m_optionsVBoxLayout->addWidget(m_genererDestructeur);
+    m_optionsVBoxLayout->addWidget(labelClasseAAjouter);
+    m_optionsVBoxLayout->addWidget(m_classeAAjouter);
+    m_optionsVBoxLayout->addWidget(labelAjouterAttributs);
+    m_optionsVBoxLayout->addWidget(m_ajouterAttributs);
     m_groupBoxOptions->setLayout(m_optionsVBoxLayout);
+
     m_vboxLayoutPrincipale->addWidget(m_groupBoxOptions);
 
     //Commentaires
@@ -54,7 +78,7 @@ FenPrincipale::FenPrincipale()
     m_formLayoutCommentaires->addRow("&Auteur :", m_auteur);
     m_formLayoutCommentaires->addRow("Da&te de création :", m_dateCreation);
     m_formLayoutCommentaires->addRow("&Rôle de la classe :", m_roleClasse);
-    m_formLayoutCommentaires->addWidget(m_ajouterLicenceGPL);
+    m_formLayoutCommentaires->addRow(m_ajouterLicenceGPL);
     m_groupBoxCommentaires->setLayout(m_formLayoutCommentaires);
     m_vboxLayoutPrincipale->addWidget(m_groupBoxCommentaires);
 
@@ -112,7 +136,24 @@ void FenPrincipale::genererCode()
                 codeGenere += m_roleClasse->toPlainText();
                 codeGenere += "\n";
             }
-            codeGenere += "*/\n\n\n";
+
+            if(m_ajouterLicenceGPL->isChecked())
+            {
+                codeGenere += "\nLicence GPL : \n\n";
+                codeGenere += "This program is free software: you can redistribute it and/or modify"
+                              "it under the terms of the GNU General Public License as published by"
+                              "the Free Software Foundation, either version 3 of the License, or"
+                              "(at your option) any later version.\n\n"
+                              "This program is distributed in the hope that it will be useful,"
+                              "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+                              "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+                              "GNU General Public License for more details.\n\n"
+                              "You should have received a copy of the GNU General Public License"
+                              "along with this program.  If not, see <https://www.gnu.org/licenses/>";
+                codeGenere += "\n";
+            }
+
+            codeGenere += "*/\n\n";
         }
 
         if(!m_nomClasse->text().isEmpty())
@@ -127,7 +168,22 @@ void FenPrincipale::genererCode()
 
                 codeGenere += "#define ";
                 codeGenere += m_headerGuard->text().toUpper();
-                codeGenere += "\n\n\n";
+                codeGenere += "\n\n";
+            }
+
+            QList<QListWidgetItem*> listeClassesSelectionnees;
+            listeClassesSelectionnees = m_classeAAjouter->selectedItems();
+
+            if(listeClassesSelectionnees.size() > 0)
+            {
+
+                for (int i = 0; i < listeClassesSelectionnees.size(); ++i) {
+                    codeGenere += "#include <";
+                    codeGenere += listeClassesSelectionnees[i]->text();
+                    codeGenere += ">\n";
+                }
+
+                codeGenere += "\n";
             }
 
             codeGenere += "class ";
