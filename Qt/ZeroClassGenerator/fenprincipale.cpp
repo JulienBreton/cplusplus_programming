@@ -5,7 +5,7 @@ FenPrincipale::FenPrincipale()
     //Paramétrage de la fenêtre
     setWindowTitle("Zero Class Generator");
     setWindowIcon(QIcon("icone.png"));
-    resize(400, 450);
+    resize(400, 600);
 
     m_vboxLayoutPrincipale = new QVBoxLayout;
 
@@ -30,38 +30,47 @@ FenPrincipale::FenPrincipale()
     //Options
     m_optionsVBoxLayout = new QVBoxLayout;
     m_groupBoxOptions = new QGroupBox(tr("Options"));
-    m_protegerHeader = new QCheckBox(tr("Protéger le &header contre les inclusions multiples"));
+    m_protegerHeader = new QCheckBox(tr("Protéger le &header contre les inclusions multiples."));
     m_protegerHeader->setChecked(true);
     m_headerGuard = new QLineEdit();
-    m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut");
-    m_genererDestructeur = new QCheckBox("Générer un &destructeur");
+    m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut.");
+    m_genererDestructeur = new QCheckBox("Générer un &destructeur.");
 
     //Ajouter des classes
     QLabel * labelClasseAAjouter = new QLabel();
     labelClasseAAjouter->setText("Sélectionnez les classes à ajouter : ");
-    m_classeAAjouter = new QListWidget();
-    m_classeAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("QWidget"), m_classeAAjouter);
-    new QListWidgetItem(tr("QLabel"), m_classeAAjouter);
-    new QListWidgetItem(tr("QCheckBox"), m_classeAAjouter);
-    new QListWidgetItem(tr("QPushButton"), m_classeAAjouter);
-    new QListWidgetItem(tr("QTextEdit"), m_classeAAjouter);
-    new QListWidgetItem(tr("QMessageBox"), m_classeAAjouter);
+    m_classesAAjouter = new QListWidget();
+    m_classesAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    new QListWidgetItem(tr("personnage.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("arme.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("magie.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("nain.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("magicien.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("elf.h"), m_classesAAjouter);
 
+    //Ajouter des attributs
     QLabel * labelAjouterAttributs = new QLabel();
     labelAjouterAttributs->setText("Ajoutez des attributs : ");
-    m_ajouterAttributs = new QLineEdit();
-    m_ajouterAttributs->setToolTip("Séparez les attributs par des ;");
-    m_ajouterAttributs->setToolTipDuration(5000);
+    m_attributsAAjouter = new QListWidget();
+    m_attributsAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    new QListWidgetItem(tr("string m_nom"), m_attributsAAjouter);
+    new QListWidgetItem(tr("int m_vie"), m_attributsAAjouter);
+    new QListWidgetItem(tr("double m_force"), m_attributsAAjouter);
+    new QListWidgetItem(tr("double m_age"), m_attributsAAjouter);
+    new QListWidgetItem(tr("string m_race"), m_attributsAAjouter);
+    new QListWidgetItem(tr("string m_arme"), m_attributsAAjouter);
+
+    m_genereAccesseur = new QCheckBox(tr("Générer les &accesseurs aux attributs."));
 
     m_optionsVBoxLayout->addWidget(m_protegerHeader);
     m_optionsVBoxLayout->addWidget(m_headerGuard);
     m_optionsVBoxLayout->addWidget(m_genererConstructeur);
     m_optionsVBoxLayout->addWidget(m_genererDestructeur);
     m_optionsVBoxLayout->addWidget(labelClasseAAjouter);
-    m_optionsVBoxLayout->addWidget(m_classeAAjouter);
+    m_optionsVBoxLayout->addWidget(m_classesAAjouter);
     m_optionsVBoxLayout->addWidget(labelAjouterAttributs);
-    m_optionsVBoxLayout->addWidget(m_ajouterAttributs);
+    m_optionsVBoxLayout->addWidget(m_attributsAAjouter);
+    m_optionsVBoxLayout->addWidget(m_genereAccesseur);
     m_groupBoxOptions->setLayout(m_optionsVBoxLayout);
 
     m_vboxLayoutPrincipale->addWidget(m_groupBoxOptions);
@@ -172,15 +181,15 @@ void FenPrincipale::genererCode()
             }
 
             QList<QListWidgetItem*> listeClassesSelectionnees;
-            listeClassesSelectionnees = m_classeAAjouter->selectedItems();
+            listeClassesSelectionnees = m_classesAAjouter->selectedItems();
 
             if(listeClassesSelectionnees.size() > 0)
             {
 
                 for (int i = 0; i < listeClassesSelectionnees.size(); ++i) {
-                    codeGenere += "#include <";
+                    codeGenere += "#include \"";
                     codeGenere += listeClassesSelectionnees[i]->text();
-                    codeGenere += ">\n";
+                    codeGenere += "\"\n";
                 }
 
                 codeGenere += "\n";
@@ -218,8 +227,24 @@ void FenPrincipale::genererCode()
             codeGenere += "\n\n    ";
             codeGenere += "protected :";
             codeGenere += "\n\n    ";
-            codeGenere += "private :";
-            codeGenere += "\n\n}\n";
+            codeGenere += "private :\n";
+
+            QList<QListWidgetItem*> listeAttributsSelectionnees;
+            listeAttributsSelectionnees = m_attributsAAjouter->selectedItems();
+
+            if(listeAttributsSelectionnees.size() > 0)
+            {
+
+                for (int i = 0; i < listeAttributsSelectionnees.size(); ++i) {
+                    codeGenere += "\n        ";
+                    codeGenere += listeAttributsSelectionnees[i]->text();
+                    codeGenere += ";";
+                }
+
+                codeGenere += "\n";
+            }
+
+            codeGenere += "\n}\n";
 
             //On protége le header.
             if(m_protegerHeader->isChecked() && !m_headerGuard->text().isEmpty())
