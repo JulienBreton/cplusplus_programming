@@ -40,6 +40,10 @@ private:
     QLineEdit *m_nomClasse;
     QLineEdit *m_classeMere;
 
+    //Ajout classes et attributs
+    QHBoxLayout * m_classesAttributsHBoxLayout;
+    QGroupBox * m_groupBoxClassesAttributs;
+
     //Options
     QVBoxLayout *m_optionsVBoxLayout;
     QGroupBox *m_groupBoxOptions;
@@ -50,7 +54,7 @@ private:
     QCheckBox *m_ajouterLicenceGPL;
     QListWidget *m_classesAAjouter;
     QListWidget *m_attributsAAjouter;
-    QCheckBox *m_genereAccesseur;
+    QCheckBox *m_genererAccesseur;
 
     //Commentaires
     QFormLayout *m_formLayoutCommentaires;

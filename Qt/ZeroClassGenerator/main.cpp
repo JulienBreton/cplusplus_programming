@@ -5,8 +5,8 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    FenPrincipale FenetrePrincipale;
-    FenetrePrincipale.show();
+    FenPrincipale * FenetrePrincipale = new FenPrincipale();
+    FenetrePrincipale->show();
 
     return app.exec();
 }

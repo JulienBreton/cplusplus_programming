@@ -27,6 +27,34 @@ FenPrincipale::FenPrincipale()
     m_groupBoxDefClasse->setLayout(m_formLayoutDefClasse);
     m_vboxLayoutPrincipale->addWidget(m_groupBoxDefClasse);
 
+    //Ajouter des classes et attributs
+    m_classesAttributsHBoxLayout = new QHBoxLayout;
+    m_groupBoxClassesAttributs = new QGroupBox(tr("Sélectionnez les classes et les attributs à ajouter : "));
+    m_classesAAjouter = new QListWidget();
+    m_classesAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    new QListWidgetItem(tr("personnage.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("arme.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("magie.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("nain.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("magicien.h"), m_classesAAjouter);
+    new QListWidgetItem(tr("elf.h"), m_classesAAjouter);
+    m_classesAttributsHBoxLayout->addWidget(m_classesAAjouter);
+
+    //Ajouter des attributs
+    m_attributsAAjouter = new QListWidget();
+    m_attributsAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    new QListWidgetItem(tr("string m_nom"), m_attributsAAjouter);
+    new QListWidgetItem(tr("int m_vie"), m_attributsAAjouter);
+    new QListWidgetItem(tr("double m_force"), m_attributsAAjouter);
+    new QListWidgetItem(tr("double m_age"), m_attributsAAjouter);
+    new QListWidgetItem(tr("string m_race"), m_attributsAAjouter);
+    new QListWidgetItem(tr("string m_arme"), m_attributsAAjouter);
+    m_classesAttributsHBoxLayout->addWidget(m_attributsAAjouter);
+    m_genererAccesseur = new QCheckBox(tr("Générer les &accesseurs aux attributs."));
+    m_groupBoxClassesAttributs->setLayout(m_classesAttributsHBoxLayout);
+
+    m_vboxLayoutPrincipale->addWidget(m_groupBoxClassesAttributs);
+
     //Options
     m_optionsVBoxLayout = new QVBoxLayout;
     m_groupBoxOptions = new QGroupBox(tr("Options"));
@@ -36,41 +64,11 @@ FenPrincipale::FenPrincipale()
     m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut.");
     m_genererDestructeur = new QCheckBox("Générer un &destructeur.");
 
-    //Ajouter des classes
-    QLabel * labelClasseAAjouter = new QLabel();
-    labelClasseAAjouter->setText("Sélectionnez les classes à ajouter : ");
-    m_classesAAjouter = new QListWidget();
-    m_classesAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("personnage.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("arme.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("magie.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("nain.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("magicien.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("elf.h"), m_classesAAjouter);
-
-    //Ajouter des attributs
-    QLabel * labelAjouterAttributs = new QLabel();
-    labelAjouterAttributs->setText("Ajoutez des attributs : ");
-    m_attributsAAjouter = new QListWidget();
-    m_attributsAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("string m_nom"), m_attributsAAjouter);
-    new QListWidgetItem(tr("int m_vie"), m_attributsAAjouter);
-    new QListWidgetItem(tr("double m_force"), m_attributsAAjouter);
-    new QListWidgetItem(tr("double m_age"), m_attributsAAjouter);
-    new QListWidgetItem(tr("string m_race"), m_attributsAAjouter);
-    new QListWidgetItem(tr("string m_arme"), m_attributsAAjouter);
-
-    m_genereAccesseur = new QCheckBox(tr("Générer les &accesseurs aux attributs."));
-
     m_optionsVBoxLayout->addWidget(m_protegerHeader);
     m_optionsVBoxLayout->addWidget(m_headerGuard);
     m_optionsVBoxLayout->addWidget(m_genererConstructeur);
     m_optionsVBoxLayout->addWidget(m_genererDestructeur);
-    m_optionsVBoxLayout->addWidget(labelClasseAAjouter);
-    m_optionsVBoxLayout->addWidget(m_classesAAjouter);
-    m_optionsVBoxLayout->addWidget(labelAjouterAttributs);
-    m_optionsVBoxLayout->addWidget(m_attributsAAjouter);
-    m_optionsVBoxLayout->addWidget(m_genereAccesseur);
+    m_optionsVBoxLayout->addWidget(m_genererAccesseur);
     m_groupBoxOptions->setLayout(m_optionsVBoxLayout);
 
     m_vboxLayoutPrincipale->addWidget(m_groupBoxOptions);
@@ -119,6 +117,9 @@ void FenPrincipale::genererCode()
     {
 
         QString codeGenere = "";
+
+        QList<QListWidgetItem*> listeAttributsSelectionnees;
+        listeAttributsSelectionnees = m_attributsAAjouter->selectedItems();
 
         //On génére les commentaires.
         if(m_groupBoxCommentaires->isChecked())
@@ -224,13 +225,29 @@ void FenPrincipale::genererCode()
                 codeGenere += "();";
             }
 
+            //On génére les attributs.
+            if(m_genererAccesseur->isChecked())
+            {
+
+                if(listeAttributsSelectionnees.size() > 0)
+                {
+
+                    codeGenere += "\n";
+
+                    for (int i = 0; i < listeAttributsSelectionnees.size(); ++i) {
+                        codeGenere += "\n        ";
+                        QString attribut = listeAttributsSelectionnees[i]->text();
+                        QStringList accesseur = attribut.split("m_");
+                        codeGenere += accesseur[1];
+                        codeGenere += "();";
+                    }
+                }
+            }
+
             codeGenere += "\n\n    ";
             codeGenere += "protected :";
             codeGenere += "\n\n    ";
             codeGenere += "private :\n";
-
-            QList<QListWidgetItem*> listeAttributsSelectionnees;
-            listeAttributsSelectionnees = m_attributsAAjouter->selectedItems();
 
             if(listeAttributsSelectionnees.size() > 0)
             {
