@@ -7,6 +7,11 @@ FenPrincipale::FenPrincipale()
     setWindowIcon(QIcon("icone.png"));
     resize(400, 600);
 
+    QVBoxLayout *vboxOnglets = new QVBoxLayout;
+    m_onglets = new QTabWidget(this);
+    m_page1 = new QWidget;
+    m_page2 = new QWidget;
+
     m_vboxLayoutPrincipale = new QVBoxLayout;
 
     //Définition de la classe
@@ -43,12 +48,12 @@ FenPrincipale::FenPrincipale()
     //Ajouter des attributs
     m_attributsAAjouter = new QListWidget();
     m_attributsAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("string m_nom"), m_attributsAAjouter);
+    new QListWidgetItem(tr("QString m_nom"), m_attributsAAjouter);
     new QListWidgetItem(tr("int m_vie"), m_attributsAAjouter);
     new QListWidgetItem(tr("double m_force"), m_attributsAAjouter);
     new QListWidgetItem(tr("double m_age"), m_attributsAAjouter);
-    new QListWidgetItem(tr("string m_race"), m_attributsAAjouter);
-    new QListWidgetItem(tr("string m_arme"), m_attributsAAjouter);
+    new QListWidgetItem(tr("QString m_race"), m_attributsAAjouter);
+    new QListWidgetItem(tr("QString m_arme"), m_attributsAAjouter);
     m_classesAttributsHBoxLayout->addWidget(m_attributsAAjouter);
     m_genererAccesseur = new QCheckBox(tr("Générer les &accesseurs aux attributs."));
     m_groupBoxClassesAttributs->setLayout(m_classesAttributsHBoxLayout);
@@ -98,9 +103,25 @@ FenPrincipale::FenPrincipale()
     m_boutonsHBoxLayout ->setAlignment(Qt::AlignRight);
     m_vboxLayoutPrincipale->addLayout(m_boutonsHBoxLayout);
 
-    setLayout(m_vboxLayoutPrincipale);
+    m_page1->setLayout(m_vboxLayoutPrincipale);
+
+    m_onglets->addTab(m_page1, "Header");
+
+    m_layoutCodeCPP = new QVBoxLayout();
+    m_TextEditCodeCPP = new QTextEdit();
+    m_TextEditCodeCPP->setText("Veuillez cliquer sur le bouton Générer.");
+    m_layoutCodeCPP->addWidget(m_TextEditCodeCPP);
+
+    m_page2->setLayout(m_layoutCodeCPP);
+
+    m_onglets->addTab(m_page2, "CPP");
+
+    vboxOnglets->addWidget(m_onglets);
+
+    this->setLayout(vboxOnglets);
 
     connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCode()));
+    connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCPP()));
     connect(m_quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
     connect(m_nomClasse, SIGNAL(textEdited(QString)), this, SLOT(saisirHeaderGuard(QString)));
     connect(m_protegerHeader, SIGNAL(stateChanged(int)), this, SLOT(activerHeaderGuard(int)));
@@ -261,7 +282,7 @@ void FenPrincipale::genererCode()
                 codeGenere += "\n";
             }
 
-            codeGenere += "\n}\n";
+            codeGenere += "\n};\n";
 
             //On protége le header.
             if(m_protegerHeader->isChecked() && !m_headerGuard->text().isEmpty())
@@ -305,4 +326,55 @@ void FenPrincipale::activerHeaderGuard(int state)
         QString nomClasse = "HEADER_"+m_nomClasse->text().toUpper();
         m_headerGuard->setText(nomClasse);
     }
+}
+
+void FenPrincipale::genererCPP()
+{
+    QString codeGenere = "";
+
+    //Ajout de l'include de la classe associée au CPP.
+    if(!m_nomClasse->text().isEmpty())
+    {
+        codeGenere += "#include \""+m_nomClasse->text()+".h\";\n";
+    }
+
+    //Ajout du constructeur
+    if(m_genererConstructeur->isChecked())
+    {
+        codeGenere += "\n";
+        codeGenere += m_nomClasse->text()+"::"+m_nomClasse->text()+"()\n{\n";
+        codeGenere += "\n}\n";
+    }
+
+    //Ajout du destructeur
+    if(m_genererDestructeur->isChecked())
+    {
+        codeGenere += "\n";
+        codeGenere += m_nomClasse->text()+"::~"+m_nomClasse->text()+"()\n{\n";
+        codeGenere += "\n}\n";
+    }
+
+    //On génére les accesseurs
+    if(m_genererAccesseur->isChecked())
+    {
+
+        QList<QListWidgetItem*> listeAttributsSelectionnees;
+        listeAttributsSelectionnees = m_attributsAAjouter->selectedItems();
+
+        if(listeAttributsSelectionnees.size() > 0)
+        {
+            codeGenere += "\n";
+
+            for (int i = 0; i < listeAttributsSelectionnees.size(); ++i) {
+                QString attribut = listeAttributsSelectionnees[i]->text();
+                QStringList accesseur = attribut.split("m_");
+                QStringList type = attribut.split(" ");
+                codeGenere += "public "+type[0]+" "+m_nomClasse->text()+"::"+accesseur[1]+"()\n{\n";
+                codeGenere += "    return "+accesseur[1]+";\n";
+                codeGenere += "}\n\n";
+            }
+        }
+    }
+
+     m_TextEditCodeCPP->setText(codeGenere);
 }
