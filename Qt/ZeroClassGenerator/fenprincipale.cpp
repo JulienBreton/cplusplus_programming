@@ -10,7 +10,6 @@ FenPrincipale::FenPrincipale()
     QVBoxLayout *vboxOnglets = new QVBoxLayout;
     m_onglets = new QTabWidget(this);
     m_page1 = new QWidget;
-    m_page2 = new QWidget;
 
     m_vboxLayoutPrincipale = new QVBoxLayout;
 
@@ -105,23 +104,13 @@ FenPrincipale::FenPrincipale()
 
     m_page1->setLayout(m_vboxLayoutPrincipale);
 
-    m_onglets->addTab(m_page1, "Header");
-
-    m_layoutCodeCPP = new QVBoxLayout();
-    m_TextEditCodeCPP = new QTextEdit();
-    m_TextEditCodeCPP->setText("Veuillez cliquer sur le bouton Générer.");
-    m_layoutCodeCPP->addWidget(m_TextEditCodeCPP);
-
-    m_page2->setLayout(m_layoutCodeCPP);
-
-    m_onglets->addTab(m_page2, "CPP");
+    m_onglets->addTab(m_page1, "Configuration");
 
     vboxOnglets->addWidget(m_onglets);
 
     this->setLayout(vboxOnglets);
 
     connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCode()));
-    connect(m_generer, SIGNAL(clicked()), this, SLOT(genererCPP()));
     connect(m_quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
     connect(m_nomClasse, SIGNAL(textEdited(QString)), this, SLOT(saisirHeaderGuard(QString)));
     connect(m_protegerHeader, SIGNAL(stateChanged(int)), this, SLOT(activerHeaderGuard(int)));
@@ -293,7 +282,7 @@ void FenPrincipale::genererCode()
             }
         }
 
-        m_fenCodeGenere = new FenCodeGenere(codeGenere, this);
+        m_fenCodeGenere = new FenCodeGenere(codeGenere, genererCPP(), m_nomClasse->text(), this);
         m_fenCodeGenere->exec();
     }
 }
@@ -328,7 +317,7 @@ void FenPrincipale::activerHeaderGuard(int state)
     }
 }
 
-void FenPrincipale::genererCPP()
+QString FenPrincipale::genererCPP()
 {
     QString codeGenere = "";
 
@@ -376,5 +365,5 @@ void FenPrincipale::genererCPP()
         }
     }
 
-     m_TextEditCodeCPP->setText(codeGenere);
+     return codeGenere;
 }

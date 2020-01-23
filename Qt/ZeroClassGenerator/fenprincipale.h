@@ -28,16 +28,16 @@ public:
 
 private slots:
     void genererCode();
-    void genererCPP();
     void saisirHeaderGuard(QString nomClasse);
     void activerHeaderGuard(int state);
 
 private:
 
+    QString genererCPP();
+
     QVBoxLayout *m_vboxLayoutPrincipale;
     QTabWidget *m_onglets;
     QWidget * m_page1;
-    QWidget * m_page2;
 
     //Definition de la classe
     QFormLayout *m_formLayoutDefClasse;
@@ -72,10 +72,6 @@ private:
     QHBoxLayout *m_boutonsHBoxLayout;
     QPushButton *m_generer;
     QPushButton *m_quitter;
-
-    //Contenu de l'onglet CPP
-    QTextEdit *m_TextEditCodeCPP;
-    QVBoxLayout *m_layoutCodeCPP;
 
     FenCodeGenere *m_fenCodeGenere;
 };
