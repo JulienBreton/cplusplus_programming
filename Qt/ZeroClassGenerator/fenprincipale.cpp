@@ -367,13 +367,22 @@ QString FenPrincipale::genererCPP()
         {
             codeGenere += "\n";
 
-            for (int i = 0; i < listeAttributsSelectionnees.size(); ++i) {
+            for (int i = 0; i < listeAttributsSelectionnees.size(); ++i)
+            {
                 QString attribut = listeAttributsSelectionnees[i]->text();
                 QStringList accesseur = attribut.split("m_");
                 QStringList type = attribut.split(" ");
                 codeGenere += type[0]+" "+m_nomClasse->text()+"::"+accesseur[1]+"()\n{\n";
                 codeGenere += "    return m_"+accesseur[1]+";\n";
-                codeGenere += "}\n\n";
+
+                if(i < (listeAttributsSelectionnees.size()-1))
+                {
+                    codeGenere += "}\n\n";
+                }
+                else
+                {
+                    codeGenere += "}\n";
+                }
             }
         }
     }
