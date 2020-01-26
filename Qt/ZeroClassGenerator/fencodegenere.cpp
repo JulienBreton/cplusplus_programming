@@ -1,7 +1,11 @@
 #include "fencodegenere.h"
 
-FenCodeGenere::FenCodeGenere(QString codeGenere, QString codeCPP, QString nomClasse, QWidget *parent = 0) : QDialog(parent)
+FenCodeGenere::FenCodeGenere(QString codeGenere, QString codeCPP, QString nomClasse, QWidget *parent) : QDialog(parent)
 {
+    setNomClasse(nomClasse);
+    setCodeHeader(codeGenere);
+    setCodeCPP(codeCPP);
+
     //Paramétrage de la fenêtre
     setWindowTitle("Zero Class Generator");
     setWindowIcon(QIcon("icone.png"));
@@ -35,9 +39,82 @@ FenCodeGenere::FenCodeGenere(QString codeGenere, QString codeCPP, QString nomCla
     vboxOnglets->addWidget(m_onglets);
     m_boutonFermer = new QPushButton;
     m_boutonFermer->setText("Fermer");
+    m_boutonEnregistrer = new QPushButton;
+    m_boutonEnregistrer->setText("Enregistrer les fichiers");
+    vboxOnglets->addWidget(m_boutonEnregistrer);
     vboxOnglets->addWidget(m_boutonFermer);
 
     this->setLayout(vboxOnglets);
 
     connect(m_boutonFermer, SIGNAL(clicked()), this, SLOT(close()));
+    connect(m_boutonEnregistrer, SIGNAL(clicked()), this, SLOT(enregisterFichiers()));
+}
+
+void FenCodeGenere::enregisterFichiers()
+{
+    QString classe = nomClasse();
+
+    QString saveFile = QFileDialog::getSaveFileName(this, tr("Enregistrer .h et .cpp"),
+                               "/home/julien/test_class_generator/robot",
+                               tr(".h/.cpp (*.h *.cpp)"));
+
+    //Enregistrement du .h
+    QFile fileHeader(saveFile+".h");
+
+    if (!fileHeader.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(this, "Erreur", "Impossible d'écrire dans le fichier "+nomClasse()+".h");
+
+        return;
+    }
+
+    QTextStream streamCodeHeader(&fileHeader);
+    streamCodeHeader << codeHeader();
+
+    fileHeader.close();
+
+    //Enregistrement du .cpp
+    QFile fileCPP(saveFile+".cpp");
+
+    if (!fileCPP.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(this, "Erreur", "Impossible d'écrire dans le fichier "+nomClasse()+".cpp");
+
+        return;
+    }
+
+    QTextStream streamCodeCPP(&fileCPP);
+    streamCodeCPP << codeCPP();
+
+    fileCPP.close();
+}
+
+void FenCodeGenere::setNomClasse(QString nomClasse)
+{
+    m_nomClasse = nomClasse;
+}
+
+QString FenCodeGenere::nomClasse()
+{
+    return m_nomClasse;
+}
+
+void FenCodeGenere::setCodeHeader(QString codeHeader)
+{
+    m_codeHeader = codeHeader;
+}
+
+QString FenCodeGenere::codeHeader()
+{
+    return m_codeHeader;
+}
+
+void FenCodeGenere::setCodeCPP(QString codeCPP)
+{
+    m_codeCPP = codeCPP;
+}
+
+QString FenCodeGenere::codeCPP()
+{
+    return m_codeCPP;
 }

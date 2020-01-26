@@ -191,6 +191,18 @@ void FenPrincipale::genererCode()
                 codeGenere += "\n\n";
             }
 
+            //On ajoute la classe QString car on peut en avoir besoin pour les attributs.
+            codeGenere += "#include <QString>\n";
+
+            //On ajoute la classe mère
+            if(!m_classeMere->text().isEmpty())
+            {
+                codeGenere += "#include \"";
+                codeGenere += m_classeMere->text()+".h";
+                codeGenere += "\"\n";
+            }
+
+            //On ajoute les classes sélectionnées
             QList<QListWidgetItem*> listeClassesSelectionnees;
             listeClassesSelectionnees = m_classesAAjouter->selectedItems();
 
@@ -202,10 +214,11 @@ void FenPrincipale::genererCode()
                     codeGenere += listeClassesSelectionnees[i]->text();
                     codeGenere += "\"\n";
                 }
-
-                codeGenere += "\n";
             }
 
+            codeGenere += "\n";
+
+            //On génére la structure de la classe.
             codeGenere += "class ";
             codeGenere += m_nomClasse->text();
 
@@ -235,7 +248,7 @@ void FenPrincipale::genererCode()
                 codeGenere += "();";
             }
 
-            //On génére les attributs.
+            //On génére les accesseurs.
             if(m_genererAccesseur->isChecked())
             {
 
@@ -248,7 +261,7 @@ void FenPrincipale::genererCode()
                         codeGenere += "\n        ";
                         QString attribut = listeAttributsSelectionnees[i]->text();
                         QStringList accesseur = attribut.split("m_");
-                        codeGenere += accesseur[1];
+                        codeGenere += accesseur[0]+accesseur[1];
                         codeGenere += "();";
                     }
                 }
@@ -324,7 +337,7 @@ QString FenPrincipale::genererCPP()
     //Ajout de l'include de la classe associée au CPP.
     if(!m_nomClasse->text().isEmpty())
     {
-        codeGenere += "#include \""+m_nomClasse->text()+".h\";\n";
+        codeGenere += "#include \""+m_nomClasse->text()+".h\"\n";
     }
 
     //Ajout du constructeur
@@ -358,8 +371,8 @@ QString FenPrincipale::genererCPP()
                 QString attribut = listeAttributsSelectionnees[i]->text();
                 QStringList accesseur = attribut.split("m_");
                 QStringList type = attribut.split(" ");
-                codeGenere += "public "+type[0]+" "+m_nomClasse->text()+"::"+accesseur[1]+"()\n{\n";
-                codeGenere += "    return "+accesseur[1]+";\n";
+                codeGenere += type[0]+" "+m_nomClasse->text()+"::"+accesseur[1]+"()\n{\n";
+                codeGenere += "    return m_"+accesseur[1]+";\n";
                 codeGenere += "}\n\n";
             }
         }
