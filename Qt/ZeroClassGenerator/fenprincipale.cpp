@@ -3,7 +3,7 @@
 FenPrincipale::FenPrincipale()
 {
     //Paramétrage de la fenêtre
-    setWindowTitle("Zero Class Generator");
+    setWindowTitle(tr("Zero Class Generator"));
     setWindowIcon(QIcon("icone.png"));
     resize(400, 600);
 
@@ -26,8 +26,8 @@ FenPrincipale::FenPrincipale()
     QRegExpValidator * classeMereValidator = new QRegExpValidator(rx, m_classeMere);
     m_classeMere->setValidator(classeMereValidator);
 
-    m_formLayoutDefClasse->addRow("* &Nom : ", m_nomClasse);
-    m_formLayoutDefClasse->addRow("Classe &mère :", m_classeMere);
+    m_formLayoutDefClasse->addRow(tr("* &Nom : "), m_nomClasse);
+    m_formLayoutDefClasse->addRow(tr("Classe &mère :"), m_classeMere);
     m_groupBoxDefClasse->setLayout(m_formLayoutDefClasse);
     m_vboxLayoutPrincipale->addWidget(m_groupBoxDefClasse);
 
@@ -36,23 +36,23 @@ FenPrincipale::FenPrincipale()
     m_groupBoxClassesAttributs = new QGroupBox(tr("Sélectionnez les classes et les attributs à ajouter : "));
     m_classesAAjouter = new QListWidget();
     m_classesAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("personnage.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("arme.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("magie.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("nain.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("magicien.h"), m_classesAAjouter);
-    new QListWidgetItem(tr("elf.h"), m_classesAAjouter);
+    new QListWidgetItem("personnage.h", m_classesAAjouter);
+    new QListWidgetItem("arme.h", m_classesAAjouter);
+    new QListWidgetItem("magie.h", m_classesAAjouter);
+    new QListWidgetItem("nain.h", m_classesAAjouter);
+    new QListWidgetItem("magicien.h", m_classesAAjouter);
+    new QListWidgetItem("elf.h", m_classesAAjouter);
     m_classesAttributsHBoxLayout->addWidget(m_classesAAjouter);
 
     //Ajouter des attributs
     m_attributsAAjouter = new QListWidget();
     m_attributsAAjouter->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    new QListWidgetItem(tr("QString m_nom"), m_attributsAAjouter);
-    new QListWidgetItem(tr("int m_vie"), m_attributsAAjouter);
-    new QListWidgetItem(tr("double m_force"), m_attributsAAjouter);
-    new QListWidgetItem(tr("double m_age"), m_attributsAAjouter);
-    new QListWidgetItem(tr("QString m_race"), m_attributsAAjouter);
-    new QListWidgetItem(tr("QString m_arme"), m_attributsAAjouter);
+    new QListWidgetItem("QString m_nom", m_attributsAAjouter);
+    new QListWidgetItem("int m_vie", m_attributsAAjouter);
+    new QListWidgetItem("double m_force", m_attributsAAjouter);
+    new QListWidgetItem("double m_age", m_attributsAAjouter);
+    new QListWidgetItem("QString m_race", m_attributsAAjouter);
+    new QListWidgetItem("QString m_arme", m_attributsAAjouter);
     m_classesAttributsHBoxLayout->addWidget(m_attributsAAjouter);
     m_genererAccesseur = new QCheckBox(tr("Générer les &accesseurs aux attributs."));
     m_groupBoxClassesAttributs->setLayout(m_classesAttributsHBoxLayout);
@@ -65,8 +65,8 @@ FenPrincipale::FenPrincipale()
     m_protegerHeader = new QCheckBox(tr("Protéger le &header contre les inclusions multiples."));
     m_protegerHeader->setChecked(true);
     m_headerGuard = new QLineEdit();
-    m_genererConstructeur = new QCheckBox("Générer un &constructeur par défaut.");
-    m_genererDestructeur = new QCheckBox("Générer un &destructeur.");
+    m_genererConstructeur = new QCheckBox(tr("Générer un &constructeur par défaut."));
+    m_genererDestructeur = new QCheckBox(tr("Générer un &destructeur."));
 
     m_optionsVBoxLayout->addWidget(m_protegerHeader);
     m_optionsVBoxLayout->addWidget(m_headerGuard);
@@ -85,18 +85,18 @@ FenPrincipale::FenPrincipale()
     m_auteur = new QLineEdit;
     m_dateCreation = new QDateTimeEdit(QDate::currentDate());
     m_roleClasse = new QTextEdit;
-    m_ajouterLicenceGPL = new QCheckBox("Ajouter la &licence GPL");
-    m_formLayoutCommentaires->addRow("&Auteur :", m_auteur);
-    m_formLayoutCommentaires->addRow("Da&te de création :", m_dateCreation);
-    m_formLayoutCommentaires->addRow("&Rôle de la classe :", m_roleClasse);
+    m_ajouterLicenceGPL = new QCheckBox(tr("Ajouter la &licence GPL"));
+    m_formLayoutCommentaires->addRow(tr("&Auteur :"), m_auteur);
+    m_formLayoutCommentaires->addRow(tr("Da&te de création :"), m_dateCreation);
+    m_formLayoutCommentaires->addRow(tr("&Rôle de la classe :"), m_roleClasse);
     m_formLayoutCommentaires->addRow(m_ajouterLicenceGPL);
     m_groupBoxCommentaires->setLayout(m_formLayoutCommentaires);
     m_vboxLayoutPrincipale->addWidget(m_groupBoxCommentaires);
 
     //Les boutons
     m_boutonsHBoxLayout = new QHBoxLayout();
-    m_generer = new QPushButton("&Générer");
-    m_quitter = new QPushButton("&Quitter");
+    m_generer = new QPushButton(tr("&Générer"));
+    m_quitter = new QPushButton(tr("&Quitter"));
     m_boutonsHBoxLayout->addWidget(m_generer);
     m_boutonsHBoxLayout->addWidget(m_quitter);
     m_boutonsHBoxLayout ->setAlignment(Qt::AlignRight);
@@ -104,7 +104,7 @@ FenPrincipale::FenPrincipale()
 
     m_page1->setLayout(m_vboxLayoutPrincipale);
 
-    m_onglets->addTab(m_page1, "Configuration");
+    m_onglets->addTab(m_page1, tr("Configuration"));
 
     vboxOnglets->addWidget(m_onglets);
 
@@ -120,7 +120,7 @@ void FenPrincipale::genererCode()
 {
     if(m_nomClasse->text().isEmpty())
     {
-        QMessageBox::critical(this, "Erreur", "Le nom de la classe est obligatoire.");
+        QMessageBox::critical(this, tr("Erreur"), tr("Le nom de la classe est obligatoire."));
         return;
     }
     else
@@ -138,28 +138,28 @@ void FenPrincipale::genererCode()
 
             if(!m_auteur->text().isEmpty())
             {
-                codeGenere += "Auteur : ";
+                codeGenere += tr("Auteur : ");
                 codeGenere += m_auteur->text();
                 codeGenere += "\n";
             }
 
             if(!m_dateCreation->text().isEmpty())
             {
-                codeGenere += "Date de création : ";
+                codeGenere += tr("Date de création : ");
                 codeGenere += m_dateCreation->text();
                 codeGenere += "\n";
             }
 
             if(!m_roleClasse->toPlainText().isEmpty())
             {
-                codeGenere += "\nRôle : \n";
+                codeGenere += "\n"+tr("Rôle : ")+"\n";
                 codeGenere += m_roleClasse->toPlainText();
                 codeGenere += "\n";
             }
 
             if(m_ajouterLicenceGPL->isChecked())
             {
-                codeGenere += "\nLicence GPL : \n\n";
+                codeGenere += "\n"+tr("Licence GPL : ")+"\n\n";
                 codeGenere += "This program is free software: you can redistribute it and/or modify "
                               "it under the terms of the GNU General Public License as published by "
                               "the Free Software Foundation, either version 3 of the License, or "

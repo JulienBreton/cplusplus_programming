@@ -15,3 +15,6 @@ HEADERS += \
 
 RESOURCES += \
     ZeroClassGenerator.qrc
+
+TRANSLATIONS += \
+    zeroclassgenerator_en.ts zeroclassgenerator_es.ts

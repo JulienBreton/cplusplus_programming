@@ -734,6 +734,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../../../../Qt/5.14.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../ZeroClassGenerator/fencodegenere.h ../ZeroClassGenerator/fenprincipale.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../ZeroClassGenerator/fencodegenere.cpp ../ZeroClassGenerator/fenprincipale.cpp ../ZeroClassGenerator/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents zeroclassgenerator_en.ts zeroclassgenerator_es.ts $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -900,6 +901,14 @@ moc_fencodegenere.cpp: ../ZeroClassGenerator/fencodegenere.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QFile \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QMessageBox \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qmessagebox.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QTextStream \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/qfileinfo.h \
 		moc_predefs.h \
 		../../../../Qt/5.14.0/gcc_64/bin/moc
 	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-ZeroClassGenerator-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/ZeroClassGenerator -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../ZeroClassGenerator/fencodegenere.h -o moc_fencodegenere.cpp
@@ -1282,6 +1291,10 @@ moc_fenprincipale.cpp: ../ZeroClassGenerator/fenprincipale.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../ZeroClassGenerator/fencodegenere.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QFile \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QTextStream \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qfiledialog.h \
 		moc_predefs.h \
 		../../../../Qt/5.14.0/gcc_64/bin/moc
 	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-ZeroClassGenerator-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/ZeroClassGenerator -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../ZeroClassGenerator/fenprincipale.h -o moc_fenprincipale.cpp
@@ -1427,7 +1440,15 @@ fencodegenere.o: ../ZeroClassGenerator/fencodegenere.cpp ../ZeroClassGenerator/f
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
-		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qtabwidget.h
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QFile \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QMessageBox \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qmessagebox.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QTextStream \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fencodegenere.o ../ZeroClassGenerator/fencodegenere.cpp
 
 fenprincipale.o: ../ZeroClassGenerator/fenprincipale.cpp ../ZeroClassGenerator/fenprincipale.h \
@@ -1807,7 +1828,11 @@ fenprincipale.o: ../ZeroClassGenerator/fenprincipale.cpp ../ZeroClassGenerator/f
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qrubberband.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../ZeroClassGenerator/fencodegenere.h \
-		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QFile \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QTextStream \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fenprincipale.o ../ZeroClassGenerator/fenprincipale.cpp
 
 main.o: ../ZeroClassGenerator/main.cpp ../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QApplication \
@@ -2190,7 +2215,11 @@ main.o: ../ZeroClassGenerator/main.cpp ../../../../Qt/5.14.0/gcc_64/include/QtWi
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qrubberband.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../ZeroClassGenerator/fencodegenere.h \
-		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QFile \
+		../../../../Qt/5.14.0/gcc_64/include/QtCore/QTextStream \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../ZeroClassGenerator/main.cpp
 
 qrc_ZeroClassGenerator.o: qrc_ZeroClassGenerator.cpp 

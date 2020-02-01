@@ -7,7 +7,7 @@ FenCodeGenere::FenCodeGenere(QString codeGenere, QString codeCPP, QString nomCla
     setCodeCPP(codeCPP);
 
     //Paramétrage de la fenêtre
-    setWindowTitle("Zero Class Generator");
+    setWindowTitle(tr("Zero Class Generator"));
     setWindowIcon(QIcon("icone.png"));
     setFixedSize(400, 600);
 
@@ -38,9 +38,9 @@ FenCodeGenere::FenCodeGenere(QString codeGenere, QString codeCPP, QString nomCla
 
     vboxOnglets->addWidget(m_onglets);
     m_boutonFermer = new QPushButton;
-    m_boutonFermer->setText("Fermer");
+    m_boutonFermer->setText(tr("Fermer"));
     m_boutonEnregistrer = new QPushButton;
-    m_boutonEnregistrer->setText("Enregistrer les fichiers");
+    m_boutonEnregistrer->setText(tr("Enregistrer les fichiers"));
     vboxOnglets->addWidget(m_boutonEnregistrer);
     vboxOnglets->addWidget(m_boutonFermer);
 
@@ -63,7 +63,7 @@ void FenCodeGenere::enregisterFichiers()
 
     if (!fileHeader.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QMessageBox::critical(this, "Erreur", "Impossible d'écrire dans le fichier "+nomClasse()+".h");
+        QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'écrire dans le fichier ")+nomClasse()+".h");
 
         return;
     }
@@ -78,7 +78,7 @@ void FenCodeGenere::enregisterFichiers()
 
     if (!fileCPP.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QMessageBox::critical(this, "Erreur", "Impossible d'écrire dans le fichier "+nomClasse()+".cpp");
+        QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'écrire dans le fichier ")+nomClasse()+".cpp");
 
         return;
     }
