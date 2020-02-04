@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FenCalculatrice</class>
+ <widget class="QWidget" name="FenCalculatrice">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>368</width>
+    <height>49</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QSpinBox" name="nombre1"/>
+   </item>
+   <item>
+    <widget class="QComboBox" name="operation">
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="currentText">
+      <string>+</string>
+     </property>
+     <property name="insertPolicy">
+      <enum>QComboBox::InsertAtBottom</enum>
+     </property>
+     <item>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>-</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>*</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>/</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="nombre2"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="boutonEgal">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>=</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="resultat">
+     <property name="text">
+      <string>Résultat</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
