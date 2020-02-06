@@ -12,7 +12,7 @@ class FenCalculatrice : public QWidget
     Q_OBJECT
 
 public slots:
-    void calculerOperation();
+    void on_boutonEgal_clicked();
 
 
 public:

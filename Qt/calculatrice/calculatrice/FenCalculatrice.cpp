@@ -6,8 +6,6 @@ FenCalculatrice::FenCalculatrice(QWidget *parent) :
     ui(new Ui::FenCalculatrice)
 {
     ui->setupUi(this);
-
-    connect(ui->boutonEgal, SIGNAL(clicked()), this, SLOT(calculerOperation()));
 }
 
 FenCalculatrice::~FenCalculatrice()
@@ -15,7 +13,7 @@ FenCalculatrice::~FenCalculatrice()
     delete ui;
 }
 
-void FenCalculatrice::calculerOperation()
+void FenCalculatrice::on_boutonEgal_clicked()
 {
     double resultat = 0.0;
 

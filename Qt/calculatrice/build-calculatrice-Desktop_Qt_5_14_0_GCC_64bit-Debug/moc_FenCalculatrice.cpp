@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_FenCalculatrice_t {
     QByteArrayData data[3];
-    char stringdata0[35];
+    char stringdata0[39];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,12 @@ struct qt_meta_stringdata_FenCalculatrice_t {
 static const qt_meta_stringdata_FenCalculatrice_t qt_meta_stringdata_FenCalculatrice = {
     {
 QT_MOC_LITERAL(0, 0, 15), // "FenCalculatrice"
-QT_MOC_LITERAL(1, 16, 17), // "calculerOperation"
-QT_MOC_LITERAL(2, 34, 0) // ""
+QT_MOC_LITERAL(1, 16, 21), // "on_boutonEgal_clicked"
+QT_MOC_LITERAL(2, 38, 0) // ""
 
     },
-    "FenCalculatrice\0calculerOperation\0"
+    "FenCalculatrice\0on_boutonEgal_clicked\0"
+    ""
 };
 #undef QT_MOC_LITERAL
 
@@ -69,7 +70,7 @@ void FenCalculatrice::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         auto *_t = static_cast<FenCalculatrice *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->calculerOperation(); break;
+        case 0: _t->on_boutonEgal_clicked(); break;
         default: ;
         }
     }
