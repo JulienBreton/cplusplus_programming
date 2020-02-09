@@ -75,7 +75,7 @@ fonctionAmie(*test1);
 ```
 ## Qt
 
-Pour faire fonctionner Qt :
+#### Pour faire fonctionner Qt :
 
 ```console
 sudo apt-get install build-essential libgl1-mesa-dev
@@ -87,11 +87,11 @@ Voir http://debian-facile.org/doc:environnements:lxde:transparence pour l'instal
 ```console
 compton &
 ```
-Activation du mécanisme slots/signals personnalisé :
+#### Activation du mécanisme slots/signals personnalisé :
 
 Ajout de la macro Q_OBJECT dans la classe => The Q_OBJECT macro must appear in the private section of a class definition that declares its own signals and slots or that uses other services provided by Qt's meta-object system.
 
-Pour avoir les outils pour la traduction (lupdate):
+#### Pour avoir les outils pour la traduction (lupdate):
 
 ```
 sudo apt-get install qttools5-dev-tools
