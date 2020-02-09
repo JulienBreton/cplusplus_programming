@@ -91,4 +91,9 @@ Activation du mécanisme slots/signals personnalisé :
 
 Ajout de la macro Q_OBJECT dans la classe => The Q_OBJECT macro must appear in the private section of a class definition that declares its own signals and slots or that uses other services provided by Qt's meta-object system.
 
+Pour avoir les outils pour la traduction (lupdate):
 
+```
+sudo apt-get install qttools5-dev-tools
+sudo apt-get install qt5-qmake
+```
