@@ -97,3 +97,6 @@ Ajout de la macro Q_OBJECT dans la classe => The Q_OBJECT macro must appear in t
 sudo apt-get install qttools5-dev-tools
 sudo apt-get install qt5-qmake
 ```
+#### Qt Designer et layout
+
+Pour qu'un layout s'applique à un QWidget il le faire dans le code avec setLayout() sinon le QWidget ne suivra pas le redimensionnement de la fenêtre. 
