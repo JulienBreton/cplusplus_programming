@@ -18,3 +18,6 @@ RESOURCES += \
 
 TRANSLATIONS += \
     zeroclassgenerator_en.ts zeroclassgenerator_es.ts
+
+FORMS += \
+    form.ui
