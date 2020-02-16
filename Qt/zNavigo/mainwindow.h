@@ -5,6 +5,7 @@
 #include <QWebEngineView>
 #include <QUrl>
 #include <QProgressBar>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,7 +26,11 @@ public slots:
     void allerAccueil();
     void allerURL();
     void changementOnglet(int index);
-    void actualiserTitreOnglet(bool chargementTermine);
+    void actualiserTitreOnglet(QString titrePage);
+    void afficherAProposzNavigo();
+    void afficherAProposQt();
+    void getIndexOngletQuiCharge();
+    void getOngletTest();
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -33,10 +38,12 @@ public:
 
 private:
     QWebEngineView * webViewActive();
+    void getOngletTitre(QWebEngineView * web);
 
     Ui::MainWindow *ui;
     QProgressBar * m_loadingBar;
     QWebEngineView * m_webCourrant;
+    int m_indexOngletEnChargement;
 
 };
 #endif // MAINWINDOW_H

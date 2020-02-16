@@ -22,7 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->vLayoutWeb->addWidget(m_loadingBar);
 
-    //ouvrirTab();
+    //m_indexOngletEnChargement = 0;
+
+    getOngletTitre(m_webCourrant);
 
     //Menu
     connect(ui->actionOuvrirOnglet, SIGNAL(triggered()), this, SLOT(ouvrirTab()));
@@ -33,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionArreter, SIGNAL(triggered()), this, SLOT(stopChargement()));
     connect(ui->actionAccueil, SIGNAL(triggered()), this, SLOT(allerAccueil()));
     connect(ui->actionAllerURL, SIGNAL(triggered()), this, SLOT(allerURL()));
+    connect(ui->actionAProposDezNavigo, SIGNAL(triggered()), this, SLOT(afficherAProposzNavigo()));
+    connect(ui->actionAProposDeQt, SIGNAL(triggered()), this, SLOT(afficherAProposQt()));
 
     //Boutons
     connect(ui->btPrecedent, SIGNAL(clicked()), this, SLOT(allerPagePrecedente()));
@@ -43,8 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btAllerURL, SIGNAL(clicked()), this, SLOT(allerURL()));
 
     connect(webViewActive(), SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-    connect(ui->tabNavigateur, SIGNAL(currentChanged(int)), this, SLOT(changementOnglet(int)));
-    connect(webViewActive(), SIGNAL(loadFinished(bool)), this, SLOT(actualiserTitreOnglet(bool)));
+    connect(webViewActive(), SIGNAL(loadStarted()), this , SLOT(getOngletTest()));
+    //connect(ui->tabNavigateur, SIGNAL(currentChanged(int)), this, SLOT(changementOnglet(int)));
+    //connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+
 }
 
 MainWindow::~MainWindow()
@@ -74,9 +80,12 @@ void MainWindow::ouvrirTab()
     layoutOnglet->addWidget(m_loadingBar);
 
     connect(webViewActive(), SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-    connect(webViewActive(), SIGNAL(loadFinished(bool)), this, SLOT(actualiserTitreOnglet(bool)));
 
-    //qDebug() << layoutOnglet->margin();
+    //getOngletTitre(m_webCourrant);
+
+    connect(webViewActive(), SIGNAL(loadStarted()), this , SLOT(getOngletTest()));
+
+    qDebug() << "---***ouvrirTab" << m_indexOngletEnChargement << "***---";
 }
 
 void MainWindow::fermerTab()
@@ -95,6 +104,7 @@ void MainWindow::allerPagePrecedente()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->back();
+        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -105,6 +115,7 @@ void MainWindow::allerPageSuivante()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->forward();
+        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -115,6 +126,7 @@ void MainWindow::rechargerPage()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->reload();
+        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -137,6 +149,7 @@ void MainWindow::allerAccueil()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->setUrl(urlAccueil);
+        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -160,7 +173,9 @@ void MainWindow::allerURL()
     if(m_webCourrant != nullptr && url.isValid())
     {
         m_webCourrant->setUrl(url);
+        getOngletTitre(m_webCourrant);
     }
+
 }
 
 void MainWindow::changementOnglet(int index)
@@ -171,13 +186,47 @@ void MainWindow::changementOnglet(int index)
     }
 }
 
-void MainWindow::actualiserTitreOnglet(bool chargementTermine)
+void MainWindow::afficherAProposzNavigo()
 {
-    if(chargementTermine)
-    {
-       QString titreReduit = m_webCourrant->title();
-       titreReduit.truncate(30);
+    QMessageBox msgBox;
+    msgBox.about(this, "zNavigo", "Navigateur zNavigo\nJulien Breton\nFévrier 2020.");
+}
 
-       ui->tabNavigateur->setTabText(ui->tabNavigateur->currentIndex(), titreReduit);
-    }
+void MainWindow::afficherAProposQt()
+{
+    QMessageBox msgBox;
+    msgBox.aboutQt(this);
+}
+
+void MainWindow::actualiserTitreOnglet(QString titrePage)
+{
+    ui->tabNavigateur->setTabText(m_indexOngletEnChargement, titrePage);
+}
+
+void MainWindow::getOngletTitre(QWebEngineView * web)
+{
+    QWidget * onglet = web->parentWidget();
+    m_indexOngletEnChargement = ui->tabNavigateur->indexOf(onglet);
+    QString titreReduit = web->title();
+    titreReduit.truncate(30);
+
+    qDebug() << "TAB où actualiser titre: " << m_indexOngletEnChargement;
+    connect(web, SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+}
+
+/*void MainWindow::getOngletTest()
+{
+    QWidget * onglet = webViewActive()->parentWidget();
+    m_indexOngletEnChargement = ui->tabNavigateur->indexOf(onglet);
+    QString titreReduit = webViewActive()->title();
+    titreReduit.truncate(30);
+
+    qDebug() << "TAB où actualiser titre: " << m_indexOngletEnChargement;
+    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+}*/
+
+void MainWindow::getIndexOngletQuiCharge()
+{
+    qDebug() << "CHARGEMENT PAGE";
+    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
 }
