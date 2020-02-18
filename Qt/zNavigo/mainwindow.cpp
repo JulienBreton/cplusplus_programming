@@ -9,22 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->showMaximized();
 
-    m_webCourrant = new QWebEngineView();
-    m_webCourrant = ui->web;
-
-    QUrl urlAccueil("http://www.google.fr");
-    m_webCourrant->setUrl(urlAccueil);
-
+    //On ajoute le layout à l'onglet pour que son contenu soit redimentionné.
     ui->tab->setLayout(ui->vLayoutWeb);
+
+    //On retire le second onglet.
     ui->tabNavigateur->removeTab(1);
 
+    //On set l'URL de la page d'accueil.
+    QUrl urlAccueil("http://www.google.fr");
+    ui->web->setUrl(urlAccueil);
+
+    //Mise en place de la progessBar
     m_loadingBar = new QProgressBar();
-
     ui->vLayoutWeb->addWidget(m_loadingBar);
-
-    //m_indexOngletEnChargement = 0;
-
-    getOngletTitre(m_webCourrant);
 
     //Menu
     connect(ui->actionOuvrirOnglet, SIGNAL(triggered()), this, SLOT(ouvrirTab()));
@@ -46,11 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btHome, SIGNAL(clicked()), this, SLOT(allerAccueil()));
     connect(ui->btAllerURL, SIGNAL(clicked()), this, SLOT(allerURL()));
 
-    connect(webViewActive(), SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-    connect(webViewActive(), SIGNAL(loadStarted()), this , SLOT(getOngletTest()));
-    //connect(ui->tabNavigateur, SIGNAL(currentChanged(int)), this, SLOT(changementOnglet(int)));
-    //connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
-
+    connect(ui->web, SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
+    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -60,16 +54,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::ouvrirTab()
 {
+    //Mise en place du nouvel onglet.
     QWidget * onglet = new QWidget();
     onglet->setObjectName("NouvelOnglet");
 
     QVBoxLayout * layoutOnglet = new QVBoxLayout();
     layoutOnglet->setObjectName("layoutOnglet");
 
-    m_webCourrant = new QWebEngineView();
-    m_webCourrant->setObjectName("web");
+    QWebEngineView * nouvelleWebView = new QWebEngineView();
+    nouvelleWebView->setObjectName("web");
 
-    layoutOnglet->addWidget(m_webCourrant);
+    layoutOnglet->addWidget(nouvelleWebView);
 
     onglet->setLayout(layoutOnglet);
 
@@ -79,13 +74,8 @@ void MainWindow::ouvrirTab()
     m_loadingBar = new QProgressBar();
     layoutOnglet->addWidget(m_loadingBar);
 
-    connect(webViewActive(), SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-
-    //getOngletTitre(m_webCourrant);
-
-    connect(webViewActive(), SIGNAL(loadStarted()), this , SLOT(getOngletTest()));
-
-    qDebug() << "---***ouvrirTab" << m_indexOngletEnChargement << "***---";
+    connect(nouvelleWebView, SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
+    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
 }
 
 void MainWindow::fermerTab()
@@ -104,7 +94,6 @@ void MainWindow::allerPagePrecedente()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->back();
-        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -115,7 +104,6 @@ void MainWindow::allerPageSuivante()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->forward();
-        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -126,7 +114,6 @@ void MainWindow::rechargerPage()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->reload();
-        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -149,7 +136,6 @@ void MainWindow::allerAccueil()
     if(m_webCourrant != nullptr)
     {
         m_webCourrant->setUrl(urlAccueil);
-        getOngletTitre(m_webCourrant);
     }
 }
 
@@ -173,16 +159,6 @@ void MainWindow::allerURL()
     if(m_webCourrant != nullptr && url.isValid())
     {
         m_webCourrant->setUrl(url);
-        getOngletTitre(m_webCourrant);
-    }
-
-}
-
-void MainWindow::changementOnglet(int index)
-{
-    if(index <= 0)
-    {
-        m_webCourrant = webViewActive();
     }
 }
 
@@ -200,33 +176,9 @@ void MainWindow::afficherAProposQt()
 
 void MainWindow::actualiserTitreOnglet(QString titrePage)
 {
-    ui->tabNavigateur->setTabText(m_indexOngletEnChargement, titrePage);
-}
-
-void MainWindow::getOngletTitre(QWebEngineView * web)
-{
-    QWidget * onglet = web->parentWidget();
-    m_indexOngletEnChargement = ui->tabNavigateur->indexOf(onglet);
-    QString titreReduit = web->title();
-    titreReduit.truncate(30);
-
-    qDebug() << "TAB où actualiser titre: " << m_indexOngletEnChargement;
-    connect(web, SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
-}
-
-/*void MainWindow::getOngletTest()
-{
-    QWidget * onglet = webViewActive()->parentWidget();
-    m_indexOngletEnChargement = ui->tabNavigateur->indexOf(onglet);
     QString titreReduit = webViewActive()->title();
     titreReduit.truncate(30);
 
-    qDebug() << "TAB où actualiser titre: " << m_indexOngletEnChargement;
-    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
-}*/
-
-void MainWindow::getIndexOngletQuiCharge()
-{
-    qDebug() << "CHARGEMENT PAGE";
-    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+    QWidget * onglet = webViewActive()->parentWidget();
+    ui->tabNavigateur->setTabText(ui->tabNavigateur->indexOf(onglet), titrePage);
 }

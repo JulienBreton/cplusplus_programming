@@ -25,12 +25,9 @@ public slots:
     void stopChargement();
     void allerAccueil();
     void allerURL();
-    void changementOnglet(int index);
     void actualiserTitreOnglet(QString titrePage);
     void afficherAProposzNavigo();
     void afficherAProposQt();
-    void getIndexOngletQuiCharge();
-    void getOngletTest();
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -38,12 +35,10 @@ public:
 
 private:
     QWebEngineView * webViewActive();
-    void getOngletTitre(QWebEngineView * web);
 
     Ui::MainWindow *ui;
     QProgressBar * m_loadingBar;
     QWebEngineView * m_webCourrant;
-    int m_indexOngletEnChargement;
 
 };
 #endif // MAINWINDOW_H
