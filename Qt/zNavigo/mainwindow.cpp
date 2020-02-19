@@ -44,7 +44,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btAllerURL, SIGNAL(clicked()), this, SLOT(allerURL()));
 
     connect(ui->web, SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+    connect(ui->web, SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+    connect(ui->web, SIGNAL(urlChanged(QUrl)), this, SLOT(changementUrl(QUrl)));
+
+    connect(ui->tabNavigateur, SIGNAL(currentChanged(int)), this, SLOT(changementOnglet(int)));
 }
 
 MainWindow::~MainWindow()
@@ -75,7 +78,8 @@ void MainWindow::ouvrirTab()
     layoutOnglet->addWidget(m_loadingBar);
 
     connect(nouvelleWebView, SIGNAL(loadProgress(int)), m_loadingBar , SLOT(setValue(int)));
-    connect(webViewActive(), SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+    connect(nouvelleWebView, SIGNAL(titleChanged(QString)), this, SLOT(actualiserTitreOnglet(QString)));
+    connect(nouvelleWebView, SIGNAL(urlChanged(QUrl)), this, SLOT(changementUrl(QUrl)));
 }
 
 void MainWindow::fermerTab()
@@ -176,9 +180,31 @@ void MainWindow::afficherAProposQt()
 
 void MainWindow::actualiserTitreOnglet(QString titrePage)
 {
-    QString titreReduit = webViewActive()->title();
+    QWidget * onglet = webViewActive()->parentWidget();
+
+    if(titrePage.size() == 0)
+    {
+        titrePage = "Nouvel onglet";
+    }
+
+    QString titreReduit = titrePage;
     titreReduit.truncate(30);
 
-    QWidget * onglet = webViewActive()->parentWidget();
-    ui->tabNavigateur->setTabText(ui->tabNavigateur->indexOf(onglet), titrePage);
+    ui->tabNavigateur->setTabText(ui->tabNavigateur->indexOf(onglet), titreReduit);
+
+    setWindowTitle(titreReduit + " - " + tr("zNavigo"));
+}
+
+void MainWindow::changementUrl(const QUrl & url)
+{
+    if (url.toString() != tr("html/page_blanche.html"))
+    {
+        ui->barreURL->setText(url.toString());
+    }
+}
+
+void MainWindow::changementOnglet(int index)
+{
+    actualiserTitreOnglet(webViewActive()->title());
+    changementUrl(webViewActive()->url());
 }

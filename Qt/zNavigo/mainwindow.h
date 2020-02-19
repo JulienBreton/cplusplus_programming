@@ -28,6 +28,8 @@ public slots:
     void actualiserTitreOnglet(QString titrePage);
     void afficherAProposzNavigo();
     void afficherAProposQt();
+    void changementUrl(const QUrl & url);
+    void changementOnglet(int);
 
 public:
     MainWindow(QWidget *parent = nullptr);
