@@ -7,6 +7,7 @@
 #include <QProgressBar>
 #include <QMessageBox>
 #include <QTabWidget>
+#include <QWebEngineHistoryItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,6 +32,7 @@ public slots:
     void afficherAProposQt();
     void actualiserBarreURL(const QUrl & url);
     void actualiserApresChangementOnglet(int);
+    void ajouterURLActionHisto();
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -39,8 +41,10 @@ public:
 private:
     QWebEngineView * webViewActive();
     void setTitreFenetreNavigateur();
+    void obtenirHistorique();
 
     QTabWidget * m_tabOnglets;
+    QList<QWebEngineHistoryItem> m_historique;
 
     Ui::MainWindow *ui;
 };

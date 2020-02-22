@@ -336,8 +336,19 @@
     <addaction name="actionAProposDezNavigo"/>
     <addaction name="actionAProposDeQt"/>
    </widget>
+   <widget class="QMenu" name="menuHistorique">
+    <property name="tearOffEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Historique</string>
+    </property>
+    <addaction name="actionViderHistorique"/>
+    <addaction name="separator"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuNavigation"/>
+   <addaction name="menuHistorique"/>
    <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -418,6 +429,11 @@
   <action name="actionAProposDeQt">
    <property name="text">
     <string>A propos de Qt</string>
+   </property>
+  </action>
+  <action name="actionViderHistorique">
+   <property name="text">
+    <string>Vider l'historique</string>
    </property>
   </action>
  </widget>

@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_tabOnglets = new QTabWidget();
     ui->hLayoutTab->addWidget(m_tabOnglets);
 
+    ui->menuHistorique->setStyleSheet("QMenu { menu-scrollable: 1; }");
+
     //On crée le premier onglet ainsi que la webView qu'il contient.
     ouvrirTab();
 
@@ -183,6 +185,8 @@ void MainWindow::actualiserTitreOnglet(QString titrePage)
     m_tabOnglets->setTabText(m_tabOnglets->indexOf(ongletDeWebCourant), titrePage);
 
    setTitreFenetreNavigateur();
+
+   obtenirHistorique();
 }
 
 void MainWindow::actualiserBarreURL(const QUrl & url)
@@ -203,4 +207,28 @@ void MainWindow::setTitreFenetreNavigateur()
 {
     setWindowTitle(webViewActive()->title()+" - zNavigo");
 }
+
+void MainWindow::obtenirHistorique()
+{
+    m_historique = webViewActive()->history()->items();
+
+    if(m_historique.last().title() != "")
+    {
+        QAction * actionHisto = ui->menuHistorique->addAction(m_historique.last().title()+" [URL]: "+m_historique.last().url().toString());
+        connect(actionHisto, SIGNAL(triggered()), this, SLOT(ajouterURLActionHisto()));
+    }
+}
+
+void MainWindow::ajouterURLActionHisto()
+{
+    QObject* obj = sender();
+
+    QAction * action = qobject_cast<QAction *>(obj);
+    QString textAction = action->text();
+    QStringList list = textAction.split(" [URL]: ");
+    QString URL = list[1];
+
+    webViewActive()->setUrl(URL);
+}
+
 

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[17];
-    char stringdata0[249];
+    QByteArrayData data[18];
+    char stringdata0[271];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,8 @@ QT_MOC_LITERAL(12, 153, 22), // "afficherAProposzNavigo"
 QT_MOC_LITERAL(13, 176, 17), // "afficherAProposQt"
 QT_MOC_LITERAL(14, 194, 18), // "actualiserBarreURL"
 QT_MOC_LITERAL(15, 213, 3), // "url"
-QT_MOC_LITERAL(16, 217, 31) // "actualiserApresChangementOnglet"
+QT_MOC_LITERAL(16, 217, 31), // "actualiserApresChangementOnglet"
+QT_MOC_LITERAL(17, 249, 21) // "ajouterURLActionHisto"
 
     },
     "MainWindow\0ouvrirTab\0\0fermerTab\0"
@@ -57,7 +58,8 @@ QT_MOC_LITERAL(16, 217, 31) // "actualiserApresChangementOnglet"
     "allerURL\0actualiserTitreOnglet\0titrePage\0"
     "afficherAProposzNavigo\0afficherAProposQt\0"
     "actualiserBarreURL\0url\0"
-    "actualiserApresChangementOnglet"
+    "actualiserApresChangementOnglet\0"
+    "ajouterURLActionHisto"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +69,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,19 +77,20 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   79,    2, 0x0a /* Public */,
-       3,    0,   80,    2, 0x0a /* Public */,
-       4,    0,   81,    2, 0x0a /* Public */,
-       5,    0,   82,    2, 0x0a /* Public */,
-       6,    0,   83,    2, 0x0a /* Public */,
-       7,    0,   84,    2, 0x0a /* Public */,
-       8,    0,   85,    2, 0x0a /* Public */,
-       9,    0,   86,    2, 0x0a /* Public */,
-      10,    1,   87,    2, 0x0a /* Public */,
-      12,    0,   90,    2, 0x0a /* Public */,
-      13,    0,   91,    2, 0x0a /* Public */,
-      14,    1,   92,    2, 0x0a /* Public */,
-      16,    1,   95,    2, 0x0a /* Public */,
+       1,    0,   84,    2, 0x0a /* Public */,
+       3,    0,   85,    2, 0x0a /* Public */,
+       4,    0,   86,    2, 0x0a /* Public */,
+       5,    0,   87,    2, 0x0a /* Public */,
+       6,    0,   88,    2, 0x0a /* Public */,
+       7,    0,   89,    2, 0x0a /* Public */,
+       8,    0,   90,    2, 0x0a /* Public */,
+       9,    0,   91,    2, 0x0a /* Public */,
+      10,    1,   92,    2, 0x0a /* Public */,
+      12,    0,   95,    2, 0x0a /* Public */,
+      13,    0,   96,    2, 0x0a /* Public */,
+      14,    1,   97,    2, 0x0a /* Public */,
+      16,    1,  100,    2, 0x0a /* Public */,
+      17,    0,  103,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -103,6 +106,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QUrl,   15,
     QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -126,6 +130,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 10: _t->afficherAProposQt(); break;
         case 11: _t->actualiserBarreURL((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 12: _t->actualiserApresChangementOnglet((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->ajouterURLActionHisto(); break;
         default: ;
         }
     }
@@ -160,13 +165,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }
