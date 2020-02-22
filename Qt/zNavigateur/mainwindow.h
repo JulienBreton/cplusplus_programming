@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWebEngineView>
+#include <QUrl>
+#include <QProgressBar>
+#include <QMessageBox>
+#include <QTabWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,11 +16,32 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public slots:
+
+    void ouvrirTab();
+    void fermerTab();
+    void allerPagePrecedente();
+    void allerPageSuivante();
+    void rechargerPage();
+    void stopChargement();
+    void allerAccueil();
+    void allerURL();
+    void actualiserTitreOnglet(QString titrePage);
+    void afficherAProposzNavigo();
+    void afficherAProposQt();
+    void actualiserBarreURL(const QUrl & url);
+    void actualiserApresChangementOnglet(int);
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
+    QWebEngineView * webViewActive();
+    void setTitreFenetreNavigateur();
+
+    QTabWidget * m_tabOnglets;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
