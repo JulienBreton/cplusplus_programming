@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QTabWidget>
 #include <QWebEngineHistoryItem>
+#include <QInputDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,6 +34,7 @@ public slots:
     void actualiserBarreURL(const QUrl & url);
     void actualiserApresChangementOnglet(int);
     void ajouterURLActionHisto();
+    void chercherDansPageWeb();
 
 public:
     MainWindow(QWidget *parent = nullptr);

@@ -914,6 +914,11 @@ moc_mainwindow.cpp: ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineHistoryItem \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginehistory.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		moc_predefs.h \
 		../../../../Qt/5.14.0/gcc_64/bin/moc
 	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/zNavigateur -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineCore -I/home/julien/Qt/5.14.0/gcc_64/include/QtQuick -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtQmlModels -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebChannel -I/home/julien/Qt/5.14.0/gcc_64/include/QtQml -I/home/julien/Qt/5.14.0/gcc_64/include/QtNetwork -I/home/julien/Qt/5.14.0/gcc_64/include/QtPositioning -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../zNavigateur/mainwindow.h -o moc_mainwindow.cpp
@@ -1095,6 +1100,11 @@ main.o: ../zNavigateur/main.cpp ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineHistoryItem \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginehistory.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1260,6 +1270,11 @@ mainwindow.o: ../zNavigateur/mainwindow.cpp ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QTabWidget \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineHistoryItem \
 		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginehistory.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QInputDialog \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qinputdialog.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../zNavigateur/mainwindow.cpp
 

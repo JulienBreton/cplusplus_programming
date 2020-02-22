@@ -40,6 +40,7 @@ public:
     QAction *actionAProposDezNavigo;
     QAction *actionAProposDeQt;
     QAction *actionViderHistorique;
+    QAction *actionChercher;
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *vLayoutFenetre;
@@ -57,6 +58,7 @@ public:
     QMenu *menuNavigation;
     QMenu *menuAide;
     QMenu *menuHistorique;
+    QMenu *menuEditer;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -106,6 +108,8 @@ public:
         actionAProposDeQt->setObjectName(QString::fromUtf8("actionAProposDeQt"));
         actionViderHistorique = new QAction(MainWindow);
         actionViderHistorique->setObjectName(QString::fromUtf8("actionViderHistorique"));
+        actionChercher = new QAction(MainWindow);
+        actionChercher->setObjectName(QString::fromUtf8("actionChercher"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
@@ -214,12 +218,15 @@ public:
         menuHistorique = new QMenu(menubar);
         menuHistorique->setObjectName(QString::fromUtf8("menuHistorique"));
         menuHistorique->setTearOffEnabled(true);
+        menuEditer = new QMenu(menubar);
+        menuEditer->setObjectName(QString::fromUtf8("menuEditer"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menu->menuAction());
+        menubar->addAction(menuEditer->menuAction());
         menubar->addAction(menuNavigation->menuAction());
         menubar->addAction(menuHistorique->menuAction());
         menubar->addAction(menuAide->menuAction());
@@ -237,6 +244,7 @@ public:
         menuAide->addAction(actionAProposDeQt);
         menuHistorique->addAction(actionViderHistorique);
         menuHistorique->addSeparator();
+        menuEditer->addAction(actionChercher);
 
         retranslateUi(MainWindow);
         QObject::connect(actionQuitter, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -262,6 +270,10 @@ public:
         actionAProposDezNavigo->setText(QCoreApplication::translate("MainWindow", "A propos de zNavigateur", nullptr));
         actionAProposDeQt->setText(QCoreApplication::translate("MainWindow", "A propos de Qt", nullptr));
         actionViderHistorique->setText(QCoreApplication::translate("MainWindow", "Vider l'historique", nullptr));
+        actionChercher->setText(QCoreApplication::translate("MainWindow", "Chercher", nullptr));
+#if QT_CONFIG(shortcut)
+        actionChercher->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+F", nullptr));
+#endif // QT_CONFIG(shortcut)
 #if QT_CONFIG(tooltip)
         btPrecedent->setToolTip(QCoreApplication::translate("MainWindow", "Page pr\303\251c\303\251dente", "Page pr\303\251c\303\251dente"));
 #endif // QT_CONFIG(tooltip)
@@ -281,6 +293,7 @@ public:
         menuNavigation->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
         menuAide->setTitle(QCoreApplication::translate("MainWindow", "Aide", nullptr));
         menuHistorique->setTitle(QCoreApplication::translate("MainWindow", "Historique", nullptr));
+        menuEditer->setTitle(QCoreApplication::translate("MainWindow", "Editer", nullptr));
     } // retranslateUi
 
 };

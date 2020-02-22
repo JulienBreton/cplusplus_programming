@@ -346,7 +346,14 @@
     <addaction name="actionViderHistorique"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuEditer">
+    <property name="title">
+     <string>Editer</string>
+    </property>
+    <addaction name="actionChercher"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuEditer"/>
    <addaction name="menuNavigation"/>
    <addaction name="menuHistorique"/>
    <addaction name="menuAide"/>
@@ -434,6 +441,14 @@
   <action name="actionViderHistorique">
    <property name="text">
     <string>Vider l'historique</string>
+   </property>
+  </action>
+  <action name="actionChercher">
+   <property name="text">
+    <string>Chercher</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

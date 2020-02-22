@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAllerURL, SIGNAL(triggered()), this, SLOT(allerURL()));
     connect(ui->actionAProposDezNavigo, SIGNAL(triggered()), this, SLOT(afficherAProposzNavigo()));
     connect(ui->actionAProposDeQt, SIGNAL(triggered()), this, SLOT(afficherAProposQt()));
+    connect(ui->actionChercher, SIGNAL(triggered()), this, SLOT(chercherDansPageWeb()));
 
     //Programmation du déclenchement des boutons de la toolBar de navigation.
     connect(ui->btPrecedent, SIGNAL(clicked()), this, SLOT(allerPagePrecedente()));
@@ -229,6 +230,15 @@ void MainWindow::ajouterURLActionHisto()
     QString URL = list[1];
 
     webViewActive()->setUrl(URL);
+}
+
+void MainWindow::chercherDansPageWeb()
+{
+    bool ok = false;
+    QString search = QInputDialog::getText(this, tr("Recherche"),
+                                           tr("Recherche:"), QLineEdit::Normal,
+                                           "", &ok);
+    webViewActive()->findText(search);
 }
 
 
