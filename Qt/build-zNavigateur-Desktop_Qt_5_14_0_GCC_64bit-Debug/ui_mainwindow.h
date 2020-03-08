@@ -41,6 +41,7 @@ public:
     QAction *actionAProposDeQt;
     QAction *actionViderHistorique;
     QAction *actionChercher;
+    QAction *actionOptions;
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *vLayoutFenetre;
@@ -110,6 +111,8 @@ public:
         actionViderHistorique->setObjectName(QString::fromUtf8("actionViderHistorique"));
         actionChercher = new QAction(MainWindow);
         actionChercher->setObjectName(QString::fromUtf8("actionChercher"));
+        actionOptions = new QAction(MainWindow);
+        actionOptions->setObjectName(QString::fromUtf8("actionOptions"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
@@ -245,6 +248,7 @@ public:
         menuHistorique->addAction(actionViderHistorique);
         menuHistorique->addSeparator();
         menuEditer->addAction(actionChercher);
+        menuEditer->addAction(actionOptions);
 
         retranslateUi(MainWindow);
         QObject::connect(actionQuitter, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -274,6 +278,7 @@ public:
 #if QT_CONFIG(shortcut)
         actionChercher->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_CONFIG(shortcut)
+        actionOptions->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
 #if QT_CONFIG(tooltip)
         btPrecedent->setToolTip(QCoreApplication::translate("MainWindow", "Page pr\303\251c\303\251dente", "Page pr\303\251c\303\251dente"));
 #endif // QT_CONFIG(tooltip)
@@ -289,6 +294,9 @@ public:
         btStopChargement->setText(QString());
         btHome->setText(QString());
         btAllerURL->setText(QString());
+#if QT_CONFIG(shortcut)
+        btAllerURL->setShortcut(QCoreApplication::translate("MainWindow", "Return", nullptr));
+#endif // QT_CONFIG(shortcut)
         menu->setTitle(QCoreApplication::translate("MainWindow", "Fichier", nullptr));
         menuNavigation->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
         menuAide->setTitle(QCoreApplication::translate("MainWindow", "Aide", nullptr));

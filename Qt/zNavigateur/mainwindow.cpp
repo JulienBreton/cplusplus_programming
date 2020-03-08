@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->menuHistorique->setStyleSheet("QMenu { menu-scrollable: 1; }");
 
+    //On créé le .ini
+    m_sSettingsFile = QApplication::applicationDirPath() + "/zNavigo.ini";
+    QSettings settings(m_sSettingsFile, QSettings::IniFormat);
+
     //On crée le premier onglet ainsi que la webView qu'il contient.
     ouvrirTab();
 
@@ -34,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAProposDezNavigo, SIGNAL(triggered()), this, SLOT(afficherAProposzNavigo()));
     connect(ui->actionAProposDeQt, SIGNAL(triggered()), this, SLOT(afficherAProposQt()));
     connect(ui->actionChercher, SIGNAL(triggered()), this, SLOT(chercherDansPageWeb()));
+    connect(ui->actionOptions, SIGNAL(triggered()), this, SLOT(editerOptions()));
 
     //Programmation du déclenchement des boutons de la toolBar de navigation.
     connect(ui->btPrecedent, SIGNAL(clicked()), this, SLOT(allerPagePrecedente()));
@@ -66,8 +71,13 @@ void MainWindow::ouvrirTab()
     //On passe sur le nouvel onglet.
     m_tabOnglets->setCurrentIndex(m_tabOnglets->indexOf(onglet));
 
-    QUrl urlAccueil("http://www.google.fr");
+    //On récupère l'url de la page d'accueil dans le .ini
+    settings = new QSettings(m_sSettingsFile, QSettings::IniFormat);
+    QUrl urlAccueil(settings->value("urlAccueil","").toString());
     nouvelleWebView->setUrl(urlAccueil);
+    actualiserBarreURL(urlAccueil);
+
+    updateTaillePolice(nouvelleWebView);
 
     QProgressBar * loadingBar = new QProgressBar();
     layoutOnglet->addWidget(loadingBar);
@@ -123,7 +133,8 @@ void MainWindow::stopChargement()
 
 void MainWindow::allerAccueil()
 {
-    QUrl urlAccueil("http://www.google.fr");
+    QSettings settings(m_sSettingsFile, QSettings::IniFormat);
+    QUrl urlAccueil(settings.value("urlAccueil","").toString());
 
     if(webViewActive() != nullptr)
     {
@@ -202,6 +213,9 @@ void MainWindow::actualiserApresChangementOnglet(int index)
 
     //On actualise aussi la barre de saisie de l'URL.
     actualiserBarreURL(webViewActive()->url());
+
+    //On met à jour la taille de la police.
+    updateTaillePolice(webViewActive());
 }
 
 void MainWindow::setTitreFenetreNavigateur()
@@ -241,4 +255,22 @@ void MainWindow::chercherDansPageWeb()
     webViewActive()->findText(search);
 }
 
+void MainWindow::editerOptions()
+{
+    fntOptions options(this);
 
+    options.exec();
+
+    updateTaillePolice(webViewActive());
+}
+
+QString MainWindow::getChemiFichierIni()
+{
+    return m_sSettingsFile;
+}
+
+void MainWindow::updateTaillePolice(QWebEngineView * pageActive)
+{
+    QWebEngineSettings *defaultSettings = pageActive->settings();
+    defaultSettings->setFontSize(QWebEngineSettings::MinimumFontSize,settings->value("taillePolice","").toInt());
+}

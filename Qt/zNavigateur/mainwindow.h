@@ -9,6 +9,9 @@
 #include <QTabWidget>
 #include <QWebEngineHistoryItem>
 #include <QInputDialog>
+#include <QSettings>
+#include <QWebEngineSettings>
+#include "fntoptions.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,16 +38,21 @@ public slots:
     void actualiserApresChangementOnglet(int);
     void ajouterURLActionHisto();
     void chercherDansPageWeb();
+    void editerOptions();
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QString getChemiFichierIni();
 
 private:
     QWebEngineView * webViewActive();
     void setTitreFenetreNavigateur();
     void obtenirHistorique();
+    void updateTaillePolice(QWebEngineView * pageActive);
 
+    QString m_sSettingsFile;
+    QSettings * settings;
     QTabWidget * m_tabOnglets;
     QList<QWebEngineHistoryItem> m_historique;
 
