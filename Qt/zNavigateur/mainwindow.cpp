@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOptions, SIGNAL(triggered()), this, SLOT(editerOptions()));
     connect(ui->actionAjouter_aux_favoris, SIGNAL(triggered()), this, SLOT(ajouterAuxFavoris()));
     connect(ui->actionSupprimerFavoris, SIGNAL(triggered()), this, SLOT(supprimerDesFavoris()));
+    connect(ui->actionViderHistorique, SIGNAL(triggered()), this, SLOT(supprimerHistorique()));
 
     //Programmation du déclenchement des boutons de la toolBar de navigation.
     connect(ui->btPrecedent, SIGNAL(clicked()), this, SLOT(allerPagePrecedente()));
@@ -409,6 +410,13 @@ void MainWindow::supprimerDesFavoris()
 
 void MainWindow::supprimerHistorique()
 {
+    QList<QAction *> actionsHisto;
 
+    actionsHisto = ui->menuHistorique->actions();
 
+    for(int i = 2; i < actionsHisto.size(); i++)
+    {
+        qDebug() << "Action à supprimer : " << actionsHisto[i]->text();
+        ui->menuHistorique->removeAction(actionsHisto[i]);
+    }
 }
