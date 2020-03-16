@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WEBENGINEWIDGETS_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_WEBENGINECORE_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_WEBCHANNEL_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WEBENGINEWIDGETS_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_WEBENGINECORE_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_QMLMODELS_LIB -DQT_WEBCHANNEL_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../zNavigateur -I. -I../../../../Qt/5.14.0/gcc_64/include -I../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I../../../../Qt/5.14.0/gcc_64/include/QtPrintSupport -I../../../../Qt/5.14.0/gcc_64/include/QtWidgets -I../../../../Qt/5.14.0/gcc_64/include/QtWebEngineCore -I../../../../Qt/5.14.0/gcc_64/include/QtQuick -I../../../../Qt/5.14.0/gcc_64/include/QtGui -I../../../../Qt/5.14.0/gcc_64/include/QtQmlModels -I../../../../Qt/5.14.0/gcc_64/include/QtWebChannel -I../../../../Qt/5.14.0/gcc_64/include/QtQml -I../../../../Qt/5.14.0/gcc_64/include/QtNetwork -I../../../../Qt/5.14.0/gcc_64/include/QtPositioning -I../../../../Qt/5.14.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I. -I../../../../Qt/5.14.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../zNavigateur -I. -I../../../../Qt/5.14.0/gcc_64/include -I../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I../../../../Qt/5.14.0/gcc_64/include/QtPrintSupport -I../../../../Qt/5.14.0/gcc_64/include/QtWidgets -I../../../../Qt/5.14.0/gcc_64/include/QtWebEngineCore -I../../../../Qt/5.14.0/gcc_64/include/QtQuick -I../../../../Qt/5.14.0/gcc_64/include/QtGui -I../../../../Qt/5.14.0/gcc_64/include/QtSql -I../../../../Qt/5.14.0/gcc_64/include/QtQmlModels -I../../../../Qt/5.14.0/gcc_64/include/QtWebChannel -I../../../../Qt/5.14.0/gcc_64/include/QtQml -I../../../../Qt/5.14.0/gcc_64/include/QtNetwork -I../../../../Qt/5.14.0/gcc_64/include/QtPositioning -I../../../../Qt/5.14.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I. -I../../../../Qt/5.14.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/julien/Qt/5.14.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = zNavigateur1.0.0
 DISTDIR = /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/.tmp/zNavigateur1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/julien/Qt/5.14.0/gcc_64/lib -Wl,-rpath-link,/home/julien/Qt/5.14.0/gcc_64/lib
-LIBS          = $(SUBLIBS) /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebEngineWidgets.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5PrintSupport.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Widgets.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebEngineCore.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Quick.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Gui.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5QmlModels.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebChannel.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Qml.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Network.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Positioning.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebEngineWidgets.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5PrintSupport.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Widgets.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebEngineCore.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Quick.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Gui.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Sql.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5QmlModels.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5WebChannel.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Qml.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Network.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Positioning.so /home/julien/Qt/5.14.0/gcc_64/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -930,10 +930,22 @@ moc_fntoptions.cpp: ../zNavigateur/fntoptions.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qsettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineSettings \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginesettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsql-config.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDriver \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldriver.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlError \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlquery.h \
 		../zNavigateur/fntoptions.h \
 		moc_predefs.h \
 		../../../../Qt/5.14.0/gcc_64/bin/moc
-	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/zNavigateur -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineCore -I/home/julien/Qt/5.14.0/gcc_64/include/QtQuick -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtQmlModels -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebChannel -I/home/julien/Qt/5.14.0/gcc_64/include/QtQml -I/home/julien/Qt/5.14.0/gcc_64/include/QtNetwork -I/home/julien/Qt/5.14.0/gcc_64/include/QtPositioning -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../zNavigateur/fntoptions.h -o moc_fntoptions.cpp
+	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/zNavigateur -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineCore -I/home/julien/Qt/5.14.0/gcc_64/include/QtQuick -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtSql -I/home/julien/Qt/5.14.0/gcc_64/include/QtQmlModels -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebChannel -I/home/julien/Qt/5.14.0/gcc_64/include/QtQml -I/home/julien/Qt/5.14.0/gcc_64/include/QtNetwork -I/home/julien/Qt/5.14.0/gcc_64/include/QtPositioning -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../zNavigateur/fntoptions.h -o moc_fntoptions.cpp
 
 moc_mainwindow.cpp: ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QMainWindow \
@@ -1098,13 +1110,25 @@ moc_mainwindow.cpp: ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qsettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineSettings \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginesettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsql-config.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDriver \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldriver.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlError \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlquery.h \
 		../zNavigateur/fntoptions.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QDebug \
 		../zNavigateur/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.14.0/gcc_64/bin/moc
-	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/zNavigateur -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineCore -I/home/julien/Qt/5.14.0/gcc_64/include/QtQuick -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtQmlModels -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebChannel -I/home/julien/Qt/5.14.0/gcc_64/include/QtQml -I/home/julien/Qt/5.14.0/gcc_64/include/QtNetwork -I/home/julien/Qt/5.14.0/gcc_64/include/QtPositioning -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../zNavigateur/mainwindow.h -o moc_mainwindow.cpp
+	/home/julien/Qt/5.14.0/gcc_64/bin/moc $(DEFINES) --include /home/julien/dev/cplusplus_programming/Qt/build-zNavigateur-Desktop_Qt_5_14_0_GCC_64bit-Debug/moc_predefs.h -I/home/julien/Qt/5.14.0/gcc_64/mkspecs/linux-g++ -I/home/julien/dev/cplusplus_programming/Qt/zNavigateur -I/home/julien/Qt/5.14.0/gcc_64/include -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtPrintSupport -I/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebEngineCore -I/home/julien/Qt/5.14.0/gcc_64/include/QtQuick -I/home/julien/Qt/5.14.0/gcc_64/include/QtGui -I/home/julien/Qt/5.14.0/gcc_64/include/QtSql -I/home/julien/Qt/5.14.0/gcc_64/include/QtQmlModels -I/home/julien/Qt/5.14.0/gcc_64/include/QtWebChannel -I/home/julien/Qt/5.14.0/gcc_64/include/QtQml -I/home/julien/Qt/5.14.0/gcc_64/include/QtNetwork -I/home/julien/Qt/5.14.0/gcc_64/include/QtPositioning -I/home/julien/Qt/5.14.0/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../zNavigateur/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1297,6 +1321,18 @@ fntoptions.o: ../zNavigateur/fntoptions.cpp ../zNavigateur/fntoptions.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qsettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineSettings \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginesettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsql-config.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDriver \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldriver.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlError \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlquery.h \
 		ui_fntoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fntoptions.o ../zNavigateur/fntoptions.cpp
 
@@ -1463,6 +1499,18 @@ main.o: ../zNavigateur/main.cpp ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qsettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineSettings \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginesettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsql-config.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDriver \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldriver.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlError \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlquery.h \
 		../zNavigateur/fntoptions.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QDebug \
@@ -1638,6 +1686,18 @@ mainwindow.o: ../zNavigateur/mainwindow.cpp ../zNavigateur/mainwindow.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/qsettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/QWebEngineSettings \
+		../../../../Qt/5.14.0/gcc_64/include/QtWebEngineWidgets/qwebenginesettings.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qtsql-config.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlDriver \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqldriver.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlError \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.14.0/gcc_64/include/QtSql/qsqlquery.h \
 		../zNavigateur/fntoptions.h \
 		../../../../Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
 		../../../../Qt/5.14.0/gcc_64/include/QtCore/QDebug \

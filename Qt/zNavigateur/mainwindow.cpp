@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     //On crée le premier onglet ainsi que la webView qu'il contient.
     ouvrirTab();
 
+    connecterDatabase();
+
     //Programmation du déclenchement des slots du menu.
     connect(ui->actionOuvrirOnglet, SIGNAL(triggered()), this, SLOT(ouvrirTab()));
     connect(ui->actionFermerOnglet, SIGNAL(triggered()), this, SLOT(fermerTab()));
@@ -39,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAProposDeQt, SIGNAL(triggered()), this, SLOT(afficherAProposQt()));
     connect(ui->actionChercher, SIGNAL(triggered()), this, SLOT(chercherDansPageWeb()));
     connect(ui->actionOptions, SIGNAL(triggered()), this, SLOT(editerOptions()));
+    connect(ui->actionAjouter_aux_favoris, SIGNAL(triggered()), this, SLOT(ajouterAuxFavoris()));
+    connect(ui->actionSupprimerFavoris, SIGNAL(triggered()), this, SLOT(supprimerDesFavoris()));
 
     //Programmation du déclenchement des boutons de la toolBar de navigation.
     connect(ui->btPrecedent, SIGNAL(clicked()), this, SLOT(allerPagePrecedente()));
@@ -273,4 +277,138 @@ void MainWindow::updateTaillePolice(QWebEngineView * pageActive)
 {
     QWebEngineSettings *defaultSettings = pageActive->settings();
     defaultSettings->setFontSize(QWebEngineSettings::MinimumFontSize,settings->value("taillePolice","").toInt());
+}
+
+bool MainWindow::connecterDatabase()
+{
+    const QString DRIVER("QSQLITE");
+
+    if(QSqlDatabase::isDriverAvailable(DRIVER))
+    {
+         qDebug() << "Driver SQLite dispo OK!!!";
+
+         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
+
+         db.setDatabaseName("favoris");
+
+         if(!db.open())
+         {
+            qWarning() << "ERROR: " << db.lastError();
+            return false;
+         }
+         else
+         {
+            qDebug() << "Ouverture de la base OK!!!";
+
+            QSqlQuery query("CREATE TABLE IF NOT EXISTS favoris (id INTEGER PRIMARY KEY, libelle TEXT, url TEXT)");
+
+            if(!query.isActive())
+            {
+                qWarning() << "ERROR: " << query.lastError().text();
+                return false;
+            }
+
+            //if(!query.exec("INSERT INTO favoris(libelle) VALUES('Eddie Guerrero')"))
+            //  qWarning() << "ERROR: " << query.lastError().text();
+
+            populateFavoris();
+
+         }
+
+         return true;
+    }
+
+    qDebug() << "Driver SQLite absent KO!!!";
+    return false;
+}
+
+void MainWindow::ajouterAuxFavoris()
+{
+    QSqlQuery query;
+
+    if(!query.exec("INSERT INTO favoris (libelle, url) VALUES ('"+webViewActive()->title()+"', '"+webViewActive()->url().toString()+"')"))
+      qWarning() << "ERROR: " << query.lastError().text();
+
+    QAction * actionFavoris = ui->menuFavoris->addAction(webViewActive()->title());
+    connect(actionFavoris, SIGNAL(triggered()), this, SLOT(allerUrlFavoris()));
+}
+
+void MainWindow::populateFavoris()
+{
+    QSqlQuery query;
+    query.prepare("SELECT libelle FROM favoris");
+
+    if(!query.exec())
+            qWarning() << "Erreur lors du populate!!" << query.lastError().text();
+
+    while(query.next())
+    {
+        qDebug() << "Résultat select : " << query.value(0).toString();
+        QAction * actionFavoris = ui->menuFavoris->addAction(query.value(0).toString());
+        connect(actionFavoris, SIGNAL(triggered()), this, SLOT(allerUrlFavoris()));
+    }
+}
+
+void MainWindow::allerUrlFavoris()
+{
+    QObject* obj = sender();
+
+    QAction * action = qobject_cast<QAction *>(obj);
+    //QString textAction = action->text();
+    qDebug() << "Nom de l'action cliqué : " << action->text();
+    QString url = getURLFavoris(action->text());
+
+    webViewActive()->setUrl(url);
+}
+
+QString MainWindow::getURLFavoris(QString libelleFavoris)
+{
+    QSqlQuery query;
+    query.prepare("SELECT url FROM favoris WHERE libelle = ?");
+    query.addBindValue(libelleFavoris);
+
+    if(!query.exec())
+        qWarning() << "MainWindow::OnSearchClicked - ERROR: " << query.lastError().text();
+
+    if(query.first())
+    {
+        qDebug() << "URL trouvée dans la base : " << query.value(0).toString();
+        return query.value(0).toString();
+    }
+    else
+       return "Pas d'URL associée au libellé";
+}
+
+void MainWindow::supprimerDesFavoris()
+{
+    //Récupérer l'URL en cours
+    QUrl urlAsupprimer = webViewActive()->url();
+
+    //Chercher l'URL dans la base
+    QSqlQuery query;
+    query.prepare("DELETE FROM favoris WHERE url = '"+urlAsupprimer.toString()+"'");
+    qDebug() << "URL à supprimer" << urlAsupprimer.toString();
+
+    //Supprimer les entrées de la base qui ont cette url
+    if(!query.exec())
+        qWarning() << "MainWindow::supprimerDesFavoris - ERROR: " << query.lastError().text();
+
+    QList<QAction *> actionsFavoris;
+
+    actionsFavoris = ui->menuFavoris->actions();
+
+    for(int i = 3; i < actionsFavoris.size(); i++)
+    {
+        qDebug() << "Action à supprimer : " << actionsFavoris[i]->text();
+        ui->menuFavoris->removeAction(actionsFavoris[i]);
+    }
+
+    //Mettre à jour la liste des favoris.
+    populateFavoris();
+}
+
+void MainWindow::supprimerHistorique()
+{
+
+
 }

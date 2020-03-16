@@ -11,6 +11,10 @@
 #include <QInputDialog>
 #include <QSettings>
 #include <QWebEngineSettings>
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QSqlError>
+#include <QSqlQuery>
 #include "fntoptions.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +43,10 @@ public slots:
     void ajouterURLActionHisto();
     void chercherDansPageWeb();
     void editerOptions();
+    void ajouterAuxFavoris();
+    void allerUrlFavoris();
+    void supprimerDesFavoris();
+    void supprimerHistorique();
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -50,6 +58,9 @@ private:
     void setTitreFenetreNavigateur();
     void obtenirHistorique();
     void updateTaillePolice(QWebEngineView * pageActive);
+    bool connecterDatabase();
+    void populateFavoris();
+    QString getURLFavoris(QString libelleFavoris);
 
     QString m_sSettingsFile;
     QSettings * settings;

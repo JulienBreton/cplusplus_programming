@@ -356,10 +356,19 @@
     <addaction name="actionChercher"/>
     <addaction name="actionOptions"/>
    </widget>
+   <widget class="QMenu" name="menuFavoris">
+    <property name="title">
+     <string>Favoris</string>
+    </property>
+    <addaction name="actionAjouter_aux_favoris"/>
+    <addaction name="actionSupprimerFavoris"/>
+    <addaction name="separator"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuEditer"/>
    <addaction name="menuNavigation"/>
    <addaction name="menuHistorique"/>
+   <addaction name="menuFavoris"/>
    <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -458,6 +467,16 @@
   <action name="actionOptions">
    <property name="text">
     <string>Options</string>
+   </property>
+  </action>
+  <action name="actionAjouter_aux_favoris">
+   <property name="text">
+    <string>Ajouter aux favoris</string>
+   </property>
+  </action>
+  <action name="actionSupprimerFavoris">
+   <property name="text">
+    <string>Supprimer des favoris</string>
    </property>
   </action>
  </widget>

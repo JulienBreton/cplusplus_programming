@@ -42,6 +42,8 @@ public:
     QAction *actionViderHistorique;
     QAction *actionChercher;
     QAction *actionOptions;
+    QAction *actionAjouter_aux_favoris;
+    QAction *actionSupprimerFavoris;
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *vLayoutFenetre;
@@ -60,6 +62,7 @@ public:
     QMenu *menuAide;
     QMenu *menuHistorique;
     QMenu *menuEditer;
+    QMenu *menuFavoris;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -113,6 +116,10 @@ public:
         actionChercher->setObjectName(QString::fromUtf8("actionChercher"));
         actionOptions = new QAction(MainWindow);
         actionOptions->setObjectName(QString::fromUtf8("actionOptions"));
+        actionAjouter_aux_favoris = new QAction(MainWindow);
+        actionAjouter_aux_favoris->setObjectName(QString::fromUtf8("actionAjouter_aux_favoris"));
+        actionSupprimerFavoris = new QAction(MainWindow);
+        actionSupprimerFavoris->setObjectName(QString::fromUtf8("actionSupprimerFavoris"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
@@ -223,6 +230,8 @@ public:
         menuHistorique->setTearOffEnabled(true);
         menuEditer = new QMenu(menubar);
         menuEditer->setObjectName(QString::fromUtf8("menuEditer"));
+        menuFavoris = new QMenu(menubar);
+        menuFavoris->setObjectName(QString::fromUtf8("menuFavoris"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -232,6 +241,7 @@ public:
         menubar->addAction(menuEditer->menuAction());
         menubar->addAction(menuNavigation->menuAction());
         menubar->addAction(menuHistorique->menuAction());
+        menubar->addAction(menuFavoris->menuAction());
         menubar->addAction(menuAide->menuAction());
         menu->addAction(actionOuvrirOnglet);
         menu->addAction(actionFermerOnglet);
@@ -249,6 +259,9 @@ public:
         menuHistorique->addSeparator();
         menuEditer->addAction(actionChercher);
         menuEditer->addAction(actionOptions);
+        menuFavoris->addAction(actionAjouter_aux_favoris);
+        menuFavoris->addAction(actionSupprimerFavoris);
+        menuFavoris->addSeparator();
 
         retranslateUi(MainWindow);
         QObject::connect(actionQuitter, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -279,6 +292,8 @@ public:
         actionChercher->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+F", nullptr));
 #endif // QT_CONFIG(shortcut)
         actionOptions->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
+        actionAjouter_aux_favoris->setText(QCoreApplication::translate("MainWindow", "Ajouter aux favoris", nullptr));
+        actionSupprimerFavoris->setText(QCoreApplication::translate("MainWindow", "Supprimer des favoris", nullptr));
 #if QT_CONFIG(tooltip)
         btPrecedent->setToolTip(QCoreApplication::translate("MainWindow", "Page pr\303\251c\303\251dente", "Page pr\303\251c\303\251dente"));
 #endif // QT_CONFIG(tooltip)
@@ -302,6 +317,7 @@ public:
         menuAide->setTitle(QCoreApplication::translate("MainWindow", "Aide", nullptr));
         menuHistorique->setTitle(QCoreApplication::translate("MainWindow", "Historique", nullptr));
         menuEditer->setTitle(QCoreApplication::translate("MainWindow", "Editer", nullptr));
+        menuFavoris->setTitle(QCoreApplication::translate("MainWindow", "Favoris", nullptr));
     } // retranslateUi
 
 };
