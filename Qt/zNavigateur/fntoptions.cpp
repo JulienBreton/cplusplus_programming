@@ -16,11 +16,19 @@ fntOptions::fntOptions(QWidget *parent) :
     QSettings settings(cheminFichierIni, QSettings::IniFormat);
 
     //On set la valeur de la page d'accueil.
-    QUrl urlAccueil(settings.value("urlAccueil","").toString());
+    QUrl urlAccueil(settings.value("urlAccueil","https://www.google.fr").toString());
     ui->urlPageAccueil->setText(urlAccueil.toString());
 
-    QString taillePolice(settings.value("taillePolice","").toString());
-    ui->taillePolice->setValue(taillePolice.toInt());
+    QString taillePolice(settings.value("taillePolice","12").toString());
+
+    if(taillePolice.toInt() <= 0)
+    {
+        ui->taillePolice->setValue(12);
+    }
+    else
+    {
+        ui->taillePolice->setValue(taillePolice.toInt());
+    }
 
     connect(this, SIGNAL(accepted()), this, SLOT(enregistrerOptions()));
 }

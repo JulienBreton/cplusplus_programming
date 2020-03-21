@@ -139,7 +139,7 @@ void MainWindow::stopChargement()
 void MainWindow::allerAccueil()
 {
     QSettings settings(m_sSettingsFile, QSettings::IniFormat);
-    QUrl urlAccueil(settings.value("urlAccueil","").toString());
+    QUrl urlAccueil(settings.value("urlAccueil","https://www.google.fr").toString());
 
     if(webViewActive() != nullptr)
     {

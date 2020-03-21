@@ -1,6 +1,6 @@
-QT       += core gui sql
+QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webenginewidgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
@@ -16,31 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    fntoptions.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    fntoptions.h \
     mainwindow.h
 
 FORMS += \
-    fntoptions.ui \
     mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-DISTFILES += \
-    icones/actu.png \
-    icones/go.png \
-    icones/home.png \
-    icones/prec.png \
-    icones/stop.png \
-    icones/suiv.png \
-    icones/web.png
-
-RESOURCES += \
-    icones.qrc
