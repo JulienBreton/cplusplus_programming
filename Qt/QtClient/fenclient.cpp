@@ -7,6 +7,9 @@ FenClient::FenClient(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->boutonEnvoyer->setDisabled(true);
+    ui->message->setDisabled(true);
+
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
@@ -30,6 +33,9 @@ void FenClient::on_boutonConnexion_clicked()
 
     socket->abort(); // On désactive les connexions précédentes s'il y en a
     socket->connectToHost(ui->serveurIP->text(), ui->serveurPort->value()); // On se connecte au serveur demandé
+
+    ui->boutonEnvoyer->setDisabled(false);
+    ui->message->setDisabled(false);
 }
 
 // Envoi d'un message au serveur
