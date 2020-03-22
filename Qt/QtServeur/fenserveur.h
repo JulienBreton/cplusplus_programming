@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenServeur; }
@@ -30,7 +31,7 @@ private:
     QPushButton *boutonQuitter;
 
     QTcpServer *serveur;
-    QList<QTcpSocket *> clients;
+    QList<client *> clients;
     quint16 tailleMessage;
     unsigned int nbrClients;
 

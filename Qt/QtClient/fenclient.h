@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtNetwork>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenClient; }
@@ -29,5 +30,7 @@ private:
     Ui::FenClient *ui;
     QTcpSocket *socket; // Représente le serveur
     quint16 tailleMessage;
+
+    void envoyerPseudo();
 };
 #endif // FENCLIENT_H

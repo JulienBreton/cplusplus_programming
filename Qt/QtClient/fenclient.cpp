@@ -10,6 +10,10 @@ FenClient::FenClient(QWidget *parent)
     ui->boutonEnvoyer->setDisabled(true);
     ui->message->setDisabled(true);
 
+    QRegExp rx("^[a-zA-Z0-9]+$");
+    QRegExpValidator * pseudoValidator = new QRegExpValidator(rx, ui->pseudo);
+    ui->pseudo->setValidator(pseudoValidator);
+
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
@@ -27,6 +31,12 @@ FenClient::~FenClient()
 // Tentative de connexion au serveur
 void FenClient::on_boutonConnexion_clicked()
 {
+    if(ui->pseudo->text().size() < 3)
+    {
+         QMessageBox::warning(this, "Votre pseudo", "La taille minimale du pseudo est de 3 caractères alphanumériques.");
+         return;
+    }
+
     // On annonce sur la fenêtre qu'on est en train de se connecter
     ui->listeMessages->append(tr("<em>Tentative de connexion en cours...</em>"));
     ui->boutonConnexion->setEnabled(false);
@@ -36,11 +46,19 @@ void FenClient::on_boutonConnexion_clicked()
 
     ui->boutonEnvoyer->setDisabled(false);
     ui->message->setDisabled(false);
+    ui->pseudo->setDisabled(true);
 }
 
 // Envoi d'un message au serveur
 void FenClient::on_boutonEnvoyer_clicked()
 {
+
+    if(ui->message->text() == "")
+    {
+         QMessageBox::warning(this, "Votre message", "Vous devez saisir un message.");
+         return;
+    }
+
     QByteArray paquet;
     QDataStream out(&paquet, QIODevice::WriteOnly);
 
@@ -99,6 +117,7 @@ void FenClient::donneesRecues()
 // Ce slot est appelé lorsque la connexion au serveur a réussi
 void FenClient::connecte()
 {
+    envoyerPseudo();
     ui->listeMessages->append(tr("<em>Connexion réussie !</em>"));
     ui->boutonConnexion->setEnabled(true);
 }
@@ -136,4 +155,23 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
     }
 
     ui->boutonConnexion->setEnabled(true);
+}
+
+void FenClient::envoyerPseudo()
+{
+    QByteArray paquet;
+    QDataStream out(&paquet, QIODevice::WriteOnly);
+
+    // On prépare le paquet à envoyer
+    QString messageAEnvoyer = ui->pseudo->text();
+
+    out << (quint16) 0;
+    out << messageAEnvoyer;
+    out.device()->seek(0);
+    out << (quint16) (paquet.size() - sizeof(quint16));
+
+    socket->write(paquet); // On envoie le paquet
+
+    ui->message->clear(); // On vide la zone d'écriture du message
+    ui->message->setFocus(); // Et on remet le curseur à l'intérieur
 }
