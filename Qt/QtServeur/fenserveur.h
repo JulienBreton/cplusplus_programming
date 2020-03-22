@@ -32,6 +32,7 @@ private:
     QTcpServer *serveur;
     QList<QTcpSocket *> clients;
     quint16 tailleMessage;
+    unsigned int nbrClients;
 
     Ui::FenServeur *ui;
 };

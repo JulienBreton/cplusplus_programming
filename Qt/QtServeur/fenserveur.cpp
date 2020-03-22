@@ -7,6 +7,8 @@ FenServeur::FenServeur(QWidget *parent)
 {
     ui->setupUi(this);
 
+    nbrClients = 0;
+
     // Création et disposition des widgets de la fenêtre
     etatServeur = new QLabel;
     boutonQuitter = new QPushButton(tr("Quitter"));
@@ -29,7 +31,8 @@ FenServeur::FenServeur(QWidget *parent)
     else
     {
         // Si le serveur a été démarré correctement
-        etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter."));
+        etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
+                             + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
         connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
     }
 
@@ -47,6 +50,10 @@ void FenServeur::nouvelleConnexion()
 
     QTcpSocket *nouveauClient = serveur->nextPendingConnection();
     clients << nouveauClient;
+    nbrClients++;
+
+    etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
+                         + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
 
     connect(nouveauClient, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
@@ -99,6 +106,10 @@ void FenServeur::deconnexionClient()
         return;
 
     clients.removeOne(socket);
+    nbrClients--;
+
+    etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
+                         + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
 
     socket->deleteLater();
 }
