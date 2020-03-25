@@ -10,6 +10,15 @@ FenClient::FenClient(QWidget *parent)
     ui->boutonEnvoyer->setDisabled(true);
     ui->message->setDisabled(true);
 
+    m_boutonCouleur = new QPushButton("Changer la couleur");
+    m_boutonPolice = new QPushButton("Changer la police");
+
+    ui->hLayoutPseudo->addWidget(ui->label_3, 6, nullptr);
+    ui->hLayoutPseudo->addWidget(ui->pseudo, 6, nullptr);
+    ui->layoutButtons->addWidget(ui->boutonEnvoyer, 6, nullptr);
+    ui->layoutButtons->addWidget(m_boutonCouleur, 6, nullptr);
+    ui->layoutButtons->addWidget(m_boutonPolice, 6, nullptr);
+
     QRegExp rx("^[a-zA-Z0-9]+$");
     QRegExpValidator * pseudoValidator = new QRegExpValidator(rx, ui->pseudo);
     ui->pseudo->setValidator(pseudoValidator);
@@ -19,6 +28,8 @@ FenClient::FenClient(QWidget *parent)
     connect(socket, SIGNAL(connected()), this, SLOT(connecte()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(deconnecte()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
+    connect(m_boutonCouleur, SIGNAL(clicked()), this, SLOT(changerCouleur()));
+    connect(m_boutonPolice, SIGNAL(clicked()), this, SLOT(changerPolice()));
 
     tailleMessage = 0;
 }
@@ -53,7 +64,7 @@ void FenClient::on_boutonConnexion_clicked()
 void FenClient::on_boutonEnvoyer_clicked()
 {
 
-    if(ui->message->text() == "")
+    if(ui->message->toHtml() == "")
     {
          QMessageBox::warning(this, "Votre message", "Vous devez saisir un message.");
          return;
@@ -63,7 +74,7 @@ void FenClient::on_boutonEnvoyer_clicked()
     QDataStream out(&paquet, QIODevice::WriteOnly);
 
     // On prépare le paquet à envoyer
-    QString messageAEnvoyer = tr("<strong>") + ui->pseudo->text() +tr("</strong> : ") + ui->message->text();
+    QString messageAEnvoyer = tr("<strong>") + ui->pseudo->text() +tr("</strong> : ") + ui->message->toHtml();
 
     out << (quint16) 0;
     out << messageAEnvoyer;
@@ -174,4 +185,30 @@ void FenClient::envoyerPseudo()
 
     ui->message->clear(); // On vide la zone d'écriture du message
     ui->message->setFocus(); // Et on remet le curseur à l'intérieur
+}
+
+void FenClient::changerCouleur()
+{
+    QColorDialog * lesCouleurs = new QColorDialog();
+
+    QColor couleur = lesCouleurs->getColor(Qt::white, this);
+
+    //It returns an invalid (see QColor::isValid()) color if the user cancels the dialog.
+    if(couleur.isValid())
+    {
+        ui->message->setTextColor(couleur);
+    }
+
+}
+
+void FenClient::changerPolice()
+{
+    bool ok = false;
+
+    QFont police = QFontDialog::getFont(&ok, QFont("Times", 12), ui->message, "Choisissez une police");
+
+    if (ok)
+    {
+        ui->message->setFont(police);
+    }
 }

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QtNetwork>
 #include <QMessageBox>
+#include <QColorDialog>
+#include <QFontDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenClient; }
@@ -25,11 +27,15 @@ private slots:
     void connecte();
     void deconnecte();
     void erreurSocket(QAbstractSocket::SocketError erreur);
+    void changerCouleur();
+    void changerPolice();
 
 private:
     Ui::FenClient *ui;
     QTcpSocket *socket; // Représente le serveur
     quint16 tailleMessage;
+    QPushButton * m_boutonCouleur;
+    QPushButton * m_boutonPolice;
 
     void envoyerPseudo();
 };
