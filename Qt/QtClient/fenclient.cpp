@@ -223,7 +223,12 @@ void FenClient::changerPolice()
 
     if (ok)
     {
-        ui->message->setFont(police);
+        QString texteSelectionne = ui->message->textCursor().selectedText();
+
+        if(ui->message->textCursor().selectedText() != "")
+        {
+            ui->message->setCurrentFont(police);
+        }
     }
 }
 
