@@ -9,15 +9,23 @@ FenClient::FenClient(QWidget *parent)
 
     ui->boutonEnvoyer->setDisabled(true);
     ui->message->setDisabled(true);
+    ui->message->setDisabled(true);
+
+    ui->pseudo->setFocus();
 
     m_boutonCouleur = new QPushButton("Changer la couleur");
+    m_boutonCouleur->setDisabled(true);
     m_boutonPolice = new QPushButton("Changer la police");
+    m_boutonPolice->setDisabled(true);
+    m_boutonSmiley = new QPushButton("Ajouter un smiley");
+    m_boutonSmiley->setDisabled(true);
 
     ui->hLayoutPseudo->addWidget(ui->label_3, 6, nullptr);
     ui->hLayoutPseudo->addWidget(ui->pseudo, 6, nullptr);
     ui->layoutButtons->addWidget(ui->boutonEnvoyer, 6, nullptr);
     ui->layoutButtons->addWidget(m_boutonCouleur, 6, nullptr);
     ui->layoutButtons->addWidget(m_boutonPolice, 6, nullptr);
+    ui->layoutButtons->addWidget(m_boutonSmiley, 6, nullptr);
 
     QRegExp rx("^[a-zA-Z0-9]+$");
     QRegExpValidator * pseudoValidator = new QRegExpValidator(rx, ui->pseudo);
@@ -30,8 +38,10 @@ FenClient::FenClient(QWidget *parent)
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(erreurSocket(QAbstractSocket::SocketError)));
     connect(m_boutonCouleur, SIGNAL(clicked()), this, SLOT(changerCouleur()));
     connect(m_boutonPolice, SIGNAL(clicked()), this, SLOT(changerPolice()));
+    connect(m_boutonSmiley, SIGNAL(clicked()), this, SLOT(ajouterSmiley()));
 
     tailleMessage = 0;
+    sMessageAEnvoye = "";
 }
 
 FenClient::~FenClient()
@@ -58,6 +68,10 @@ void FenClient::on_boutonConnexion_clicked()
     ui->boutonEnvoyer->setDisabled(false);
     ui->message->setDisabled(false);
     ui->pseudo->setDisabled(true);
+    m_boutonCouleur->setDisabled(false);
+    m_boutonPolice->setDisabled(false);
+    m_boutonSmiley->setDisabled(false);
+
 }
 
 // Envoi d'un message au serveur
@@ -211,4 +225,23 @@ void FenClient::changerPolice()
     {
         ui->message->setFont(police);
     }
+}
+
+void FenClient::ajouterSmiley()
+{
+    smiley * fenSmiley = new smiley();
+
+    int result = fenSmiley->exec();
+
+    fenSmiley->getSmileyChoisi();
+
+    if(result == QDialog::Accepted)
+    {
+        if(fenSmiley->getSmileyChoisi() != "")
+        {
+            QString message = ui->message->toHtml();
+            ui->message->setText(message+fenSmiley->getSmileyChoisi());
+        }
+    }
+
 }

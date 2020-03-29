@@ -17,15 +17,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    fenclient.cpp
+    fenclient.cpp \
+    smiley.cpp
 
 HEADERS += \
-    fenclient.h
+    fenclient.h \
+    smiley.h
 
 FORMS += \
-    fenclient.ui
+    fenclient.ui \
+    smiley.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc
+
+DISTFILES += \
+    icons/icon1.png \
+    icons/icon2.png \
+    icons/icon3.png \
+    icons/icon4.png \
+    icons/icon5.png \
+    icons/icon6.png

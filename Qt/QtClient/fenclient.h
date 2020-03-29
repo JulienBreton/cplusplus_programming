@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QFontDialog>
+#include "smiley.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenClient; }
@@ -29,6 +30,7 @@ private slots:
     void erreurSocket(QAbstractSocket::SocketError erreur);
     void changerCouleur();
     void changerPolice();
+    void ajouterSmiley();
 
 private:
     Ui::FenClient *ui;
@@ -36,6 +38,8 @@ private:
     quint16 tailleMessage;
     QPushButton * m_boutonCouleur;
     QPushButton * m_boutonPolice;
+    QPushButton * m_boutonSmiley;
+    QString sMessageAEnvoye;
 
     void envoyerPseudo();
 };

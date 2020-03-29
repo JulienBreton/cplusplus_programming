@@ -1014,7 +1014,11 @@ moc_mafenetre.cpp: mafenetre.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
 		windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregularexpression.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1138,13 +1142,11 @@ moc_textedit.cpp: textedit.h \
 		windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qdialog.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpen.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextoption.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregularexpression.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1154,6 +1156,7 @@ moc_textedit.cpp: textedit.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLabel \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlabel.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QGroupBox \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgroupbox.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
@@ -1351,7 +1354,11 @@ mafenetre.o: mafenetre.cpp mafenetre.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
 		windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregularexpression.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1539,7 +1546,11 @@ main.o: main.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QApplication \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
 		windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregularexpression.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1749,8 +1760,8 @@ textedit.o: textedit.cpp /home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QAction
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qpointer.h \
 		windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialog \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1872,13 +1883,11 @@ windowtablesettings.o: windowtablesettings.cpp windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qfiledevice.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvector2d.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtouchdevice.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLineEdit \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlineedit.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextcursor.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextformat.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qpen.h \
-		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qtextoption.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QSpinBox \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtCore/qregularexpression.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QFormLayout \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qformlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLayout \
@@ -1888,6 +1897,7 @@ windowtablesettings.o: windowtablesettings.cpp windowtablesettings.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgridlayout.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QLabel \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qlabel.h \
+		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qframe.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QGroupBox \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/qgroupbox.h \
 		/home/julien/Qt/5.14.0/gcc_64/include/QtWidgets/QDialogButtonBox \
