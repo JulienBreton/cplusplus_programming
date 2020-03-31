@@ -19,6 +19,13 @@ FenServeur::FenServeur(QWidget *parent)
     layout->addWidget(boutonQuitter);
     setLayout(layout);
 
+    QListView *vueCliens = new QListView;
+
+    listeClientsConnectes << "Pas d'utilisateurs connectés";
+    QStringListModel * modeleClients = new QStringListModel(listeClientsConnectes);
+    vueCliens->setModel(modeleClients);
+    layout->addWidget(vueCliens);
+
     setWindowTitle(tr("ZeroChat - Serveur"));
 
     // Gestion du serveur
@@ -61,8 +68,6 @@ void FenServeur::nouvelleConnexion()
 
 void FenServeur::donneesRecues()
 {
-    qDebug() << "Fonction donneesRecues";
-
     // 1 : on reçoit un paquet (ou un sous-paquet) d'un des clients
 
     // On détermine quel client envoie le message (recherche du QTcpSocket du client)
@@ -92,6 +97,7 @@ void FenServeur::donneesRecues()
 
     if(clients.last()->getPseudo() == "")
     {
+        listeClientsConnectes << message;
         clients.last()->setPseudo(message);
         envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>"));
     }

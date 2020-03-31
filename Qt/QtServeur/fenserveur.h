@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QVector>
+#include <QListView>
 #include "client.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +22,7 @@ public:
     FenServeur(QWidget *parent = nullptr);
     ~FenServeur();
     void envoyerATous(const QString &message);
+    void getClientsConnectes();
 
 private slots:
     void nouvelleConnexion();
@@ -34,6 +37,7 @@ private:
     QList<client *> clients;
     quint16 tailleMessage;
     unsigned int nbrClients;
+    QStringList listeClientsConnectes;
 
     Ui::FenServeur *ui;
 };

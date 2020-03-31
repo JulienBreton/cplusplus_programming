@@ -162,21 +162,37 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             ui->listeMessages->append(tr("<em>ERREUR : le serveur n'a pas pu être trouvé. Vérifiez l'IP et le port.</em>"));
             ui->boutonEnvoyer->setDisabled(true);
             ui->message->setDisabled(true);
+            ui->pseudo->setDisabled(false);
+            m_boutonCouleur->setDisabled(true);
+            m_boutonPolice->setDisabled(true);
+            m_boutonSmiley->setDisabled(true);
             break;
         case QAbstractSocket::ConnectionRefusedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a refusé la connexion. Vérifiez si le programme \"serveur\" a bien été lancé. Vérifiez aussi l'IP et le port.</em>"));
             ui->boutonEnvoyer->setDisabled(true);
             ui->message->setDisabled(true);
+            ui->pseudo->setDisabled(false);
+            m_boutonCouleur->setDisabled(true);
+            m_boutonPolice->setDisabled(true);
+            m_boutonSmiley->setDisabled(true);
             break;
         case QAbstractSocket::RemoteHostClosedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a coupé la connexion.</em>"));
             ui->boutonEnvoyer->setDisabled(true);
             ui->message->setDisabled(true);
+            ui->pseudo->setDisabled(false);
+            m_boutonCouleur->setDisabled(true);
+            m_boutonPolice->setDisabled(true);
+            m_boutonSmiley->setDisabled(true);
             break;
         default:
             ui->listeMessages->append(tr("<em>ERREUR : ") + socket->errorString() + tr("</em>"));
             ui->boutonEnvoyer->setDisabled(true);
             ui->message->setDisabled(true);
+            ui->pseudo->setDisabled(false);
+            m_boutonCouleur->setDisabled(true);
+            m_boutonPolice->setDisabled(true);
+            m_boutonSmiley->setDisabled(true);
     }
 
     ui->boutonConnexion->setEnabled(true);
