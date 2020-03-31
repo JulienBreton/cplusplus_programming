@@ -37,6 +37,7 @@ private:
     QList<client *> clients;
     quint16 tailleMessage;
     unsigned int nbrClients;
+    QStringListModel * modeleClients;
     QStringList listeClientsConnectes;
 
     Ui::FenServeur *ui;

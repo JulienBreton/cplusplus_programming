@@ -22,7 +22,7 @@ FenServeur::FenServeur(QWidget *parent)
     QListView *vueCliens = new QListView;
 
     listeClientsConnectes << "Pas d'utilisateurs connectés";
-    QStringListModel * modeleClients = new QStringListModel(listeClientsConnectes);
+    modeleClients = new QStringListModel(listeClientsConnectes);
     vueCliens->setModel(modeleClients);
     layout->addWidget(vueCliens);
 
@@ -97,7 +97,10 @@ void FenServeur::donneesRecues()
 
     if(clients.last()->getPseudo() == "")
     {
+        listeClientsConnectes.removeOne("Pas d'utilisateurs connectés");
         listeClientsConnectes << message;
+        listeClientsConnectes.removeDuplicates();
+        modeleClients->setStringList(listeClientsConnectes);
         clients.last()->setPseudo(message);
         envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>"));
     }
@@ -124,7 +127,13 @@ void FenServeur::deconnexionClient()
 
         if(socket == clients[i]->getClientTcpSocket())
         {
-             envoyerATous("<em>"+clients[i]->getPseudo()+tr(" vient de se déconnecter</em>"));
+            listeClientsConnectes.removeOne(clients[i]->getPseudo());
+            if(listeClientsConnectes.empty())
+            {
+                listeClientsConnectes << "Pas d'utilisateurs connectés";
+            }
+            modeleClients->setStringList(listeClientsConnectes);
+            envoyerATous("<em>"+clients[i]->getPseudo()+tr(" vient de se déconnecter</em>"));
             clients.removeOne(clients[i]);
             nbrClients--;
 
