@@ -19,12 +19,12 @@ FenServeur::FenServeur(QWidget *parent)
     layout->addWidget(boutonQuitter);
     setLayout(layout);
 
-    QListView *vueCliens = new QListView;
+    QListView *vueClients = new QListView;
 
     listeClientsConnectes << "Pas d'utilisateurs connectés";
     modeleClients = new QStringListModel(listeClientsConnectes);
-    vueCliens->setModel(modeleClients);
-    layout->addWidget(vueCliens);
+    vueClients->setModel(modeleClients);
+    layout->addWidget(vueClients);
 
     setWindowTitle(tr("ZeroChat - Serveur"));
 
@@ -102,7 +102,15 @@ void FenServeur::donneesRecues()
         listeClientsConnectes.removeDuplicates();
         modeleClients->setStringList(listeClientsConnectes);
         clients.last()->setPseudo(message);
-        envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>"));
+
+         QString pseudoClients = "";
+
+        for(int i=0; i<listeClientsConnectes.size(); i++)
+        {
+            pseudoClients += listeClientsConnectes[i]+"/";
+        }
+
+        envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>")+"-DEBUT-"+pseudoClients);
     }
     else
     {
@@ -132,8 +140,17 @@ void FenServeur::deconnexionClient()
             {
                 listeClientsConnectes << "Pas d'utilisateurs connectés";
             }
+
             modeleClients->setStringList(listeClientsConnectes);
-            envoyerATous("<em>"+clients[i]->getPseudo()+tr(" vient de se déconnecter</em>"));
+
+            QString pseudoClients = "";
+
+            for(int i=0; i<listeClientsConnectes.size(); i++)
+            {
+                pseudoClients += listeClientsConnectes[i]+"/";
+            }
+
+            envoyerATous("<em>"+clients[i]->getPseudo()+tr(" vient de se déconnecter</em>")+"-FIN-"+pseudoClients);
             clients.removeOne(clients[i]);
             nbrClients--;
 
@@ -161,5 +178,4 @@ void FenServeur::envoyerATous(const QString &message)
     {
          clients[i]->getClientTcpSocket()->write(paquet);
     }
-
 }

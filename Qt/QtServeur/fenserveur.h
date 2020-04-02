@@ -22,7 +22,7 @@ public:
     FenServeur(QWidget *parent = nullptr);
     ~FenServeur();
     void envoyerATous(const QString &message);
-    void getClientsConnectes();
+    QStringList getClientsConnectes();
 
 private slots:
     void nouvelleConnexion();

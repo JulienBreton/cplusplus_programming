@@ -27,6 +27,13 @@ FenClient::FenClient(QWidget *parent)
     ui->layoutButtons->addWidget(m_boutonPolice, 6, nullptr);
     ui->layoutButtons->addWidget(m_boutonSmiley, 6, nullptr);
 
+    QListView *vueClients = new QListView;
+
+    listeClientsConnectes << "Pas d'utilisateurs connectés";
+    modeleClients = new QStringListModel(listeClientsConnectes);
+    vueClients->setModel(modeleClients);
+    ui->layoutButtons->addWidget(vueClients);
+
     QRegExp rx("^[a-zA-Z0-9]+$");
     QRegExpValidator * pseudoValidator = new QRegExpValidator(rx, ui->pseudo);
     ui->pseudo->setValidator(pseudoValidator);
@@ -132,6 +139,26 @@ void FenClient::donneesRecues()
     QString messageRecu;
     in >> messageRecu;
 
+    if(messageRecu.contains("-DEBUT-"))
+    {
+        QStringList messageConnexion =  messageRecu.split("-DEBUT-");
+        messageRecu = messageConnexion[0];
+        listeClientsConnectes.removeOne("Pas d'utilisateurs connectés");
+        listeClientsConnectes << messageConnexion[1];
+        QStringList pseudosUers = messageConnexion[1].split("/");
+        pseudosUers.removeDuplicates();
+        modeleClients->setStringList(pseudosUers);
+    }
+
+    if(messageRecu.contains("-FIN-"))
+    {
+        QStringList messageConnexion =  messageRecu.split("-FIN-");
+        messageRecu = messageConnexion[0];
+        listeClientsConnectes << messageConnexion[1];
+        QStringList pseudosUers = messageConnexion[1].split("/");
+        modeleClients->setStringList(pseudosUers);
+    }
+
     // On affiche le message sur la zone de Chat
     ui->listeMessages->append(messageRecu);
 
@@ -156,6 +183,8 @@ void FenClient::deconnecte()
 // Ce slot est appelé lorsqu'il y a une erreur
 void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
 {
+    QStringList pseudosUers;
+
     switch(erreur) // On affiche un message différent selon l'erreur qu'on nous indique
     {
         case QAbstractSocket::HostNotFoundError:
@@ -166,6 +195,8 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
+            pseudosUers.clear();
+            modeleClients->setStringList(pseudosUers);
             break;
         case QAbstractSocket::ConnectionRefusedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a refusé la connexion. Vérifiez si le programme \"serveur\" a bien été lancé. Vérifiez aussi l'IP et le port.</em>"));
@@ -175,6 +206,8 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
+            pseudosUers.clear();
+            modeleClients->setStringList(pseudosUers);
             break;
         case QAbstractSocket::RemoteHostClosedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a coupé la connexion.</em>"));
@@ -184,6 +217,8 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
+            pseudosUers.clear();
+            modeleClients->setStringList(pseudosUers);
             break;
         default:
             ui->listeMessages->append(tr("<em>ERREUR : ") + socket->errorString() + tr("</em>"));
@@ -193,6 +228,8 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
+            pseudosUers.clear();
+            modeleClients->setStringList(pseudosUers);
     }
 
     ui->boutonConnexion->setEnabled(true);

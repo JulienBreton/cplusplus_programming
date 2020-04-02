@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QListView>
 #include "smiley.h"
 
 QT_BEGIN_NAMESPACE
@@ -40,6 +41,8 @@ private:
     QPushButton * m_boutonPolice;
     QPushButton * m_boutonSmiley;
     QString sMessageAEnvoye;
+    QStringListModel * modeleClients;
+    QStringList listeClientsConnectes;
 
     void envoyerPseudo();
 };
