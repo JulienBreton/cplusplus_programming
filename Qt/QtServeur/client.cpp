@@ -12,7 +12,6 @@ client::~client()
     delete clientTcpSocket;
 }
 
-
 QTcpSocket* client::getClientTcpSocket()
 {
     return clientTcpSocket;

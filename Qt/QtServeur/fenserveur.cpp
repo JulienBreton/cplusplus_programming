@@ -53,27 +53,35 @@ FenServeur::~FenServeur()
 
 void FenServeur::nouvelleConnexion()
 {
+    //qDebug() << QTime::currentTime() << " - nouvelleConnexion --------DEBUT--------";
+
     client *nouveauClient = new client();
 
     nouveauClient->setClientTcpSocket(serveur->nextPendingConnection());
     clients << nouveauClient;
-    nbrClients++;
 
     etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
                          + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
 
     connect(nouveauClient->getClientTcpSocket(), SIGNAL(readyRead()), this, SLOT(donneesRecues()));
     connect(nouveauClient->getClientTcpSocket(), SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
+
+    //qDebug() << QTime::currentTime() << " - nouvelleConnexion --------FIN--------";
 }
 
 void FenServeur::donneesRecues()
 {
+    //qDebug() << QTime::currentTime() << " - donneesRecues --------DEBUT--------";
+
     // 1 : on reçoit un paquet (ou un sous-paquet) d'un des clients
 
     // On détermine quel client envoie le message (recherche du QTcpSocket du client)
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     if (socket == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
+    {
+        //qDebug() << QTime::currentTime() << " - donneesRecues : le QTcpSocket du client est nullptr";
         return;
+    }
 
     // Si tout va bien, on continue : on récupère le message
     QDataStream in(socket);
@@ -88,8 +96,10 @@ void FenServeur::donneesRecues()
 
     // Si on connaît la taille du message, on vérifie si on a reçu le message en entier
     if (socket->bytesAvailable() < tailleMessage) // Si on n'a pas encore tout reçu, on arrête la méthode
+    {
+        //qDebug() << QTime::currentTime() << " - donneesRecues : Arrêt de la méthode, on n'a pas tout reçu";
         return;
-
+    }
 
     // Si ces lignes s'exécutent, c'est qu'on a reçu tout le message : on peut le récupérer !
     QString message;
@@ -97,22 +107,48 @@ void FenServeur::donneesRecues()
 
     if(clients.last()->getPseudo() == "")
     {
-        listeClientsConnectes.removeOne("Pas d'utilisateurs connectés");
-        listeClientsConnectes << message;
-        listeClientsConnectes.removeDuplicates();
-        modeleClients->setStringList(listeClientsConnectes);
-        clients.last()->setPseudo(message);
-
-         QString pseudoClients = "";
-
-        for(int i=0; i<listeClientsConnectes.size(); i++)
+        //qDebug() << QTime::currentTime() << " - donneesRecues : on ne connait pas le pseudo";
+        //Si le pseudo est déjà utilisé on retourne un message d'erreur au client.
+        if(!verifierUnicitePseudo(message))
         {
-            pseudoClients += listeClientsConnectes[i]+"/";
-        }
+            //qDebug() << QTime::currentTime() << " - donneesRecues : le pseudo est déjà utilisé";
 
-        envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>")+"-DEBUT-"+pseudoClients);
+            //On indique on client qu'il ne peut pas utiliser ce pseudo.
+            envoyerAUnClient("<strong> Ce pseudo est déjà utilisé. </strong>", clients.last()->getClientTcpSocket());
+            //On ferme la connexion pour que le client se connecte avec un autre pseudo.
+            clients.last()->getClientTcpSocket()->close();
+            clients.removeOne(clients.last());
+            //Remise de la taille du message à 0 pour permettre la réception des futurs messages
+            tailleMessage = 0;
+            return;
+        }
+        else
+        {
+            //Le pseudo n'est pas déjà utilisé donc on ajoute le client aux clients connectés.
+            nbrClients++;
+            etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
+                                 + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
+            listeClientsConnectes.removeOne("Pas d'utilisateurs connectés");
+            listeClientsConnectes << message; //C'est le peudo du nouveau client.
+            listeClientsConnectes.removeDuplicates();
+            modeleClients->setStringList(listeClientsConnectes);//Actualise la liste des clients affichée.
+            clients.last()->setPseudo(message);
+            //qDebug() << QTime::currentTime() << " - donneesRecues : on a le pseudo : "+clients.last()->getPseudo();
+
+            //On récupère la liste des clients connectés pour l'envoyé aux clients.
+            QString pseudoClients = "";
+
+            for(int i=0; i<listeClientsConnectes.size(); i++)
+            {
+                //On sépare les pseudos pour pouvoir les découper coté client.
+                pseudoClients += listeClientsConnectes[i]+"/";
+            }
+
+            //On indique aux clients qu'un nouveau client s'est connecté et on envoie la liste des clients.
+            envoyerATous("<em>"+clients.last()->getPseudo()+tr(" vient de se connecter.</em>")+"-DEBUT-"+pseudoClients);
+        }
     }
-    else
+    else //Là c'est un message dans la discussion.
     {
         // 2 : on renvoie le message à tous les clients
         envoyerATous(message);
@@ -120,12 +156,16 @@ void FenServeur::donneesRecues()
 
     // 3 : remise de la taille du message à 0 pour permettre la réception des futurs messages
     tailleMessage = 0;
+
+    //qDebug() << QTime::currentTime() << " - donneesRecues --------FIN--------";
 }
 
 void FenServeur::deconnexionClient()
 {
+    //qDebug() << QTime::currentTime() << " - deconnexionClient --------DEBUT--------";
+
     // On détermine quel client se déconnecte
-    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
+    QTcpSocket *socket = determinerClientEnCours();
     if (socket == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
         return;
 
@@ -136,15 +176,19 @@ void FenServeur::deconnexionClient()
         if(socket == clients[i]->getClientTcpSocket())
         {
             listeClientsConnectes.removeOne(clients[i]->getPseudo());
+
+            //Si plus de clients connectés
             if(listeClientsConnectes.empty())
             {
                 listeClientsConnectes << "Pas d'utilisateurs connectés";
             }
 
+            //Actualise la liste des clients affichée sur le serveur.
             modeleClients->setStringList(listeClientsConnectes);
 
             QString pseudoClients = "";
 
+            //On récupère la liste des clients encore connectés pour l'envoyer aux clients.
             for(int i=0; i<listeClientsConnectes.size(); i++)
             {
                 pseudoClients += listeClientsConnectes[i]+"/";
@@ -160,6 +204,8 @@ void FenServeur::deconnexionClient()
             socket->deleteLater();
         }
     }
+
+    //qDebug() << QTime::currentTime() << " - deconnexionClient --------FIN--------";
 }
 
 void FenServeur::envoyerATous(const QString &message)
@@ -178,4 +224,48 @@ void FenServeur::envoyerATous(const QString &message)
     {
          clients[i]->getClientTcpSocket()->write(paquet);
     }
+}
+
+bool FenServeur::verifierUnicitePseudo(QString PseudoNouveauClient)
+{
+    if(listeClientsConnectes.contains(PseudoNouveauClient))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void FenServeur::envoyerAUnClient(const QString &message, QTcpSocket *socket)
+{
+    // Préparation du paquet
+    QByteArray paquet;
+    QDataStream out(&paquet, QIODevice::WriteOnly);
+
+    out << static_cast<quint16>(0); // On écrit 0 au début du paquet pour réserver la place pour écrire la taille
+    out << message; // On ajoute le message à la suite
+    out.device()->seek(0); // On se replace au début du paquet
+    out << static_cast<quint16> (paquet.size() - sizeof(quint16)); // On écrase le 0 qu'on avait réservé par la longueur du message
+
+    // On détermine quel client
+    //QTcpSocket *socket = determinerClientEnCours();
+    if (socket == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
+        return;
+
+    for(int i = 0; i <clients.size(); i++)
+    {
+        if(socket == clients[i]->getClientTcpSocket())
+        {
+            //qDebug() << "envoyerAUnClient : envoi du message";
+            clients[i]->getClientTcpSocket()->write(paquet);
+        }
+    }
+}
+
+QTcpSocket * FenServeur::determinerClientEnCours()
+{
+    // On détermine quel client se déconnecte
+    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
+
+    return socket;
 }

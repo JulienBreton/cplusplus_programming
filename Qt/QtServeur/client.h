@@ -19,6 +19,7 @@ private:
 
     QTcpSocket *clientTcpSocket;
     QString pseudo;
+    quint16 tailleMessage;
 };
 
 #endif // CLIENT_H

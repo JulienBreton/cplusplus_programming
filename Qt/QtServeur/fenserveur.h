@@ -22,7 +22,7 @@ public:
     FenServeur(QWidget *parent = nullptr);
     ~FenServeur();
     void envoyerATous(const QString &message);
-    QStringList getClientsConnectes();
+    void envoyerAUnClient(const QString &message, QTcpSocket *socket);
 
 private slots:
     void nouvelleConnexion();
@@ -30,9 +30,11 @@ private slots:
     void deconnexionClient();
 
 private:
+    bool verifierUnicitePseudo(QString PseudoNouveauClient);
+    QTcpSocket * determinerClientEnCours();
+
     QLabel *etatServeur;
     QPushButton *boutonQuitter;
-
     QTcpServer *serveur;
     QList<client *> clients;
     quint16 tailleMessage;

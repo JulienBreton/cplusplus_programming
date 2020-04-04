@@ -29,7 +29,7 @@ FenClient::FenClient(QWidget *parent)
 
     QListView *vueClients = new QListView;
 
-    listeClientsConnectes << "Pas d'utilisateurs connectés";
+    listeClientsConnectes << "Vous n'êtes pas connecté au serveur.";
     modeleClients = new QStringListModel(listeClientsConnectes);
     vueClients->setModel(modeleClients);
     ui->layoutButtons->addWidget(vueClients);
@@ -85,7 +85,7 @@ void FenClient::on_boutonConnexion_clicked()
 void FenClient::on_boutonEnvoyer_clicked()
 {
 
-    if(ui->message->toHtml() == "")
+    if(ui->message->toPlainText() == "")
     {
          QMessageBox::warning(this, "Votre message", "Vous devez saisir un message.");
          return;
@@ -134,7 +134,6 @@ void FenClient::donneesRecues()
     if (socket->bytesAvailable() < tailleMessage)
         return;
 
-
     // Si on arrive jusqu'à cette ligne, on peut récupérer le message entier
     QString messageRecu;
     in >> messageRecu;
@@ -143,7 +142,7 @@ void FenClient::donneesRecues()
     {
         QStringList messageConnexion =  messageRecu.split("-DEBUT-");
         messageRecu = messageConnexion[0];
-        listeClientsConnectes.removeOne("Pas d'utilisateurs connectés");
+        listeClientsConnectes.removeOne("Vous n'êtes pas connecté au serveur.");
         listeClientsConnectes << messageConnexion[1];
         QStringList pseudosUers = messageConnexion[1].split("/");
         pseudosUers.removeDuplicates();
@@ -183,7 +182,7 @@ void FenClient::deconnecte()
 // Ce slot est appelé lorsqu'il y a une erreur
 void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
 {
-    QStringList pseudosUers;
+    QStringList pseudosUsers;
 
     switch(erreur) // On affiche un message différent selon l'erreur qu'on nous indique
     {
@@ -195,8 +194,9 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
-            pseudosUers.clear();
-            modeleClients->setStringList(pseudosUers);
+            pseudosUsers.clear();
+            pseudosUsers << "Vous n'êtes pas connecté au serveur.";
+            modeleClients->setStringList(pseudosUsers);
             break;
         case QAbstractSocket::ConnectionRefusedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a refusé la connexion. Vérifiez si le programme \"serveur\" a bien été lancé. Vérifiez aussi l'IP et le port.</em>"));
@@ -206,8 +206,9 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
-            pseudosUers.clear();
-            modeleClients->setStringList(pseudosUers);
+            pseudosUsers.clear();
+            pseudosUsers << "Vous n'êtes pas connecté au serveur.";
+            modeleClients->setStringList(pseudosUsers);
             break;
         case QAbstractSocket::RemoteHostClosedError:
             ui->listeMessages->append(tr("<em>ERREUR : le serveur a coupé la connexion.</em>"));
@@ -217,8 +218,9 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
-            pseudosUers.clear();
-            modeleClients->setStringList(pseudosUers);
+            pseudosUsers.clear();
+            pseudosUsers << "Vous n'êtes pas connecté au serveur.";
+            modeleClients->setStringList(pseudosUsers);
             break;
         default:
             ui->listeMessages->append(tr("<em>ERREUR : ") + socket->errorString() + tr("</em>"));
@@ -228,8 +230,9 @@ void FenClient::erreurSocket(QAbstractSocket::SocketError erreur)
             m_boutonCouleur->setDisabled(true);
             m_boutonPolice->setDisabled(true);
             m_boutonSmiley->setDisabled(true);
-            pseudosUers.clear();
-            modeleClients->setStringList(pseudosUers);
+            pseudosUsers.clear();
+            pseudosUsers << "Vous n'êtes pas connecté au serveur.";
+            modeleClients->setStringList(pseudosUsers);
     }
 
     ui->boutonConnexion->setEnabled(true);
