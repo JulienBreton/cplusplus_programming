@@ -24,7 +24,6 @@ public:
 private slots:
     void on_boutonConnexion_clicked();
     void on_boutonEnvoyer_clicked();
-    void on_message_returnPressed();
     void donneesRecues();
     void connecte();
     void deconnecte();

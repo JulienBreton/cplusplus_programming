@@ -43,7 +43,7 @@ FenServeur::FenServeur(QWidget *parent)
         connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
     }
 
-    tailleMessage = 0;
+    //tailleMessage = 0;
 }
 
 FenServeur::~FenServeur()
@@ -73,6 +73,10 @@ void FenServeur::donneesRecues()
 {
     //qDebug() << QTime::currentTime() << " - donneesRecues --------DEBUT--------";
 
+    client * clientEnCours = determinerClientEnCours();
+
+    quint16 tailleMessage = 0;
+
     // 1 : on reçoit un paquet (ou un sous-paquet) d'un des clients
 
     // On détermine quel client envoie le message (recherche du QTcpSocket du client)
@@ -86,16 +90,17 @@ void FenServeur::donneesRecues()
     // Si tout va bien, on continue : on récupère le message
     QDataStream in(socket);
 
-    if (tailleMessage == 0) // Si on ne connaît pas encore la taille du message, on essaie de la récupérer
+    if (clientEnCours->getTailleMessage() == 0) // Si on ne connaît pas encore la taille du message, on essaie de la récupérer
     {
         if (socket->bytesAvailable() < static_cast<int>(sizeof(quint16))) // On n'a pas reçu la taille du message en entier
              return;
 
         in >> tailleMessage; // Si on a reçu la taille du message en entier, on la récupère
+        clientEnCours->setTailleMessage(tailleMessage);
     }
 
     // Si on connaît la taille du message, on vérifie si on a reçu le message en entier
-    if (socket->bytesAvailable() < tailleMessage) // Si on n'a pas encore tout reçu, on arrête la méthode
+    if (socket->bytesAvailable() < clientEnCours->getTailleMessage()) // Si on n'a pas encore tout reçu, on arrête la méthode
     {
         //qDebug() << QTime::currentTime() << " - donneesRecues : Arrêt de la méthode, on n'a pas tout reçu";
         return;
@@ -119,7 +124,7 @@ void FenServeur::donneesRecues()
             clients.last()->getClientTcpSocket()->close();
             clients.removeOne(clients.last());
             //Remise de la taille du message à 0 pour permettre la réception des futurs messages
-            tailleMessage = 0;
+            clientEnCours->setTailleMessage(0);
             return;
         }
         else
@@ -155,7 +160,7 @@ void FenServeur::donneesRecues()
     }
 
     // 3 : remise de la taille du message à 0 pour permettre la réception des futurs messages
-    tailleMessage = 0;
+    clientEnCours->setTailleMessage(0);
 
     //qDebug() << QTime::currentTime() << " - donneesRecues --------FIN--------";
 }
@@ -165,15 +170,15 @@ void FenServeur::deconnexionClient()
     //qDebug() << QTime::currentTime() << " - deconnexionClient --------DEBUT--------";
 
     // On détermine quel client se déconnecte
-    QTcpSocket *socket = determinerClientEnCours();
-    if (socket == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
+    client * clientAdeconnecter = determinerClientEnCours();
+    if (clientAdeconnecter->getClientTcpSocket() == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
         return;
 
     //On cherche dans les clients celui qui a pour socket celle qui a demandé la déconnexion.
     for(int i = 0; i <clients.size(); i++)
     {
 
-        if(socket == clients[i]->getClientTcpSocket())
+        if(clientAdeconnecter->getClientTcpSocket() == clients[i]->getClientTcpSocket())
         {
             listeClientsConnectes.removeOne(clients[i]->getPseudo());
 
@@ -201,7 +206,7 @@ void FenServeur::deconnexionClient()
             etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter.")
                                  + tr("<br />Il y a ")+QString::number(nbrClients)+tr(" clients connectés."));
 
-            socket->deleteLater();
+            clientAdeconnecter->getClientTcpSocket()->deleteLater();
         }
     }
 
@@ -248,7 +253,6 @@ void FenServeur::envoyerAUnClient(const QString &message, QTcpSocket *socket)
     out << static_cast<quint16> (paquet.size() - sizeof(quint16)); // On écrase le 0 qu'on avait réservé par la longueur du message
 
     // On détermine quel client
-    //QTcpSocket *socket = determinerClientEnCours();
     if (socket == nullptr) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
         return;
 
@@ -262,10 +266,21 @@ void FenServeur::envoyerAUnClient(const QString &message, QTcpSocket *socket)
     }
 }
 
-QTcpSocket * FenServeur::determinerClientEnCours()
+client * FenServeur::determinerClientEnCours()
 {
+    client * clientEnCours = new client();
+
     // On détermine quel client se déconnecte
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
 
-    return socket;
+    for(int i = 0; i <clients.size(); i++)
+    {
+        if(socket == clients[i]->getClientTcpSocket())
+        {
+            clientEnCours = clients[i];
+            break;
+        }
+    }
+
+    return clientEnCours;
 }

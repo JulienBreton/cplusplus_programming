@@ -4,6 +4,7 @@ client::client()
 {
     clientTcpSocket = new QTcpSocket();
     pseudo = "";
+    tailleMessage = 0;
 }
 
 client::~client()
@@ -30,4 +31,14 @@ void client::setPseudo(QString pseudoRecu)
 QString client::getPseudo()
 {
     return pseudo;
+}
+
+quint16 client::getTailleMessage()
+{
+    return tailleMessage;
+}
+
+void client::setTailleMessage(quint16 taille)
+{
+    tailleMessage = taille;
 }

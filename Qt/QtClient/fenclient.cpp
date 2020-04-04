@@ -32,6 +32,7 @@ FenClient::FenClient(QWidget *parent)
     listeClientsConnectes << "Vous n'êtes pas connecté au serveur.";
     modeleClients = new QStringListModel(listeClientsConnectes);
     vueClients->setModel(modeleClients);
+    vueClients->setDisabled(true);
     ui->layoutButtons->addWidget(vueClients);
 
     QRegExp rx("^[a-zA-Z0-9]+$");
@@ -106,12 +107,6 @@ void FenClient::on_boutonEnvoyer_clicked()
 
     ui->message->clear(); // On vide la zone d'écriture du message
     ui->message->setFocus(); // Et on remet le curseur à l'intérieur
-}
-
-// Appuyer sur la touche Entrée a le même effet que cliquer sur le bouton "Envoyer"
-void FenClient::on_message_returnPressed()
-{
-    on_boutonEnvoyer_clicked();
 }
 
 // On a reçu un paquet (ou un sous-paquet)

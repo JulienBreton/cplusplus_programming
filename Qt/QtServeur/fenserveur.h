@@ -31,13 +31,12 @@ private slots:
 
 private:
     bool verifierUnicitePseudo(QString PseudoNouveauClient);
-    QTcpSocket * determinerClientEnCours();
+    client * determinerClientEnCours();
 
     QLabel *etatServeur;
     QPushButton *boutonQuitter;
     QTcpServer *serveur;
     QList<client *> clients;
-    quint16 tailleMessage;
     unsigned int nbrClients;
     QStringListModel * modeleClients;
     QStringList listeClientsConnectes;
