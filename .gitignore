@@ -2,3 +2,4 @@ Qt/compilation/*
 Qt/.qmake.stash
 Qt/zNavigateur/zNavigateur.pro.user
 Qt/build-*/*
+Qt/QML/build-*/*
