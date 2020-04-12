@@ -26,6 +26,17 @@ int main()
         cout << "Le mot " << it->first << " apparait " << it->second << " fois." << endl;
     }
 
+    map<string, int>::iterator trouve = occurrences.find("bananes");
+
+    if(trouve == occurrences.end())
+    {
+        cout << "Le mot bananes n'est pas dans la table" << endl;
+    }
+    else
+    {
+        cout << "Le mot banane apparait " << trouve->second << " fois." << endl;
+    }
+
 
     return 0;
 }
