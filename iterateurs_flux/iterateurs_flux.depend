@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1586808862 source:/home/julien/dev/cplusplus_programming/iterateurs_flux/main.cpp
+	<fstream>
+	<iterator>
+	<iostream>
+	<algorithm>
+
