@@ -2,6 +2,12 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include "Afficher.h"
+#include "Generer.h"
+#include "Sommer.h"
+
 using namespace std;
 
 int main()
@@ -21,7 +27,7 @@ int main()
     cout << "Le mot 'Inde' existe " << occurrences["Inde"] << " fois dans le fichier" << endl;
     cout << "Le mot 'vitamines' existe " << occurrences["vitamines"] << " fois dans le fichier" << endl;
 
-    for(map<string, int>::iterator it=occurrences.begin(); it!=occurrences.end(); ++it)
+    /*for(map<string, int>::iterator it=occurrences.begin(); it!=occurrences.end(); ++it)
     {
         cout << "Le mot " << it->first << " apparait " << it->second << " fois." << endl;
     }
@@ -35,8 +41,21 @@ int main()
     else
     {
         cout << "Le mot banane apparait " << trouve->second << " fois." << endl;
-    }
+    }*/
 
+    srand(time(0));
+    vector<int> tab(100, -1);
+    generate(tab.begin(), tab.end(), Generer());  //On génère des nombres aléatoires
+    sort(tab.begin(), tab.end());
+
+    for_each(tab.begin(), tab.end(), Afficher());   //Et on affiche les éléments
+
+    Sommer somme;
+
+    //On somme les éléments et on récupère le foncteur utilisé
+    somme = for_each(tab.begin(), tab.end(), somme);
+
+    cout << "La somme des elements generes est : " << somme.resultat() << endl;
 
     return 0;
 }
