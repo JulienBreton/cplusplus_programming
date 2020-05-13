@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ColorCombo.qml</file>
+        <file>TestCB.qml</file>
+        <file>IconCombo.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>icon.png</file>
+        <file>www.png</file>
+    </qresource>
+</RCC>

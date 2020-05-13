@@ -54,12 +54,12 @@ Window {
 
             onCurrentIndexChanged: lblPeople.text = model.get(currentIndex).text + " = " +model.get(currentIndex).age
 
-            onAccepted:{
+            /*onAccepted:{
                 if(find(editText) === -1) {
                     model.append({"text": editText, "age": "0"})
                     currentIndex = find(editText)
                 }
-            }
+            }*/
         }
     }
 
