@@ -13,6 +13,11 @@ ApplicationWindow {
 
     Backend {
         id: backend
+        target: textEdit
+        cursorPosition: textEdit.cursorPosition
+        selectionStart: textEdit.selectionStart
+        selectionEnd: textEdit.selectionEnd
+        //indexTextStyle: textEdit.
         //onPathChanged: console.log("Path:", path)
         //onDataChanged: console.log("Path:", path)
     }
@@ -26,7 +31,7 @@ ApplicationWindow {
 
         onAccepted: {
             backend.path = openDialog.fileUrl
-            editor.text = backend.data
+            textEdit.text = backend.data
         }
     }
 
@@ -39,7 +44,7 @@ ApplicationWindow {
 
         onAccepted: {
             backend.path = saveDialog.fileUrl
-            backend.data = editor.text
+            backend.data = textEdit.text
         }
     }
 
@@ -48,7 +53,7 @@ ApplicationWindow {
         text: qsTr("New")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/oNew.png"
-        onTriggered: editor.clear()
+        onTriggered: textEdit.clear()
     }
 
     Action {
@@ -72,7 +77,7 @@ ApplicationWindow {
         text: qsTr("Copy")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/oCopy.png"
-        onTriggered: editor.copy()
+        onTriggered: textEdit.copy()
     }
 
     Action {
@@ -80,7 +85,7 @@ ApplicationWindow {
         text: qsTr("Cut")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/oCut.png"
-        onTriggered: editor.cut()
+        onTriggered: textEdit.cut()
     }
 
     Action {
@@ -88,7 +93,39 @@ ApplicationWindow {
         text: qsTr("Paste")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/oPaste.png"
-        onTriggered: editor.paste()
+        onTriggered: textEdit.paste()
+    }
+
+    Action {
+        id: actionToggleCheckState
+        text: qsTr("Checked")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/checkbox-checked.png"
+        onTriggered: {
+
+            backend.myMessage = "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
+            textEdit.insert(textEdit.cursorPosition, backend.myMessage)
+        }
+    }
+
+    Action {
+        id: actionBold
+        text: qsTr("Bold")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/textbold.png"
+        onTriggered: backend.bold = !backend.bold
+        checkable: true
+        checked: backend.bold
+    }
+
+    Action {
+        id: actionChecked
+        text: qsTr("checked")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/textbold.png"
+        onTriggered: backend.listChecked = !backend.listChecked
+        checkable: true
+        checked: backend.listChecked
     }
 
     //To do - add actions
@@ -119,17 +156,36 @@ ApplicationWindow {
             ToolButton {display: AbstractButton.IconOnly; action: actionCopy}
             ToolButton {display: AbstractButton.IconOnly; action: actionCut}
             ToolButton {display: AbstractButton.IconOnly; action: actionPaste}
+            //ToolButton {display: AbstractButton.IconOnly; action: actionToggleCheckState}
+            ToolButton {display: AbstractButton.IconOnly; action: actionBold}
+            //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
+
+            ComboBox {
+                model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
+                "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
+                "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
+                "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
+
+                id: comboStyle
+                onActivated: {
+                    //console.log(currentIndex)
+                    backend.indexTextStyle = currentIndex
+                }
+            }
         }
     }
 
     ScrollView {
         anchors.fill: parent
         TextArea {
-            id: editor
+            id: textEdit
+            textFormat: TextEdit.MarkdownText
             focus: true
-            text: "Hello World"
+            //text: "It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](http://google.com)"
             selectByMouse: true
             persistentSelection: true
+
+
         }
     }
 

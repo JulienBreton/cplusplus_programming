@@ -1,9 +1,50 @@
 #include "backend.h"
 
 Backend::Backend(QObject *parent) : QObject(parent)
+  , m_target(0)
+  , m_doc(0)
+  , m_cursorPosition(-1)
+  , m_selectionStart(0)
+  , m_selectionEnd(0)
 {
     m_path = QCoreApplication::applicationDirPath();
     m_path.append("/file.txt");
+}
+
+void Backend::setCursorPosition(int position)
+{
+    if (position == m_cursorPosition)
+        return;
+
+    m_cursorPosition = position;
+
+    reset();
+}
+
+void Backend::setSelectionStart(int position)
+{
+    m_selectionStart = position;
+}
+
+void Backend::setSelectionEnd(int position)
+{
+    m_selectionEnd = position;
+}
+
+void Backend::setTarget(QQuickItem *target)
+{
+    m_doc = 0;
+    m_target = target;
+    if (!m_target)
+        return;
+
+    QVariant doc = m_target->property("textDocument");
+    if (doc.canConvert<QQuickTextDocument*>()) {
+        QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
+        if (qqdoc)
+            m_doc = qqdoc->textDocument();
+    }
+    emit targetChanged();
 }
 
 QString Backend::path()
@@ -43,4 +84,214 @@ void Backend::setData(QString value)
     file.close();
 
     emit dataChanged();
+}
+
+QString Backend::message()
+{
+    return m_message;
+}
+
+void Backend::setMessage(QString message)
+{
+    m_message = message;
+    qDebug() << m_message;
+    emit messageChanged();
+}
+
+bool Backend::bold() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().charFormat().fontWeight() == QFont::Bold;
+}
+
+bool Backend::checked() const
+{
+    return false;
+    /*QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().currentList()->format().style() == QTextListFormat::lis*/
+}
+
+int Backend::currentTextStyle()
+{
+    return m_currentTextStyle;
+}
+
+void Backend::setBold(bool arg)
+{
+    QTextCharFormat fmt;
+    fmt.setFontWeight(arg ? QFont::Bold : QFont::Normal);
+    mergeFormatOnWordOrSelection(fmt);
+    emit boldChanged();
+}
+
+void Backend::setCurrentTextStyle(int currentIndexStyleBox){
+    m_currentTextStyle = currentIndexStyleBox;
+    qDebug() << "Le style est : " << m_currentTextStyle;
+    emit textStyleChanged();
+}
+
+QTextCursor Backend::textCursor() const
+{
+    if (!m_doc)
+        return QTextCursor();
+
+    QTextCursor cursor = QTextCursor(m_doc);
+    if (m_selectionStart != m_selectionEnd) {
+        cursor.setPosition(m_selectionStart);
+        cursor.setPosition(m_selectionEnd, QTextCursor::KeepAnchor);
+    } else {
+        cursor.setPosition(m_cursorPosition);
+    }
+    return cursor;
+}
+
+void Backend::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
+{
+    QTextCursor cursor = textCursor();
+    if (!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+    cursor.mergeCharFormat(format);
+}
+
+void Backend::reset()
+{
+    //emit fontFamilyChanged();
+    //emit alignmentChanged();
+    emit boldChanged();
+    emit checkedChanged();
+    //emit italicChanged();
+    //emit underlineChanged();
+    //emit fontSizeChanged();
+    //emit textColorChanged();
+}
+
+void Backend::setChecked(bool checked)
+{
+    QTextCursor cursor = textCursor();
+    QTextListFormat::Style style = QTextListFormat::ListStyleUndefined;
+    QTextBlockFormat::MarkerType marker = QTextBlockFormat::MarkerType::NoMarker;
+
+    style = QTextListFormat::ListDecimal;
+
+    /*if (cursor.currentList()){
+        style = cursor.currentList()->format().style();
+        qDebug() << "Le style est : " << style;
+    }
+    else{
+        style = QTextListFormat::ListSquare;
+    }*/
+
+    //Permet d'afficher la checkbox non cochée
+    //https://doc.qt.io/qt-5/qtextblockformat.html#MarkerType-enum
+    marker = QTextBlockFormat::MarkerType::Unchecked;
+
+    cursor.beginEditBlock();
+
+    QTextBlockFormat blockFmt = cursor.blockFormat();
+
+        blockFmt.setMarker(marker);
+        cursor.setBlockFormat(blockFmt);
+        QTextListFormat listFmt;
+        if (cursor.currentList()) {
+            listFmt = cursor.currentList()->format();
+        } else {
+            listFmt.setIndent(blockFmt.indent() + 1);
+            blockFmt.setIndent(0);
+            cursor.setBlockFormat(blockFmt);
+        }
+        listFmt.setStyle(style);
+        cursor.createList(listFmt);
+   // }
+
+    cursor.endEditBlock();
+
+    emit checkedChanged();
+}
+
+void Backend::textStyle(int styleIndex)
+{
+    QTextCursor cursor = textCursor();
+    QTextListFormat::Style style = QTextListFormat::ListStyleUndefined;
+    QTextBlockFormat::MarkerType marker = QTextBlockFormat::MarkerType::NoMarker;
+
+    switch (styleIndex) {
+    case 1:
+        style = QTextListFormat::ListDisc;
+        break;
+    case 2:
+        style = QTextListFormat::ListCircle;
+        break;
+    case 3:
+        style = QTextListFormat::ListSquare;
+        break;
+    case 4:
+        if (cursor.currentList())
+            style = cursor.currentList()->format().style();
+        else
+            style = QTextListFormat::ListSquare;
+        marker = QTextBlockFormat::MarkerType::Unchecked;
+        break;
+    case 5:
+        if (cursor.currentList())
+            style = cursor.currentList()->format().style();
+        else
+            style = QTextListFormat::ListSquare;
+        marker = QTextBlockFormat::MarkerType::Checked;
+        break;
+    case 6:
+        style = QTextListFormat::ListDecimal;
+        break;
+    case 7:
+        style = QTextListFormat::ListLowerAlpha;
+        break;
+    case 8:
+        style = QTextListFormat::ListUpperAlpha;
+        break;
+    case 9:
+        style = QTextListFormat::ListLowerRoman;
+        break;
+    case 10:
+        style = QTextListFormat::ListUpperRoman;
+        break;
+    default:
+        break;
+    }
+
+    cursor.beginEditBlock();
+
+    QTextBlockFormat blockFmt = cursor.blockFormat();
+
+    if (style == QTextListFormat::ListStyleUndefined) {
+        blockFmt.setObjectIndex(-1);
+        int headingLevel = styleIndex >= 11 ? styleIndex - 11 + 1 : 0; // H1 to H6, or Standard
+        blockFmt.setHeadingLevel(headingLevel);
+        cursor.setBlockFormat(blockFmt);
+
+        int sizeAdjustment = headingLevel ? 4 - headingLevel : 0; // H1 to H6: +3 to -2
+        QTextCharFormat fmt;
+        fmt.setFontWeight(headingLevel ? QFont::Bold : QFont::Normal);
+        fmt.setProperty(QTextFormat::FontSizeAdjustment, sizeAdjustment);
+        cursor.select(QTextCursor::LineUnderCursor);
+        cursor.mergeCharFormat(fmt);
+        //textEdit->mergeCurrentCharFormat(fmt);
+    } else {
+        blockFmt.setMarker(marker);
+        cursor.setBlockFormat(blockFmt);
+        QTextListFormat listFmt;
+        if (cursor.currentList()) {
+            listFmt = cursor.currentList()->format();
+        } else {
+            listFmt.setIndent(blockFmt.indent() + 1);
+            blockFmt.setIndent(0);
+            cursor.setBlockFormat(blockFmt);
+        }
+        listFmt.setStyle(style);
+        cursor.createList(listFmt);
+    }
+
+    cursor.endEditBlock();
 }

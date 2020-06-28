@@ -9,5 +9,8 @@
         <file>outlines/oNew.png</file>
         <file>outlines/oCut.png</file>
         <file>outlines/oCopy.png</file>
+        <file>outlines/checkbox.png</file>
+        <file>outlines/checkbox-checked.png</file>
+        <file>outlines/textbold.png</file>
     </qresource>
 </RCC>
