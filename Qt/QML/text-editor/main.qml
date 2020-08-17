@@ -218,7 +218,9 @@ ApplicationWindow {
     }
 
     header: ToolBar {
-        Row {
+
+        RowLayout{
+
             ToolButton {display: AbstractButton.IconOnly; action: actionNew}
             ToolButton {display: AbstractButton.IconOnly; action: actionOpen}
             ToolButton {display: AbstractButton.IconOnly; action: actionSave}
@@ -230,19 +232,41 @@ ApplicationWindow {
             //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
             ToolButton {display: AbstractButton.IconOnly; action: actionTable}
 
-            ComboBox {
-                model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
-                    "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
-                    "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
-                    "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
+            Row{
+                ComboBox {
+                    property bool sizeToContents
+                    property int modelWidth
 
-                id: comboStyle
-                onActivated: {
-                    //console.log(currentIndex)
-                    backend.indexTextStyle = currentIndex
+                    width: (sizeToContents) ? modelWidth + 2*leftPadding + 2*rightPadding : implicitWidth
+
+                    model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
+                        "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
+                        "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
+                        "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
+
+                    id: comboStyle
+                    sizeToContents: true
+                    onActivated: {
+                        //console.log(currentIndex)
+                        backend.indexTextStyle = currentIndex
+                    }
+
+                    TextMetrics {
+                        id: textMetrics
+                    }
+
+                    onModelChanged: {
+                        textMetrics.font = comboStyle.font
+                        for(var i = 0; i < model.length; i++){
+                            textMetrics.text = model[i]
+                            modelWidth = Math.max(textMetrics.width, modelWidth)
+                        }
+                    }
                 }
             }
         }
+
+
     }
 
     ScrollView {
