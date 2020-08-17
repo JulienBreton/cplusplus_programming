@@ -12,5 +12,7 @@
         <file>outlines/checkbox.png</file>
         <file>outlines/checkbox-checked.png</file>
         <file>outlines/textbold.png</file>
+        <file>outlines/ftinserttable.png</file>
+        <file>outlines/table.png</file>
     </qresource>
 </RCC>

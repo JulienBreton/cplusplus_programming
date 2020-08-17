@@ -9,7 +9,10 @@
 #include <QTextCursor>
 #include <QQuickItem>
 #include <QQuickTextDocument>
+#include <QTextTable>
 #include <QTextList>
+
+#include "windowtablesettings.h"
 
 class Backend : public QObject
 {
@@ -27,8 +30,12 @@ class Backend : public QObject
     Q_PROPERTY(bool listChecked READ checked WRITE setChecked NOTIFY checkedChanged)
 
     Q_PROPERTY(int indexTextStyle READ currentTextStyle WRITE textStyle NOTIFY textStyleChanged)
-    //Q_PROPERTY(bool listStyle READ listStyle WRITE getListStyle NOTIFY listStyleChanged)
 
+    //table
+    Q_PROPERTY(int tableRows READ tableRows WRITE setTableRows)
+    Q_PROPERTY(int tableColumns READ tableColumns WRITE setTableColumns)
+
+    //Q_PROPERTY(QTextTableFormat tableaux READ tableColumns WRITE setTableColumns NOTIFY nbrTableColumnsChanged)
 
 public:
     explicit Backend(QObject *parent = nullptr);
@@ -55,6 +62,16 @@ public:
     bool checked() const;
     int currentTextStyle();
     void setCurrentTextStyle(int currentIndexStyleBox);
+    void tableau();
+    //void setTableau();
+    //void insertTable();
+
+    //Table
+    int tableRows();
+    void setTableRows(int nbrOfRows);
+    int tableColumns();
+    void setTableColumns(int nbrOfColumns);
+    Q_INVOKABLE void insertTable(int r, int c);
 
     void sayHelloFromCpp(){
            qDebug() << "Hello you have called this function from C++";
@@ -80,6 +97,10 @@ Q_SIGNALS:
     void checkedChanged();
     void textStyleChanged();
 
+    //Table
+    void nbrTableRowsChanged();
+    void nbrTableColumnsChanged();
+
 private:
     QTextCursor textCursor() const;
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
@@ -97,6 +118,12 @@ private:
     int m_selectionEnd;
 
     int m_currentTextStyle;
+
+    //Table
+    int m_tableRow;
+    int m_tableColumn;
+
+    WindowTableSettings *tableSettings;
 
 };
 

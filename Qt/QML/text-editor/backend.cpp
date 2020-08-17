@@ -6,6 +6,8 @@ Backend::Backend(QObject *parent) : QObject(parent)
   , m_cursorPosition(-1)
   , m_selectionStart(0)
   , m_selectionEnd(0)
+  , m_tableRow(0)
+  , m_tableColumn(0)
 {
     m_path = QCoreApplication::applicationDirPath();
     m_path.append("/file.txt");
@@ -295,3 +297,70 @@ void Backend::textStyle(int styleIndex)
 
     cursor.endEditBlock();
 }
+
+void Backend::insertTable(int r, int c)
+{
+    QTextCursor cursor;
+    cursor = textCursor();
+    bool result = false;
+
+    QTextTable * table = cursor.currentTable();
+    /*this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(table, SIGNAL(customContextMenuRequested(const QPoint &)),
+            this, SLOT(ShowContextMenu(const QPoint &)));*/
+
+    if (table != nullptr)
+    {
+       //tableSettings = new WindowTableSettings(table->rows(), table->columns());
+       //tableSettings->exec();
+       table->resize(r, c);
+    }
+    else
+    {
+        //tableSettings = new WindowTableSettings;
+        //result = tableSettings->exec();
+
+        //if(result)
+        //{
+            if(table == nullptr)
+            {
+                /*QTextTableFormat tableFormat;
+                tableFormat.setBackground(QColor("#e0e0e0"));
+                QVector<QTextLength> constraints;
+                constraints << QTextLength(QTextLength::PercentageLength, 16);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                constraints << QTextLength(QTextLength::PercentageLength, 28);
+                tableFormat.setColumnWidthConstraints(constraints);*/
+                cursor = textCursor();
+                cursor.insertTable(r, c);
+            }
+        //}
+    }
+}
+
+int Backend::tableRows()
+{
+    return m_tableRow;
+}
+
+void Backend::setTableRows(int nbrOfRows)
+{
+    m_tableRow = nbrOfRows;
+    qDebug() << "Nbr de lignes" << m_tableRow;
+    //insertTable();
+    //emit insertTable();
+}
+
+int Backend::tableColumns()
+{
+    return m_tableColumn;
+}
+
+void Backend::setTableColumns(int nbrOfColumns)
+{
+    m_tableColumn = nbrOfColumns;
+    qDebug() << "Nbr de colonnes" << m_tableColumn;
+    //insertTable();
+}
+

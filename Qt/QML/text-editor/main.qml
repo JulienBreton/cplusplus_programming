@@ -6,6 +6,7 @@ import com.company.backend 1.0
 
 ApplicationWindow {
 
+    id: root
     visible: true
     width: 640
     height: 480
@@ -20,6 +21,44 @@ ApplicationWindow {
         //indexTextStyle: textEdit.
         //onPathChanged: console.log("Path:", path)
         //onDataChanged: console.log("Path:", path)
+    }
+
+    Popup {
+        id: popup
+        anchors.centerIn: parent
+        width: 300
+        height: 300
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        Column {
+            anchors.fill: parent
+            spacing: 25
+
+            SpinBox {
+                id: tableRows
+            }
+
+            SpinBox {
+                id: tableColumns
+            }
+
+            Button {
+                id: closeButton
+                text: "Close"
+                onClicked: {
+                    popup.close()
+
+                    //Here we send to c++ the number of rows and columns
+                    //backend.tableRows = tableRows.value
+                    //console.log(tableRows.value)
+                    //backend.tableColumns = tableColumns.value
+                    //console.log(tableColumns.value)
+                    backend.insertTable(tableRows.value, tableColumns.value)
+                }
+            }
+         }
     }
 
     FileDialog {
@@ -118,7 +157,7 @@ ApplicationWindow {
         checked: backend.bold
     }
 
-    Action {
+    /*Action {
         id: actionChecked
         text: qsTr("checked")
         icon.color: "transparent"
@@ -126,6 +165,18 @@ ApplicationWindow {
         onTriggered: backend.listChecked = !backend.listChecked
         checkable: true
         checked: backend.listChecked
+    }*/
+
+    Action {
+        id: actionTable
+        text: qsTr("add table")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/table.png"
+        onTriggered: {
+            popup.open()
+        }
+
+        checkable: true
     }
 
     //To do - add actions
@@ -159,6 +210,7 @@ ApplicationWindow {
             //ToolButton {display: AbstractButton.IconOnly; action: actionToggleCheckState}
             ToolButton {display: AbstractButton.IconOnly; action: actionBold}
             //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
+            ToolButton {display: AbstractButton.IconOnly; action: actionTable}
 
             ComboBox {
                 model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
@@ -181,12 +233,10 @@ ApplicationWindow {
             id: textEdit
             textFormat: TextEdit.MarkdownText
             focus: true
-            //text: "It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](http://google.com)"
+            //text: ""
             selectByMouse: true
             persistentSelection: true
-
-
         }
-    }
 
+    }
 }

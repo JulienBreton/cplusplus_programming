@@ -1,4 +1,6 @@
-QT += quick
+QT += \
+    quick \
+    widgets
 
 CONFIG += c++11
 
@@ -15,7 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         backend.cpp \
-        main.cpp
+        main.cpp \
+        table.cpp \
+        windowtablesettings.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,4 +35,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    backend.h
+    backend.h \
+    table.h \
+    windowtablesettings.h
