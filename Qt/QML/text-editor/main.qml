@@ -2,6 +2,7 @@ import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.5
 import com.company.backend 1.0
 
 ApplicationWindow {
@@ -10,7 +11,61 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("QML Markdown Editor")
+
+    Popup {
+        id: tablePopUp
+        anchors.centerIn: parent
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        GridLayout {
+            id: grid
+            columns: 2
+            rows: 3
+            rowSpacing: 20
+            columnSpacing: 20
+
+            Text {
+                text: qsTr("Rows : ")
+            }
+
+            SpinBox {
+                id: tableRows
+            }
+
+            Text {
+                text: qsTr("Columns : ")
+            }
+
+            SpinBox {
+                id: tableColumns
+
+            }
+
+            Button {
+                id: closeButton
+                text: qsTr("Cancel")
+
+                onClicked: {
+                    tablePopUp.close()
+                }
+            }
+
+            Button {
+                id: addButton
+                text: qsTr("Add table")
+                Layout.alignment: Qt.AlignRight
+                onClicked: {
+                    tablePopUp.close()
+
+                    backend.insertTable(tableRows.value, tableColumns.value)
+                }
+            }
+
+        }
+    }
 
     Backend {
         id: backend
@@ -23,43 +78,6 @@ ApplicationWindow {
         //onDataChanged: console.log("Path:", path)
     }
 
-    Popup {
-        id: popup
-        anchors.centerIn: parent
-        width: 300
-        height: 300
-        modal: true
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-
-        Column {
-            anchors.fill: parent
-            spacing: 25
-
-            SpinBox {
-                id: tableRows
-            }
-
-            SpinBox {
-                id: tableColumns
-            }
-
-            Button {
-                id: closeButton
-                text: "Close"
-                onClicked: {
-                    popup.close()
-
-                    //Here we send to c++ the number of rows and columns
-                    //backend.tableRows = tableRows.value
-                    //console.log(tableRows.value)
-                    //backend.tableColumns = tableColumns.value
-                    //console.log(tableColumns.value)
-                    backend.insertTable(tableRows.value, tableColumns.value)
-                }
-            }
-         }
-    }
 
     FileDialog {
         id: openDialog
@@ -173,7 +191,7 @@ ApplicationWindow {
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/table.png"
         onTriggered: {
-            popup.open()
+            tablePopUp.open()
         }
 
         checkable: true
@@ -214,9 +232,9 @@ ApplicationWindow {
 
             ComboBox {
                 model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
-                "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
-                "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
-                "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
+                    "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
+                    "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
+                    "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
 
                 id: comboStyle
                 onActivated: {
