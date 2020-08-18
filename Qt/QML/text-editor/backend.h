@@ -27,6 +27,8 @@ class Backend : public QObject
     Q_PROPERTY(QString data READ data WRITE setData NOTIFY dataChanged)
     Q_PROPERTY(QString myMessage READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(bool bold READ bold WRITE setBold NOTIFY boldChanged)
+    Q_PROPERTY(bool underline READ underline WRITE setUnderline NOTIFY underlineChanged)
+    Q_PROPERTY(bool italic READ italic WRITE setItalic NOTIFY italicChanged)
     Q_PROPERTY(bool listChecked READ checked WRITE setChecked NOTIFY checkedChanged)
 
     Q_PROPERTY(int indexTextStyle READ currentTextStyle WRITE textStyle NOTIFY textStyleChanged)
@@ -59,12 +61,12 @@ public:
     QString message();
     void setMessage(QString message);
     bool bold() const;
+    bool underline() const;
+    bool italic() const;
     bool checked() const;
     int currentTextStyle();
     void setCurrentTextStyle(int currentIndexStyleBox);
     void tableau();
-    //void setTableau();
-    //void insertTable();
 
     //Table
     int tableRows();
@@ -79,6 +81,8 @@ public:
 
 public Q_SLOTS:
     void setBold(bool arg);
+    void setUnderline(bool underline);
+    void setItalic(bool italic);
     void setChecked(bool checked);
 
 private Q_SLOTS:
@@ -94,6 +98,8 @@ Q_SIGNALS:
     void dataChanged();
     void messageChanged();
     void boldChanged();
+    void underlineChanged();
+    void italicChanged();
     void checkedChanged();
     void textStyleChanged();
 

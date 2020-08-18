@@ -100,6 +100,22 @@ void Backend::setMessage(QString message)
     emit messageChanged();
 }
 
+bool Backend::underline() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().charFormat().fontUnderline();
+}
+
+bool Backend::italic() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().charFormat().fontItalic();
+}
+
 bool Backend::bold() const
 {
     QTextCursor cursor = textCursor();
@@ -128,6 +144,22 @@ void Backend::setBold(bool arg)
     fmt.setFontWeight(arg ? QFont::Bold : QFont::Normal);
     mergeFormatOnWordOrSelection(fmt);
     emit boldChanged();
+}
+
+void Backend::setUnderline(bool underline)
+{
+    QTextCharFormat format;
+    format.setFontUnderline(underline);
+    mergeFormatOnWordOrSelection(format);
+    emit underlineChanged();
+}
+
+void Backend::setItalic(bool italic)
+{
+    QTextCharFormat format;
+    format.setFontItalic(italic);
+    mergeFormatOnWordOrSelection(format);
+    emit italicChanged();
 }
 
 void Backend::setCurrentTextStyle(int currentIndexStyleBox){
@@ -165,8 +197,8 @@ void Backend::reset()
     //emit alignmentChanged();
     emit boldChanged();
     emit checkedChanged();
-    //emit italicChanged();
-    //emit underlineChanged();
+    emit italicChanged();
+    emit underlineChanged();
     //emit fontSizeChanged();
     //emit textColorChanged();
 }

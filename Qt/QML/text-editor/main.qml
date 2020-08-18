@@ -169,10 +169,30 @@ ApplicationWindow {
         id: actionBold
         text: qsTr("Bold")
         icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/textbold.png"
+        icon.source: "qrc:/flat/outlines/bold.svg"
         onTriggered: backend.bold = !backend.bold
         checkable: true
         checked: backend.bold
+    }
+
+    Action {
+        id: actionItalic
+        text: qsTr("Italic")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/italic.svg"
+        onTriggered: backend.italic = !backend.italic
+        checkable: true
+        checked: backend.italic
+    }
+
+    Action {
+        id: actionUnderline
+        text: qsTr("Underline")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/underline.svg"
+        onTriggered: backend.underline = !backend.underline
+        checkable: true
+        checked: backend.underline
     }
 
     /*Action {
@@ -229,6 +249,8 @@ ApplicationWindow {
             ToolButton {display: AbstractButton.IconOnly; action: actionPaste}
             //ToolButton {display: AbstractButton.IconOnly; action: actionToggleCheckState}
             ToolButton {display: AbstractButton.IconOnly; action: actionBold}
+            ToolButton {display: AbstractButton.IconOnly; action: actionItalic}
+            ToolButton {display: AbstractButton.IconOnly; action: actionUnderline}
             //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
             ToolButton {display: AbstractButton.IconOnly; action: actionTable}
 
@@ -274,6 +296,7 @@ ApplicationWindow {
         TextArea {
             id: textEdit
             textFormat: TextEdit.MarkdownText
+            //textFormat: TextEdit.RichText
             focus: true
             //text: ""
             selectByMouse: true

@@ -14,5 +14,9 @@
         <file>outlines/textbold.png</file>
         <file>outlines/ftinserttable.png</file>
         <file>outlines/table.png</file>
+        <file>outlines/underline.png</file>
+        <file>outlines/bold.svg</file>
+        <file>outlines/underline.svg</file>
+        <file>outlines/italic.svg</file>
     </qresource>
 </RCC>
