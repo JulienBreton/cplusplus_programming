@@ -100,14 +100,6 @@ void Backend::setMessage(QString message)
     emit messageChanged();
 }
 
-bool Backend::underline() const
-{
-    QTextCursor cursor = textCursor();
-    if (cursor.isNull())
-        return false;
-    return textCursor().charFormat().fontUnderline();
-}
-
 bool Backend::italic() const
 {
     QTextCursor cursor = textCursor();
@@ -156,14 +148,6 @@ void Backend::setBold(bool arg)
         mergeFormatOnWordOrSelection(fmt);
         emit boldChanged();
     }
-}
-
-void Backend::setUnderline(bool underline)
-{
-    QTextCharFormat format;
-    format.setFontUnderline(underline);
-    mergeFormatOnWordOrSelection(format);
-    emit underlineChanged();
 }
 
 void Backend::setItalic(bool italic)
@@ -224,7 +208,6 @@ void Backend::reset()
     emit boldChanged();
     emit checkedChanged();
     emit italicChanged();
-    emit underlineChanged();
     emit fontSizeChanged();
     emit textColorChanged();
 }

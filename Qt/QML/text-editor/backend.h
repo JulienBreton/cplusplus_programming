@@ -27,7 +27,6 @@ class Backend : public QObject
     Q_PROPERTY(QString data READ data WRITE setData NOTIFY dataChanged)
     Q_PROPERTY(QString myMessage READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(bool bold READ bold WRITE setBold NOTIFY boldChanged)
-    Q_PROPERTY(bool underline READ underline WRITE setUnderline NOTIFY underlineChanged)
     Q_PROPERTY(bool italic READ italic WRITE setItalic NOTIFY italicChanged)
     Q_PROPERTY(bool strick READ strick WRITE setStrick NOTIFY strickChanged)
     Q_PROPERTY(bool listChecked READ checked WRITE setChecked NOTIFY checkedChanged)
@@ -66,7 +65,6 @@ public:
     QString message();
     void setMessage(QString message);
     bool bold() const;
-    bool underline() const;
     bool italic() const;
     bool strick() const;
     bool checked() const;
@@ -96,7 +94,6 @@ public:
 
 public Q_SLOTS:
     void setBold(bool arg);
-    void setUnderline(bool underline);
     void setItalic(bool italic);
     void setStrick(bool strick);
     void setChecked(bool checked);
@@ -114,7 +111,6 @@ Q_SIGNALS:
     void dataChanged();
     void messageChanged();
     void boldChanged();
-    void underlineChanged();
     void italicChanged();
     void strickChanged();
     void checkedChanged();

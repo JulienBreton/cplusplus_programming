@@ -209,16 +209,6 @@ ApplicationWindow {
     }
 
     Action {
-        id: actionUnderline
-        text: qsTr("Underline")
-        icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/underline.svg"
-        onTriggered: backend.underline = !backend.underline
-        checkable: true
-        checked: backend.underline
-    }
-
-    Action {
         id: actionStrick
         text: qsTr("Strick")
         icon.color: "transparent"
@@ -320,8 +310,6 @@ ApplicationWindow {
             {display: AbstractButton.IconOnly; action: actionBold}
             ToolButton
             {display: AbstractButton.IconOnly; action: actionItalic}
-            ToolButton
-            {display: AbstractButton.IconOnly; action: actionUnderline}
             ToolButton
             {display: AbstractButton.IconOnly; action: actionStrick}
             //ToolButton
