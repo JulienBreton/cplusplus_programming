@@ -33,6 +33,7 @@ ApplicationWindow {
 
             SpinBox {
                 id: tableRows
+                from: 1
             }
 
             Text {
@@ -41,7 +42,7 @@ ApplicationWindow {
 
             SpinBox {
                 id: tableColumns
-
+                from: 1
             }
 
             Button {
@@ -103,6 +104,19 @@ ApplicationWindow {
             backend.path = saveDialog.fileUrl
             backend.data = textEdit.text
         }
+    }
+
+    FontDialog {
+        id: fontDialog
+        onAccepted: {
+            backend.fontFamily = font.family;
+            backend.fontSize = font.pointSize;
+        }
+    }
+
+    ColorDialog {
+        id: colorDialog
+        currentColor: "black"
     }
 
     Action {
@@ -209,12 +223,40 @@ ApplicationWindow {
         id: actionTable
         text: qsTr("add table")
         icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/table.png"
+        icon.source: "qrc:/flat/outlines/grid.svg"
         onTriggered: {
             tablePopUp.open()
         }
 
         checkable: true
+    }
+
+    Action {
+        id: actionSize
+        text: qsTr("Size")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/size_plus.svg"
+        onTriggered: {
+
+            backend.fontSize++
+        }
+
+        checkable: true
+        //checked: backend.fontSize
+    }
+
+    Action {
+        id: actionSizeMenus
+        text: qsTr("Size")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/size_menus.svg"
+        onTriggered: {
+
+            backend.fontSize--
+        }
+
+        checkable: true
+        //checked: backend.fontSize
     }
 
     //To do - add actions
@@ -253,6 +295,48 @@ ApplicationWindow {
             ToolButton {display: AbstractButton.IconOnly; action: actionUnderline}
             //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
             ToolButton {display: AbstractButton.IconOnly; action: actionTable}
+            ToolButton {display: AbstractButton.IconOnly; action: actionSize}
+            ToolButton {display: AbstractButton.IconOnly; action: actionSizeMenus}
+
+            /*ToolButton {
+                id: fontFamilyToolButton
+                text: qsTr("\uE808") // icon-font
+                font.family: "fontello"
+                font.bold: backend.bold
+                font.italic: backend.italic
+                font.underline: backend.underline
+                onClicked: {
+                    fontDialog.currentFont.family = backend.fontFamily;
+                    fontDialog.currentFont.pointSize = backend.fontSize;
+                    fontDialog.open();
+                }
+            }
+            ToolButton {
+                id: textColorButton
+                text: "\uF1FC" // icon-brush
+                font.family: "fontello"
+                focusPolicy: Qt.TabFocus
+                onClicked: colorDialog.open()
+
+                Rectangle {
+                    width: aFontMetrics.width + 3
+                    height: 2
+                    color: backend.textColor
+                    parent: textColorButton.contentItem
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.baseline: parent.baseline
+                    anchors.baselineOffset: 6
+
+                    TextMetrics {
+                        id: aFontMetrics
+                        font: textColorButton.font
+                        text: textColorButton.text
+                    }
+                }
+            }*/
+            /*ToolSeparator {
+                contentItem.visible: formatRow.y === alignRow.y
+            }*/
 
             Row{
                 ComboBox {

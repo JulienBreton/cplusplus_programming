@@ -193,14 +193,14 @@ void Backend::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 
 void Backend::reset()
 {
-    //emit fontFamilyChanged();
+    emit fontFamilyChanged();
     //emit alignmentChanged();
     emit boldChanged();
     emit checkedChanged();
     emit italicChanged();
     emit underlineChanged();
-    //emit fontSizeChanged();
-    //emit textColorChanged();
+    emit fontSizeChanged();
+    emit textColorChanged();
 }
 
 void Backend::setChecked(bool checked)
@@ -394,5 +394,71 @@ void Backend::setTableColumns(int nbrOfColumns)
     m_tableColumn = nbrOfColumns;
     qDebug() << "Nbr de colonnes" << m_tableColumn;
     //insertTable();
+}
+
+int Backend::fontSize() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return 0;
+    QTextCharFormat format = cursor.charFormat();
+    return format.font().pointSize();
+}
+
+void Backend::setFontSize(int size)
+{
+    qDebug() << "setFontSize";
+
+    if (size <= 0)
+        return;
+
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+
+    if (!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+
+    if (cursor.charFormat().property(QTextFormat::FontPointSize).toInt() == size)
+        return;
+
+    QTextCharFormat format;
+    format.setFontPointSize(size);
+    mergeFormatOnWordOrSelection(format);
+    emit fontSizeChanged();
+}
+
+QString Backend::fontFamily() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return QString();
+    QTextCharFormat format = cursor.charFormat();
+    return format.font().family();
+}
+
+void Backend::setFontFamily(const QString &family)
+{
+    QTextCharFormat format;
+    format.setFontFamily(family);
+    mergeFormatOnWordOrSelection(format);
+    emit fontFamilyChanged();
+}
+
+QColor Backend::textColor() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return QColor(Qt::black);
+    QTextCharFormat format = cursor.charFormat();
+    return format.foreground().color();
+}
+
+void Backend::setTextColor(const QColor &color)
+{
+    QTextCharFormat format;
+    format.setForeground(QBrush(color));
+    mergeFormatOnWordOrSelection(format);
+    emit textColorChanged();
 }
 

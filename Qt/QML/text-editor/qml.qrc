@@ -18,5 +18,8 @@
         <file>outlines/bold.svg</file>
         <file>outlines/underline.svg</file>
         <file>outlines/italic.svg</file>
+        <file>outlines/grid.svg</file>
+        <file>outlines/size_plus.svg</file>
+        <file>outlines/size_menus.svg</file>
     </qresource>
 </RCC>
