@@ -209,6 +209,7 @@ void Backend::reset()
     emit checkedChanged();
     emit italicChanged();
     emit fontSizeChanged();
+    emit strickChanged();
     emit textColorChanged();
 }
 
