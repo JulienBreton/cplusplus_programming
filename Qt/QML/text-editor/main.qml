@@ -1,6 +1,6 @@
-import QtQuick 2.14
+import QtQuick 2.15
 import QtQuick.Window 2.14
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.5
 import com.company.backend 1.0
@@ -98,6 +98,7 @@ ApplicationWindow {
         onAccepted: {
             backend.path = openDialog.fileUrl
             textEdit.text = backend.data
+            //textEdit.textFormat = TextEdit.MarkdownText
         }
     }
 
@@ -203,7 +204,10 @@ ApplicationWindow {
         text: qsTr("Italic")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/italic.svg"
-        onTriggered: backend.italic = !backend.italic
+        onTriggered: {
+
+            backend.italic = !backend.italic
+        }
         checkable: true
         checked: backend.italic
     }

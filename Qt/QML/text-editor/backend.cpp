@@ -113,6 +113,7 @@ bool Backend::italic() const
     QTextCursor cursor = textCursor();
     if (cursor.isNull())
         return false;
+
     return textCursor().charFormat().fontItalic();
 }
 
@@ -148,10 +149,13 @@ int Backend::currentTextStyle()
 
 void Backend::setBold(bool arg)
 {
-    QTextCharFormat fmt;
-    fmt.setFontWeight(arg ? QFont::Bold : QFont::Normal);
-    mergeFormatOnWordOrSelection(fmt);
-    emit boldChanged();
+    if(!strick())
+    {
+        QTextCharFormat fmt;
+        fmt.setFontWeight(arg ? QFont::Bold : QFont::Normal);
+        mergeFormatOnWordOrSelection(fmt);
+        emit boldChanged();
+    }
 }
 
 void Backend::setUnderline(bool underline)
@@ -164,18 +168,24 @@ void Backend::setUnderline(bool underline)
 
 void Backend::setItalic(bool italic)
 {
-    QTextCharFormat format;
-    format.setFontItalic(italic);
-    mergeFormatOnWordOrSelection(format);
-    emit italicChanged();
+    if(!strick())
+    {
+        QTextCharFormat format;
+        format.setFontItalic(italic);
+        mergeFormatOnWordOrSelection(format);
+        emit italicChanged();
+    }
 }
 
 void Backend::setStrick(bool strick)
 {
-    QTextCharFormat format;
-    format.setFontStrikeOut(strick);
-    mergeFormatOnWordOrSelection(format);
-    emit strickChanged();
+    if(!bold() && !italic())
+    {
+        QTextCharFormat format;
+        format.setFontStrikeOut(strick);
+        mergeFormatOnWordOrSelection(format);
+        emit strickChanged();
+    }
 }
 
 void Backend::setCurrentTextStyle(int currentIndexStyleBox){
@@ -260,6 +270,12 @@ void Backend::setChecked(bool checked)
     cursor.endEditBlock();
 
     emit checkedChanged();
+}
+
+void Backend::setMardown()
+{
+    QTextEdit textEdit;
+    textEdit.toMarkdown();
 }
 
 void Backend::textStyle(int styleIndex)

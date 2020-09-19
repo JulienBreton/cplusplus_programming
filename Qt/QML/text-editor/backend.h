@@ -11,6 +11,7 @@
 #include <QQuickTextDocument>
 #include <QTextTable>
 #include <QTextList>
+#include <QTextEdit>
 
 #include "windowtablesettings.h"
 
@@ -100,6 +101,7 @@ public Q_SLOTS:
     void setItalic(bool italic);
     void setStrick(bool strick);
     void setChecked(bool checked);
+    void setMardown();
 
 private Q_SLOTS:
     void textStyle(int styleIndex);
