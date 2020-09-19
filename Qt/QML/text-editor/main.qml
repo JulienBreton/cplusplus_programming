@@ -14,6 +14,13 @@ ApplicationWindow {
     visibility: Window.Maximized
     visible: true
 
+    //If the window is not maximized when the application starts the window will
+    //be in the center of the screen.
+    Component.onCompleted: {
+        x = Screen.width / 2 - width / 2
+        y = Screen.height / 2 - height / 2
+    }
+
     Popup {
         id: tablePopUp
         anchors.centerIn: parent
