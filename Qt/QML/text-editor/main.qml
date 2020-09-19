@@ -182,7 +182,8 @@ ApplicationWindow {
         icon.source: "qrc:/flat/outlines/checkbox-checked.png"
         onTriggered: {
 
-            backend.myMessage = "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
+            backend.myMessage =
+                    "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
             textEdit.insert(textEdit.cursorPosition, backend.myMessage)
         }
     }
@@ -291,20 +292,34 @@ ApplicationWindow {
 
         RowLayout{
 
-            ToolButton {display: AbstractButton.IconOnly; action: actionNew}
-            ToolButton {display: AbstractButton.IconOnly; action: actionOpen}
-            ToolButton {display: AbstractButton.IconOnly; action: actionSave}
-            ToolButton {display: AbstractButton.IconOnly; action: actionCopy}
-            ToolButton {display: AbstractButton.IconOnly; action: actionCut}
-            ToolButton {display: AbstractButton.IconOnly; action: actionPaste}
-            //ToolButton {display: AbstractButton.IconOnly; action: actionToggleCheckState}
-            ToolButton {display: AbstractButton.IconOnly; action: actionBold}
-            ToolButton {display: AbstractButton.IconOnly; action: actionItalic}
-            ToolButton {display: AbstractButton.IconOnly; action: actionUnderline}
-            //ToolButton {display: AbstractButton.IconOnly; action: actionChecked}
-            ToolButton {display: AbstractButton.IconOnly; action: actionTable}
-            ToolButton {display: AbstractButton.IconOnly; action: actionSize}
-            ToolButton {display: AbstractButton.IconOnly; action: actionSizeMenus}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionNew}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionOpen}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionSave}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionCopy}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionCut}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionPaste}
+            //ToolButton
+            //{display: AbstractButton.IconOnly; action: actionToggleCheckState}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionBold}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionItalic}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionUnderline}
+            //ToolButton
+            //{display: AbstractButton.IconOnly; action: actionChecked}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionTable}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionSize}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionSizeMenus}
 
             /*ToolButton {
                 id: fontFamilyToolButton
@@ -351,12 +366,20 @@ ApplicationWindow {
                     property bool sizeToContents
                     property int modelWidth
 
-                    width: (sizeToContents) ? modelWidth + 2*leftPadding + 2*rightPadding : implicitWidth
+                    width: (sizeToContents) ? modelWidth + 2*leftPadding
+                                              + 2*rightPadding : implicitWidth
 
-                    model: ["Standard", "Bullet List (Disc)", "Bullet List (Circle)", "Bullet List (Square)",
-                        "Task List (Unchecked)", "Task List (Checked)", "Ordered List (Decimal)", "Ordered List (Alpha lower)",
-                        "Ordered List (Alpha upper)", "Ordered List (Roman lower)", "Ordered List (Roman upper)",
-                        "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6"]
+                    model:
+                        ["Standard",
+                        "Bullet List (Disc)", "Bullet List (Circle)",
+                        "Bullet List (Square)",
+                        "Task List (Unchecked)", "Task List (Checked)",
+                        "Ordered List (Decimal)", "Ordered List (Alpha lower)",
+                        "Ordered List (Alpha upper)",
+                        "Ordered List (Roman lower)",
+                        "Ordered List (Roman upper)",
+                        "Heading 1", "Heading 2", "Heading 3", "Heading 4",
+                        "Heading 5", "Heading 6"]
 
                     id: comboStyle
                     sizeToContents: true
