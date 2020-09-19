@@ -1,8 +1,8 @@
 import QtQuick 2.15
-import QtQuick.Window 2.14
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.5
+import QtQuick.Dialogs 1.3
+import QtQuick.Layouts 1.9
 import com.company.backend 1.0
 
 ApplicationWindow {
