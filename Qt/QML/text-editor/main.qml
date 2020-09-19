@@ -8,10 +8,11 @@ import com.company.backend 1.0
 ApplicationWindow {
 
     id: root
-    visible: true
-    width: 640
-    height: 480
+    width: 1024
+    height: 600
     title: qsTr("QML Markdown Editor")
+    visibility: Window.Maximized
+    visible: true
 
     Popup {
         id: tablePopUp
