@@ -272,12 +272,6 @@ void Backend::setChecked(bool checked)
     emit checkedChanged();
 }
 
-void Backend::setMardown()
-{
-    QTextEdit textEdit;
-    textEdit.toMarkdown();
-}
-
 void Backend::textStyle(int styleIndex)
 {
     QTextCursor cursor = textCursor();

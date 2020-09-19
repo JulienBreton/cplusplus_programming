@@ -98,7 +98,6 @@ ApplicationWindow {
         onAccepted: {
             backend.path = openDialog.fileUrl
             textEdit.text = backend.data
-            //textEdit.textFormat = TextEdit.MarkdownText
         }
     }
 
@@ -204,10 +203,7 @@ ApplicationWindow {
         text: qsTr("Italic")
         icon.color: "transparent"
         icon.source: "qrc:/flat/outlines/italic.svg"
-        onTriggered: {
-
-            backend.italic = !backend.italic
-        }
+        onTriggered:  backend.italic = !backend.italic
         checkable: true
         checked: backend.italic
     }
