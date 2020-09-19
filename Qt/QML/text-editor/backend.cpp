@@ -116,6 +116,14 @@ bool Backend::italic() const
     return textCursor().charFormat().fontItalic();
 }
 
+bool Backend::strick() const
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return false;
+    return textCursor().charFormat().fontStrikeOut();
+}
+
 bool Backend::bold() const
 {
     QTextCursor cursor = textCursor();
@@ -160,6 +168,14 @@ void Backend::setItalic(bool italic)
     format.setFontItalic(italic);
     mergeFormatOnWordOrSelection(format);
     emit italicChanged();
+}
+
+void Backend::setStrick(bool strick)
+{
+    QTextCharFormat format;
+    format.setFontStrikeOut(strick);
+    mergeFormatOnWordOrSelection(format);
+    emit strickChanged();
 }
 
 void Backend::setCurrentTextStyle(int currentIndexStyleBox){

@@ -218,6 +218,16 @@ ApplicationWindow {
         checked: backend.underline
     }
 
+    Action {
+        id: actionStrick
+        text: qsTr("Strick")
+        icon.color: "transparent"
+        icon.source: "qrc:/flat/outlines/italic.svg"
+        onTriggered: backend.strick = !backend.strick
+        checkable: true
+        checked: backend.strick
+    }
+
     /*Action {
         id: actionChecked
         text: qsTr("checked")
@@ -312,6 +322,8 @@ ApplicationWindow {
             {display: AbstractButton.IconOnly; action: actionItalic}
             ToolButton
             {display: AbstractButton.IconOnly; action: actionUnderline}
+            ToolButton
+            {display: AbstractButton.IconOnly; action: actionStrick}
             //ToolButton
             //{display: AbstractButton.IconOnly; action: actionChecked}
             ToolButton
