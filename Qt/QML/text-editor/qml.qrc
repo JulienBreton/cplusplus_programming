@@ -21,5 +21,6 @@
         <file>outlines/grid.svg</file>
         <file>outlines/size_plus.svg</file>
         <file>outlines/size_menus.svg</file>
+        <file>outlines/strikethrough.svg</file>
     </qresource>
 </RCC>

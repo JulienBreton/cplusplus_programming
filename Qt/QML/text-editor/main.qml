@@ -212,7 +212,7 @@ ApplicationWindow {
         id: actionStrick
         text: qsTr("Strick")
         icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/italic.svg"
+        icon.source: "qrc:/flat/outlines/strikethrough.svg"
         onTriggered: backend.strick = !backend.strick
         checkable: true
         checked: backend.strick
@@ -239,36 +239,6 @@ ApplicationWindow {
 
         checkable: true
     }
-
-    Action {
-        id: actionSize
-        text: qsTr("Size")
-        icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/size_plus.svg"
-        onTriggered: {
-
-            backend.fontSize++
-        }
-
-        checkable: true
-        //checked: backend.fontSize
-    }
-
-    Action {
-        id: actionSizeMenus
-        text: qsTr("Size")
-        icon.color: "transparent"
-        icon.source: "qrc:/flat/outlines/size_menus.svg"
-        onTriggered: {
-
-            backend.fontSize--
-        }
-
-        checkable: true
-        //checked: backend.fontSize
-    }
-
-    //To do - add actions
 
     menuBar: MenuBar {
         Menu {
@@ -316,10 +286,6 @@ ApplicationWindow {
             //{display: AbstractButton.IconOnly; action: actionChecked}
             ToolButton
             {display: AbstractButton.IconOnly; action: actionTable}
-            ToolButton
-            {display: AbstractButton.IconOnly; action: actionSize}
-            ToolButton
-            {display: AbstractButton.IconOnly; action: actionSizeMenus}
 
             /*ToolButton {
                 id: fontFamilyToolButton

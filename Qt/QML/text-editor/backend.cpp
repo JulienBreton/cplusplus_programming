@@ -208,7 +208,6 @@ void Backend::reset()
     emit boldChanged();
     emit checkedChanged();
     emit italicChanged();
-    emit fontSizeChanged();
     emit strickChanged();
     emit textColorChanged();
 }
@@ -404,38 +403,6 @@ void Backend::setTableColumns(int nbrOfColumns)
     m_tableColumn = nbrOfColumns;
     qDebug() << "Nbr de colonnes" << m_tableColumn;
     //insertTable();
-}
-
-int Backend::fontSize() const
-{
-    QTextCursor cursor = textCursor();
-    if (cursor.isNull())
-        return 0;
-    QTextCharFormat format = cursor.charFormat();
-    return format.font().pointSize();
-}
-
-void Backend::setFontSize(int size)
-{
-    qDebug() << "setFontSize";
-
-    if (size <= 0)
-        return;
-
-    QTextCursor cursor = textCursor();
-    if (cursor.isNull())
-        return;
-
-    if (!cursor.hasSelection())
-        cursor.select(QTextCursor::WordUnderCursor);
-
-    if (cursor.charFormat().property(QTextFormat::FontPointSize).toInt() == size)
-        return;
-
-    QTextCharFormat format;
-    format.setFontPointSize(size);
-    mergeFormatOnWordOrSelection(format);
-    emit fontSizeChanged();
 }
 
 QString Backend::fontFamily() const

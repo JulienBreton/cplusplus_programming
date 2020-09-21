@@ -33,7 +33,6 @@ class Backend : public QObject
 
     Q_PROPERTY(int indexTextStyle READ currentTextStyle WRITE textStyle NOTIFY textStyleChanged)
 
-    Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor NOTIFY textColorChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
 
@@ -71,9 +70,6 @@ public:
     int currentTextStyle();
     void setCurrentTextStyle(int currentIndexStyleBox);
     void tableau();
-
-    int fontSize() const;
-    void setFontSize(int size);
 
     QString fontFamily() const;
     void setFontFamily(const QString &family);
@@ -115,8 +111,6 @@ Q_SIGNALS:
     void strickChanged();
     void checkedChanged();
     void textStyleChanged();
-
-    void fontSizeChanged();
 
     void fontFamilyChanged();
     void textColorChanged();
